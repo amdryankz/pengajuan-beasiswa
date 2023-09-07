@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Donor;
+use App\Models\FileRequirement;
 use Illuminate\Http\Request;
 
-class DonorController extends Controller
+class FileRequirementController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Donor::orderBy('name', 'asc')->get();
+        $data = FileRequirement::orderBy('name', 'asc')->get();
         dd($data);
     }
 

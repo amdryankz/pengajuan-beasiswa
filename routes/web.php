@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\FileRequirement;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonorController;
+use App\Http\Controllers\FileRequirementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard/donatur', [DonorController::class, 'index']);
+Route::get('/dashboard/berkas', [FileRequirementController::class, 'index']);
