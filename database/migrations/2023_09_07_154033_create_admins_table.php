@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->bigInteger('nip')->unique;
+            $table->string('password');
+            $table->string('status')->default('Non-Active');
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
