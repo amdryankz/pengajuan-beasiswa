@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filerequirements', function (Blueprint $table) {
+        Schema::create('file_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();

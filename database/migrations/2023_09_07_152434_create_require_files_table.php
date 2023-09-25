@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('scholarship_data_id');
             $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data');
-            $table->unsignedBigInteger('filerequirements_id');
-            $table->foreign('filerequirements_id')->references('id')->on('filerequirements');
+            $table->unsignedBigInteger('file_requirement_id');
+            $table->foreign('file_requirement_id')->references('id')->on('file_requirements');
             $table->timestamps();
         });
     }

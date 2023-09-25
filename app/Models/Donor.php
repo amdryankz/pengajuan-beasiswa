@@ -9,4 +9,9 @@ class Donor extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+    public function scholarshipData()
+    {
+        return $this->hasMany(ScholarshipData::class, 'donors_id');
+    }
 }

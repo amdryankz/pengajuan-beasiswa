@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FileRequirement;
 use Illuminate\Http\Request;
+use App\Models\FileRequirement;
+use Illuminate\Support\Facades\Session;
 
 class FileRequirementController extends Controller
 {
@@ -12,8 +13,8 @@ class FileRequirementController extends Controller
      */
     public function index()
     {
-        $data = FileRequirement::orderBy('name', 'asc')->get();
-        dd($data);
+        $data = FileRequirement::orderby('name', 'asc')->get();
+        return view('admin.filereq.index')->with('data', $data);
     }
 
     /**
@@ -21,7 +22,7 @@ class FileRequirementController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.filereq.create');
     }
 
     /**
@@ -29,7 +30,19 @@ class FileRequirementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Session::flash('name', $request->name);
+
+        $request->validate([
+            'name' => 'required'
+        ], [
+            'name.required' => 'Berkas wajib diisi'
+        ]);
+
+        $data = ['name' => $request->name];
+
+        FileRequirement::create($data);
+
+        return redirect()->route('berkas.index')->with('success', 'Berhasil menambahkan data');
     }
 
     /**
@@ -45,7 +58,8 @@ class FileRequirementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = FileRequirement::findOrFail($id);
+        return view('admin.filereq.edit')->with('data', $data);
     }
 
     /**
@@ -53,7 +67,13 @@ class FileRequirementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(['name' => 'required'], ['name.required' => 'Nama berkas wajib diisi']);
+
+        $data = ['name' => $request->name];
+
+        FileRequirement::findOrFail($id)->update($data);
+
+        return redirect()->route('berkas.index')->with('success', 'Berhasil update berkas');
     }
 
     /**
@@ -61,6 +81,14 @@ class FileRequirementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $fileRequirement = FileRequirement::findOrFail($id);
+
+        if ($fileRequirement->requireFiles()->count() > 0) {
+            return redirect()->back()->withErrors(['error' => 'Tidak dapat menghapus persyaratan ini karena masih terdapat beasiswa yang terkait.']);
+        }
+
+        $fileRequirement->delete();
+
+        return redirect()->route('berkas.index')->with('success', 'Berhasil delete berkas');
     }
 }

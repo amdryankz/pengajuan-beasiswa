@@ -17,6 +17,7 @@ return new class extends Migration
             $table->year('year');
             $table->unsignedBigInteger('donors_id');
             $table->foreign('donors_id')->references('id')->on('donors');
+            $table->string('status_scholarship');
             $table->string('value');
             $table->string('status_value');
             $table->integer('duration');
@@ -25,8 +26,7 @@ return new class extends Migration
             $table->float('min_ipk');
             $table->date('start_graduation_at');
             $table->date('end_graduation_at');
-            $table->unsignedBigInteger('kuotas_id');
-            $table->foreign('kuotas_id')->references('id')->on('kuotas');
+            $table->json('kuota')->nullable();
             $table->string('no_sk')->nullable();
             $table->string('file_sk')->nullable();
             $table->timestamps();
