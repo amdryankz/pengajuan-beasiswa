@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nim');
+            $table->bigInteger('nim')->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('name');
+            $table->string('prodi');
             $table->timestamps();
         });
     }

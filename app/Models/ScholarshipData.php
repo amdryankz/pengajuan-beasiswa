@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Donor;
 use App\Models\FileRequirement;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ class ScholarshipData extends Model
         'name',
         'year',
         'donors_id',
+        'status_scholarship',
         'value',
         'status_value',
         'duration',
@@ -36,5 +38,10 @@ class ScholarshipData extends Model
     public function requirements()
     {
         return $this->belongsToMany(FileRequirement::class, 'require_files', 'scholarship_data_id', 'file_requirement_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_scholarships', 'scholarship_data_id', 'user_id');
     }
 }

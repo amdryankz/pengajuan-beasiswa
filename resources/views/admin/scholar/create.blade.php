@@ -21,6 +21,14 @@
             </select>
         </div>
         <div class="mb-3">
+            <label for="status_scholarship" class="form-label">Status Beasiswa</label>
+            <select class="form-select" name="status_scholarship" id="status_scholarship">
+                <option>-- Pilih --</option>
+                <option>Umum</option>
+                <option>Khusus</option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="donors_id" class="form-label">Pilih Donatur</label>
             <select class="form-select" name="donors_id" id="donors_id">
                 <option>-- Pilih --</option>
@@ -83,7 +91,8 @@
             <label>Persyaratan</label>
             @foreach ($file as $requirement)
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="requirements[]" value="{{ $requirement->id }}">
+                    <input class="form-check-input" type="checkbox" name="requirements[]"
+                        value="{{ $requirement->id }}">
                     <label class="form-check-label">{{ $requirement->name }}</label>
                 </div>
             @endforeach

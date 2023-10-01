@@ -6,6 +6,7 @@ use App\Models\Donor;
 use Illuminate\Http\Request;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
+use Illuminate\Support\Facades\Auth;
 
 class ScholarshipController extends Controller
 {
@@ -45,6 +46,7 @@ class ScholarshipController extends Controller
             'name' => 'required|string|max:255',
             'year' => 'required|integer',
             'donors_id' => 'required|exists:donors,id',
+            'status_scholarship' => 'required|string|max:255',
             'value' => 'required|string|max:255',
             'status_value' => 'required|string|max:255',
             'duration' => 'required|integer',
@@ -110,6 +112,7 @@ class ScholarshipController extends Controller
             'name' => 'required|string|max:255',
             'year' => 'required|integer',
             'donors_id' => 'required|exists:donors,id',
+            'status_scholarship' => 'required|string|max:255',
             'value' => 'required|string|max:255',
             'status_value' => 'required|string|max:255',
             'duration' => 'required|integer',

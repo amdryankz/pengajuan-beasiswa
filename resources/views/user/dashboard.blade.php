@@ -49,7 +49,7 @@
                                 <i class="mdi mdi-settings text-primary"></i>
                                 Settings
                             </a>
-                            <a class="dropdown-item" href="{{ url('/adm/logout') }}">
+                            <a class="dropdown-item" href="">
                                 <i class="mdi mdi-logout text-primary"></i>
                                 Logout
                             </a>
@@ -68,33 +68,9 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/dashboard') }}">
+                        <a class="nav-link" href="">
                             <i class="mdi mdi-file-document-box-outline menu-icon"></i>
                             <span class="menu-title">Home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/donatur') }}">
-                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Donatur</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/berkas') }}">
-                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Berkas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/beasiswa') }}">
-                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Beasiswa</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/registrations') }}">
-                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Mahasiswa</span>
                         </a>
                     </li>
                 </ul>
