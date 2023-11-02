@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function scholarships()
     {
-        return $this->belongsToMany(ScholarshipData::class, 'user_scholarships', 'user_id', 'scholarship_data_id');
+        return $this->belongsToMany(ScholarshipData::class, 'user_scholarships', 'user_id', 'scholarship_data_id')->withPivot('status');
     }
 }

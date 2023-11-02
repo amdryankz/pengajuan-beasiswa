@@ -39,6 +39,17 @@
                             <a href="{{ route('admin.scholarship.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
                                 class="btn btn-info">Detail</a>
                         </td>
+                        <td>
+                            @if ($item['user']->scholarships->contains($item['scholarship']->id))
+                                @if ($item['user']->scholarships->where('id', $item['scholarship']->id)->first()->pivot->status)
+                                    Lulus
+                                @else
+                                    -
+                                @endif
+                            @else
+                                -
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

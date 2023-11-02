@@ -97,6 +97,12 @@
                             <span class="menu-title">Mahasiswa</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/adm/khusus') }}">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Beasiswa Khusus</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- partial -->

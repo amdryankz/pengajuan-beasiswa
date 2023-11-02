@@ -20,6 +20,7 @@ class UserScholarshipController extends Controller
         $now = Carbon::now();
         $scholarships = ScholarshipData::where('start_regis_at', '<=', $now)
             ->where('end_regis_at', '>=', $now)
+            ->where('status_scholarship', '=', 'Umum')
             ->get();
 
         return view('user.scholar.index')->with('data', $scholarships);
@@ -140,5 +141,29 @@ class UserScholarshipController extends Controller
         } else {
             abort(404, 'File not found');
         }
+    }
+
+    public function validateFile($scholarship_id)
+    {
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
+
+        foreach ($userScholarships as $userScholarship) {
+            $userScholarship->status = true;
+            $userScholarship->save();
+        }
+
+        return redirect()->back()->with('success', 'Berkas telah divalidasi.');
+    }
+
+    public function cancelValidation($scholarship_id)
+    {
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
+
+        foreach ($userScholarships as $userScholarship) {
+            $userScholarship->status = false;
+            $userScholarship->save();
+        }
+
+        return redirect()->back()->with('success', 'Berkas batal divalidasi.');
     }
 }

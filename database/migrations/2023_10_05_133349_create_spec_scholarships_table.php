@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_scholarships', function (Blueprint $table) {
+        Schema::create('spec_scholarships', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('scholarship_data_id');
             $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('file_requirement_id');
-            $table->foreign('file_requirement_id')->references('id')->on('file_requirements');
-            $table->string('file_path');
-            $table->boolean('status')->nullable();
+            $table->string('list_students');
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_scholarships');
+        Schema::dropIfExists('spec_scholarships');
     }
 };

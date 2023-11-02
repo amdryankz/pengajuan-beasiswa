@@ -16,9 +16,9 @@
                     <th>Durasi</th>
                     <th>Mulai Pendaftaran Beasiswa</th>
                     <th>Akhir Pendaftaran Beasiswa</th>
+                    <th>IPK</th>
                     <th>Mulai Penentuan Kelulusan</th>
                     <th>Akhir Penentuan Kelulusan</th>
-                    <th>IPK</th>
                     <th>Kuota</th>
                     <th>Berkas yang Diperlukan</th>
                     <th>Aksi</th>
