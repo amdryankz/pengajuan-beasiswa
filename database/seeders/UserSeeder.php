@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         User::insert([
             'nim' => '2008107010040',
-            'password' => '$2y$10$M2gyFI6FxpfenuRpgv5GKeL5Xhxw15t2t8l7KDxTEfLdkFzCXfdqG',
+            'password' => 'testing',
             'name' => 'M Suhail Haritsah',
             'prodi' => 'Informatika',
             'created_at' => Carbon::now(),

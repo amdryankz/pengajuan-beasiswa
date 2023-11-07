@@ -1,5 +1,7 @@
 @extends('admin.dashboard')
 
+@section('navbar', 'Beasiswa')
+
 @section('content')
     <p class="card-title">Beasiswa</p>
     <div class="pb-3"><a href="{{ route('beasiswa.create') }}" class="btn btn-primary">+ Tambah Beasiswa</a>

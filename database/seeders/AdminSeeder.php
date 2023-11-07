@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     {
         Admin::insert([
             'nip' => '2008107010041',
-            'password' => '$2y$10$M2gyFI6FxpfenuRpgv5GKeL5Xhxw15t2t8l7KDxTEfLdkFzCXfdqG',
+            'password' => 'test',
             'status' => 'Active',
             'role_id' => '1',
             'created_at' => Carbon::now(),

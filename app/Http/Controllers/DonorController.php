@@ -31,7 +31,7 @@ class DonorController extends Controller
      */
     public function store(Request $request)
     {
-        Session::flash('name', $request->name);
+        
 
         $request->validate([
             'name' => 'required'
@@ -86,13 +86,20 @@ class DonorController extends Controller
      */
     public function destroy(string $id)
     {
-        $donor = Donor::findOrFail($id);
-
-        if ($donor->scholarshipData()->count() > 0) {
-            return redirect()->back()->withErrors(['error' => 'Tidak dapat menghapus donor ini karena masih terdapat beasiswa yang terkait.']);
-        }
-
-        $donor->delete();
-        return redirect()->route('donatur.index')->with('success', 'Berhasil delete donatur');
+    $donor = Donor::find($id);
+    
+    if (!$donor) {
+        return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
     }
+
+    if ($donor->scholarshipData()->count() > 0) {
+        return redirect()->route('donatur.index')->with('error', 'Tidak dapat menghapus donor ini karena masih terdapat beasiswa yang terkait.');
+    }
+
+    $donor->delete();
+    return redirect()->route('donatur.index')->with('success', 'Berhasil menghapus Donatur');
+    }
+
+
+
 }

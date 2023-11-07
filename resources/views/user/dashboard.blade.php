@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin</title>
+    <title>Dashboard</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('admin') }}/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="{{ asset('admin') }}/vendors/base/vendor.bundle.base.css">
@@ -18,6 +18,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('admin') }}/images/favicon.png" />
 </head>
+
 
 <body>
     <div class="container-scroller">
@@ -41,7 +42,7 @@
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                             id="profileDropdown">
                             <img src="{{ asset('admin') }}/images/faces/face5.jpg" alt="profile" />
-                            <span class="nav-profile-name">M Suhail Haritsah</span>
+                            <span class="nav-profile-name">Ahmad Chairiansyah</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
