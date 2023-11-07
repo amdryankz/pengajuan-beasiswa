@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AplicantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\FileRequirementController;
@@ -33,6 +34,14 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/adm/scholarship/cancel-validation/{scholarship_id}', [UserScholarshipController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
     Route::resource('adm/khusus', SpecScholarshipController::class);
     Route::get('/adm/khusus/{scholarship_data_id}/list', [SpecScholarshipController::class, 'showList'])->name('khusus.listStudents');
+    Route::get('/adm/access', [AdminAuthController::class, 'index'])->name('access.index');
+    Route::get('/adm/access/create', [AdminAuthController::class, 'create'])->name('access.create');
+    Route::post('/adm/access', [AdminAuthController::class, 'store'])->name('access.store');
+    Route::get('/adm/access/{id}/edit', [AdminAuthController::class, 'edit'])->name('access.edit');
+    Route::put('/adm/access/{id}', [AdminAuthController::class, 'update'])->name('access.update');
+    Route::delete('/adm/access/{id}', [AdminAuthController::class, 'destroy'])->name('access.destroy');
+    Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.index');
+    Route::get('/adm/passfile', [AplicantController::class, 'indexPass'])->name('passfile.index');
 
     Route::get('/adm/dashboard', [DashboardController::class, 'index']);
     Route::get('/adm/logout', [AdminAuthController::class, 'logout']);

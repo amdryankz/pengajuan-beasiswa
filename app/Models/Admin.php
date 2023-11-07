@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Role;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
@@ -13,7 +15,10 @@ class Admin extends Authenticatable
 
     protected $fillable = [
         'nip',
-        'password'
+        'name',
+        'password',
+        'status',
+        'role_id'
     ];
 
     protected $hidden = [
@@ -23,4 +28,14 @@ class Admin extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the role that owns the Admin
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
 }

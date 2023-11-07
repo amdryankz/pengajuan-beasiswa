@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -21,7 +23,7 @@ class AdminAuthController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            if (Auth::guard('admin')->user()->status != 'Active') {
+            if (Auth::guard('admin')->user()->status != 'Aktif') {
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
@@ -45,5 +47,82 @@ class AdminAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/adm');
+    }
+
+    public function index()
+    {
+        $data = Admin::all();
+
+        return view('admin.access.index')->with('data', $data);
+    }
+
+    public function create()
+    {
+        $roles = Role::all();
+        $disabledOptions = [];
+
+        foreach ($roles as $role) {
+            $adminCount = Admin::where('role_id', $role->id)->count();
+            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin';
+        }
+
+        return view('admin.access.create')->with('roles', $roles)->with('disabledOptions', $disabledOptions);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'nip' => ['required'],
+            'name' => ['required'],
+            'password' => ['required'],
+            'role_id' => ['required', 'exists:roles,id'],
+        ]);
+
+        $data['password'] = bcrypt($data['password']);
+        Admin::create($data);
+
+        return redirect('/adm/access')->with('status', 'success')->with('message', 'User created successfully');
+    }
+
+    public function edit($id)
+    {
+
+        $user = Admin::findOrFail($id);
+        $roles = Role::all();
+
+        $disabledOptions = [];
+
+        foreach ($roles as $role) {
+            $adminCount = Admin::where('role_id', $role->id)->count();
+            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->id !== $user->role_id;
+        }
+
+        return view('admin.access.edit')->with('user', $user)->with('roles', $roles)->with('disabledOptions', $disabledOptions);;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'nip' => ['required'],
+            'name' => ['required'],
+            'status' => ['required'],
+            'role_id' => ['required', 'exists:roles,id'],
+        ]);
+
+        if ($data['status'] !== 'Aktif') {
+            $data['role_id'] = null;
+        }
+
+        Admin::where('id', $id)->update($data);
+
+        return redirect('/adm/access')->with('status', 'success')->with('message', 'User updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $user = Admin::findOrFail($id);
+        $user->delete();
+
+        return redirect('/adm/access')->with('status', 'success')->with('message', 'User deleted successfully');
     }
 }
