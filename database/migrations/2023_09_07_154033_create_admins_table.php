@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('nip')->unique();
+            $table->string('name');
             $table->string('password');
-            $table->string('status')->default('Non-Active');
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->string('status')->default('Aktif');
+            $table->unsignedBigInteger('role_id')->nullable();;
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');;
             $table->timestamps();
         });
     }

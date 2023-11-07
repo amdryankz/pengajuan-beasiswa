@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
             'password' => 'testing',
             'name' => 'M Suhail Haritsah',
             'prodi' => 'Informatika',
+            'fakultas' => 'Matematika dan Ilmu Pengetahuan Alam',
+            'ipk' => '4.00',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
