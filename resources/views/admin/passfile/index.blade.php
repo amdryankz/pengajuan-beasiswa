@@ -36,12 +36,21 @@
                         <td>{{ $item['user']->prodi }}</td>
                         <td>{{ $item['scholarship']->name }}</td>
                         <td>
-                            <a href="{{ route('admin.scholarship.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
-                                class="btn btn-info">Detail</a>
+                            <form action="{{ route('passfile.validate', ['scholarship_id' => $item['scholarship']->id]) }}"
+                                method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Lulus</button>
+                            </form>
+                            <form
+                                action="{{ route('passfile.cancelValidate', ['scholarship_id' => $item['scholarship']->id]) }}"
+                                method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Batal Lulus</button>
+                            </form>
                         </td>
                         <td>
                             @if ($item['user']->scholarships->contains($item['scholarship']->id))
-                                @if ($item['user']->scholarships->where('id', $item['scholarship']->id)->first()->pivot->status)
+                                @if ($item['user']->scholarships->where('id', $item['scholarship']->id)->first()->pivot->status_scholar)
                                     Lulus
                                 @else
                                     -

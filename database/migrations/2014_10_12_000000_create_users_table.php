@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('prodi');
             $table->string('fakultas');
+            $table->float('ipk')->nullable();
             $table->timestamps();
         });
     }

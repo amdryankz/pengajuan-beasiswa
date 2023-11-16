@@ -47,7 +47,7 @@ class UserScholarshipController extends Controller
         $user = $request->user();
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {
-            $fileName = $file_requirement_id . '_' . $user->name . '.' . $file->extension();
+            $fileName = $user->nim . '.' . $file->getClientOriginalExtension();
             $file->storeAs('file_requirements', $fileName);
 
             UserScholarship::create([
@@ -67,7 +67,7 @@ class UserScholarshipController extends Controller
     public function show(string $id)
     {
         $scholarship = ScholarshipData::findOrFail($id);
-        $filerequirements = FileRequirement::all();
+        $filerequirements = $scholarship->requirements;
 
         return view('user.scholar.show')
             ->with('fileRequirements', $filerequirements)
@@ -137,7 +137,18 @@ class UserScholarshipController extends Controller
         $path = storage_path('app/file_requirements/' . $file_path);
 
         if (file_exists($path)) {
-            return response()->download($path);
+            $filename = pathinfo($path, PATHINFO_FILENAME);
+
+            return response()->stream(
+                function () use ($path) {
+                    readfile($path);
+                },
+                200,
+                [
+                    'Content-Type' => mime_content_type($path),
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
+                ]
+            );
         } else {
             abort(404, 'File not found');
         }
@@ -148,7 +159,7 @@ class UserScholarshipController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status = true;
+            $userScholarship->status_file = true;
             $userScholarship->save();
         }
 
@@ -160,7 +171,7 @@ class UserScholarshipController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status = false;
+            $userScholarship->status_file = false;
             $userScholarship->save();
         }
 

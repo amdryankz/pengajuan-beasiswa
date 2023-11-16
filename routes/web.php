@@ -41,7 +41,10 @@ Route::middleware('auth:admin')->group(function () {
     Route::put('/adm/access/{id}', [AdminAuthController::class, 'update'])->name('access.update');
     Route::delete('/adm/access/{id}', [AdminAuthController::class, 'destroy'])->name('access.destroy');
     Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.index');
+    Route::get('/adm/alumni', [AplicantController::class, 'indexAlumni'])->name('alumni.index');
     Route::get('/adm/passfile', [AplicantController::class, 'indexPass'])->name('passfile.index');
+    Route::post('/adm/passfile/pass/{scholarship_id}', [AplicantController::class, 'validateScholar'])->name('passfile.validate');
+    Route::post('/adm/passfile/cancel-pass/{scholarship_id}', [AplicantController::class, 'cancelValidation'])->name('passfile.cancelValidate');
 
     Route::get('/adm/dashboard', [DashboardController::class, 'index']);
     Route::get('/adm/logout', [AdminAuthController::class, 'logout']);

@@ -20,7 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('file_requirement_id');
             $table->foreign('file_requirement_id')->references('id')->on('file_requirements');
             $table->string('file_path');
-            $table->boolean('status')->nullable();
+            $table->boolean('status_file')->nullable();
+            $table->boolean('status_scholar')->nullable();
             $table->timestamps();
         });
     }

@@ -88,13 +88,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/adm/beasiswa') }}">
                             <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Beasiswa</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/registrations') }}">
-                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                            <span class="menu-title">Mahasiswa</span>
+                            <span class="menu-title">Pengelolaan</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -104,7 +98,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/adm/aplicant') }}">
+                        <a class="nav-link">
+                            <span class="menu-title">Laporan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/adm/registrations') }}">
                             <i class="mdi mdi-file-document-box-outline menu-icon"></i>
                             <span class="menu-title">Pengusul</span>
                         </a>
@@ -113,6 +112,23 @@
                         <a class="nav-link" href="{{ url('/adm/passfile') }}">
                             <i class="mdi mdi-file-document-box-outline menu-icon"></i>
                             <span class="menu-title">Kelulusan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/adm/aplicant') }}">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Berlangsung</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/adm/alumni') }}">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Alumni</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span class="menu-title">Akses</span>
                         </a>
                     </li>
                     <li class="nav-item">

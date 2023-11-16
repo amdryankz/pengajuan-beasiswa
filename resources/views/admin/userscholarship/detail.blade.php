@@ -25,11 +25,11 @@
     <ul>
         @foreach ($files as $file)
             <li>
-                <a
-                    href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}">{{ $file->file_path }}</a>
+                <a href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}"
+                    target="_blank">{{ $file->file_path }}</a>
             </li>
         @endforeach
-        @if (!$file->status)
+        @if (!$file->status_file)
             <form action="{{ route('admin.scholarship.validate', ['scholarship_id' => $scholarship->id]) }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-success">Validasi</button>
