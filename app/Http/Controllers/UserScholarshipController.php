@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserScholarshipController extends Controller
@@ -17,13 +19,36 @@ class UserScholarshipController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
         $now = Carbon::now();
+
         $scholarships = ScholarshipData::where('start_regis_at', '<=', $now)
             ->where('end_regis_at', '>=', $now)
             ->where('status_scholarship', '=', 'Umum')
             ->get();
 
-        return view('user.scholar.index')->with('data', $scholarships);
+        $userScholarships = UserScholarship::where('user_id', $userId)->get();
+
+        $alumniData = [];
+        foreach ($userScholarships as $userScholarship) {
+            $scholarshipId = $userScholarship->scholarship_id;
+
+            // Pastikan beasiswa masih ada di antara yang sedang berlangsung
+            $scholarship = $scholarships->where('id', $scholarshipId)->first();
+            if ($scholarship) {
+                // Hitung waktu berakhir beasiswa (alumni dimulai setelah waktu berakhir)
+                $alumniEndDate = $scholarship->start_regis_at->addMonths($scholarship->duration);
+
+                if ($now >= $alumniEndDate) {
+                    $alumniData[] = [
+                        'scholarship' => $scholarship,
+                        'userScholarship' => $userScholarship,
+                    ];
+                }
+            }
+        }
+
+        return view('user.scholar.index')->with('data', $scholarships)->with('dataUser', $userScholarships)->with('alumniData', $alumniData);
     }
 
     /**
@@ -45,6 +70,25 @@ class UserScholarshipController extends Controller
 
         $scholarshipDataId = $request->input('scholarship_data_id');
         $user = $request->user();
+        $userIpk = $user->ipk;
+
+        // Dapatkan informasi beasiswa
+        $scholarship = ScholarshipData::findOrFail($scholarshipDataId);
+        $minIpkRequired = $scholarship->min_ipk;
+
+        // Verifikasi IPK
+        if ($userIpk < $minIpkRequired) {
+            return redirect()->route('dashboard.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
+        }
+
+        // Verifikasi apakah pengguna sudah mendaftar
+        $existingRegistration = UserScholarship::where('user_id', $user->id)
+            ->where('scholarship_data_id', $scholarshipDataId)
+            ->exists();
+
+        if ($existingRegistration) {
+            return redirect()->route('dashboard.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
+        }
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {
             $fileName = $user->nim . '.' . $file->getClientOriginalExtension();
@@ -95,8 +139,24 @@ class UserScholarshipController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $userScholarship = UserScholarship::findOrFail($id);
+
+        // Verifikasi apakah pengguna dapat membatalkan pendaftaran
+        if ($userScholarship->status_file === null) {
+            // Hapus berkas terkait jika ada (optional)
+            if ($userScholarship->file_path) {
+                Storage::delete('file_requirements/' . $userScholarship->file_path);
+            }
+
+            // Hapus pendaftaran
+            $userScholarship->delete();
+
+            return redirect()->route('dashboard.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
+        } else {
+            return redirect()->route('dashboard.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
+        }
     }
+
 
     public function showRegistrations()
     {
@@ -176,5 +236,19 @@ class UserScholarshipController extends Controller
         }
 
         return redirect()->back()->with('success', 'Berkas batal divalidasi.');
+    }
+
+    public function generatePDF(string $user_id, string $scholarship_id)
+    {
+        $user = User::findOrFail($user_id);
+        $scholarship = ScholarshipData::findOrFail($scholarship_id);
+
+        $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
+
+        // Nama file PDF yang akan diunduh
+        $pdfFileName = 'biodata_' . $user->nim . '_' . $scholarship->name . '.pdf';
+
+        // Unduh file PDF
+        return $pdf->stream($pdfFileName);
     }
 }

@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
             'prodi' => 'Informatika',
             'fakultas' => 'Matematika dan Ilmu Pengetahuan Alam',
             'ipk' => '4.00',
+            'jk' => 'Laki-Laki',
+            'birthplace' => 'Sigli',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

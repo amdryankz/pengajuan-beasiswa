@@ -18,7 +18,18 @@ return new class extends Migration
             $table->string('name');
             $table->string('prodi');
             $table->string('fakultas');
+            $table->string('jk');
             $table->float('ipk')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('birthplace')->nullable();
+            $table->string('address')->nullable();
+            $table->string('name_parent')->nullable();
+            $table->string('job_parent')->nullable();
+            $table->string('income_parent')->nullable();
+            $table->integer('no_hp')->nullable();
+            $table->integer('no_rek')->nullable();
+            $table->string('name_rek')->nullable();
+            $table->string('name_bank')->nullable();
             $table->timestamps();
         });
     }

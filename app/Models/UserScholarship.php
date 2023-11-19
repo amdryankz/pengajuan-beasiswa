@@ -15,4 +15,9 @@ class UserScholarship extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scholarshipData()
+    {
+        return $this->belongsTo(ScholarshipData::class, 'scholarship_data_id');
+    }
 }

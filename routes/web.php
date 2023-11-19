@@ -45,6 +45,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/passfile', [AplicantController::class, 'indexPass'])->name('passfile.index');
     Route::post('/adm/passfile/pass/{scholarship_id}', [AplicantController::class, 'validateScholar'])->name('passfile.validate');
     Route::post('/adm/passfile/cancel-pass/{scholarship_id}', [AplicantController::class, 'cancelValidation'])->name('passfile.cancelValidate');
+    Route::get('/adm/scholarship/{user_id}/{scholarship_id}/pdf', [UserScholarshipController::class, 'generatePDF'])->name('admin.scholarship.pdf');
 
     Route::get('/adm/dashboard', [DashboardController::class, 'index']);
     Route::get('/adm/logout', [AdminAuthController::class, 'logout']);
@@ -56,8 +57,12 @@ Route::middleware('guest:admin')->group(function () {
     Route::post('/adm', [AdminAuthController::class, 'authenticating']);
 });
 
-Route::get('/', [UserAuthController::class, 'login'])->name('loginUser');
-Route::post('/', [UserAuthController::class, 'authenticating']);
+Route::middleware('guest_user')->group(function () {
+    Route::get('/', [UserAuthController::class, 'login'])->name('loginUser');
+    Route::post('/', [UserAuthController::class, 'authenticating']);
+});
 
-Route::get('/mhs/logout', [AdminAuthController::class, 'logout']);
-Route::resource('/mhs/dashboard', UserScholarshipController::class);
+Route::middleware('auth_user')->group(function () {
+    Route::resource('/mhs/dashboard', UserScholarshipController::class);
+    Route::get('/mhs/logout', [AdminAuthController::class, 'logout']);
+});
