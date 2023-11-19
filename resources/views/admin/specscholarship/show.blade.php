@@ -1,5 +1,7 @@
 @extends('admin.dashboard')
 
+@section('navbar', 'Upload Khusus')
+
 @section('content')
     <h1>Detail Beasiswa</h1>
     <!-- Tampilkan informasi lainnya sesuai kebutuhan -->

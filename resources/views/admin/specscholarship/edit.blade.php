@@ -1,5 +1,7 @@
 @extends('admin.dashboard')
 
+@section('navbar', 'Upload Khusus')
+
 @section('content')
     <div class="pb-3"><a href="{{ route('khusus.index') }}" class="btn btn-secondary">
             << Kembali</a>

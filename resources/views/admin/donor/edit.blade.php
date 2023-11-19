@@ -1,5 +1,7 @@
 @extends('admin.dashboard')
 
+@section('navbar', 'Donatur')
+
 @section('content')
     <div>
         <div class="mb-4 text-start text-lg">

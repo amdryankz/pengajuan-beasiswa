@@ -151,6 +151,7 @@ class UserScholarshipController extends Controller
             $userScholarship->status = true;
             $userScholarship->save();
         }
+        
 
         return redirect()->back()->with('success', 'Berkas telah divalidasi.');
     }

@@ -1,5 +1,7 @@
 @extends('admin.dashboard')
 
+@section('navbar', 'Konfirmasi')
+
 @section('content')
     <p class="card-title">List Pendaftaran Beasiswa</p>
     <div class="table-responsive">
