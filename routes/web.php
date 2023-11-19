@@ -25,9 +25,17 @@ use App\Http\Controllers\UserScholarshipController;
 
 Route::middleware('auth:admin')->group(function () {
     Route::resource('/adm/donatur', DonorController::class);
+
+    Route::delete('/adm/donatur/{id}', [DonorController::class, 'destroy'])->name('donatur.destroy');
+    
     Route::resource('/adm/berkas', FileRequirementController::class);
     Route::resource('/adm/beasiswa', ScholarshipController::class);
-    Route::get('/adm/registrations', [UserScholarshipController::class, 'showRegistrations']);
+
+    
+
+    
+
+    Route::get('/adm/registrations', [UserScholarshipController::class, 'showRegistrations'])->name('registrations.index');
     Route::get('/adm/registrations/{user_id}/{scholarship_id}/detail', [UserScholarshipController::class, 'showDetail'])->name('admin.scholarship.detail');
     Route::get('/adm/scholarship/download/{file_path}', [UserScholarshipController::class, 'downloadFile'])->name('admin.scholarship.download');
     Route::post('/adm/scholarship/validate/{scholarship_id}', [UserScholarshipController::class, 'validateFile'])->name('admin.scholarship.validate');

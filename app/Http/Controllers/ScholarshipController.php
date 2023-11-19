@@ -81,9 +81,13 @@ class ScholarshipController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
+    
+        {
+        $scholarship = ScholarshipData::findOrFail($id);
+
+        return view('admin.scholar.show', ['beasiswa' => $scholarship]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -157,4 +161,5 @@ class ScholarshipController extends Controller
 
         return redirect()->route('beasiswa.index');
     }
+
 }

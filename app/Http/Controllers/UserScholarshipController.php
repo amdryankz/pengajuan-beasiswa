@@ -223,6 +223,7 @@ class UserScholarshipController extends Controller
             $userScholarship->save();
         }
 
+
         return redirect()->back()->with('success', 'Berkas telah divalidasi.');
     }
 
