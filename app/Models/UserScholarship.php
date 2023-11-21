@@ -20,4 +20,9 @@ class UserScholarship extends Model
     {
         return $this->belongsTo(ScholarshipData::class, 'scholarship_data_id');
     }
+
+    public function files()
+    {
+        return $this->belongsTo(FileRequirement::class, 'file_requirement_id');
+    }
 }

@@ -272,7 +272,7 @@ class UserScholarshipController extends Controller
         $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
 
         // Nama file PDF yang akan diunduh
-        $pdfFileName = 'biodata_' . $user->nim . '_' . $scholarship->name . '.pdf';
+        $pdfFileName = $user->nim . '_' . $scholarship->name . '.pdf';
 
         // Unduh file PDF
         return $pdf->stream($pdfFileName);

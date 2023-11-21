@@ -4,26 +4,29 @@
 
 @section('content')
     <h2 class="text-xl font-semibold mb-2">Beasiswa Khusus</h2>
-    <div class="pt-2 pb-2">
+
+    <div class="mb-4">
         <a href="{{ route('khusus.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">+
-            Tambah Beasiswa Khusus</a>
+            Tambah Beasiswa Khusus
+        </a>
     </div>
-    <div class="overflow-x-auto pt-4">
-        <table class="table-auto w-full bg-white border border-gray-200 text-xs">
+
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full border-2 border-collapse">
             <thead>
-                <tr>
-                    <th class="px-2 py-1">No</th>
-                    <th class="px-2 py-1">Nama Beasiswa</th>
-                    <th class="px-2 py-1">Tahun</th>
-                    <th class="px-2 py-1">Nama Donatur</th>
-                    <th class="px-2 py-1">Nominal</th>
-                    <th class="px-2 py-1">Durasi</th>
-                    <th class="px-2 py-1">Mulai Pendaftaran</th>
-                    <th class="px-2 py-1">Akhir Pendaftaran</th>
-                    <th class="px-2 py-1">IPK</th>
-                    <th class="px-2 py-1">Mulai Penentuan</th>
-                    <th class="px-2 py-1">Akhir Penentuan</th>
-                    <th class="px-2 py-1">Aksi</th>
+                <tr class="border-b-2 bg-sky-800 text-white text-xs">
+                    <th class="px-1 py-1 text-center border-r">No</th>
+                    <th class="px-2 py-1 text-center border-r">Nama Beasiswa</th>
+                    <th class="px-2 py-1 text-center border-r">Tahun</th>
+                    <th class="px-2 py-1 text-center border-r">Nama Donatur</th>
+                    <th class="px-2 py-1 text-center border-r">Nominal</th>
+                    <th class="px-2 py-1 text-center border-r">Durasi</th>
+                    <th class="px-2 py-1 text-center border-r">Mulai Pendaftaran</th>
+                    <th class="px-2 py-1 text-center border-r">Akhir Pendaftaran</th>
+                    <th class="px-2 py-1 text-center border-r">IPK</th>
+                    <th class="px-2 py-1 text-center border-r">Mulai Penentuan</th>
+                    <th class="px-2 py-1 text-center border-r">Akhir Penentuan</th>
+                    <th class="px-2 py-1 text-center border-r">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +34,8 @@
                 <?php $displayedIds = []; ?>
                 @foreach ($data as $item)
                     @if (!in_array($item->scholarship_data_id, $displayedIds))
-                        <tr>
-                            <td class="px-2 py-1">{{ $i++ }}</td>
+                        <tr class="border-b-2 text-xs">
+                            <td class="px-1 py-1">{{ $i++ }}</td>
                             <td class="px-2 py-1">{{ $item->scholarships->name }}</td>
                             <td class="px-2 py-1">{{ $item->scholarships->year }}</td>
                             <td class="px-2 py-1">{{ $item->scholarships->donor->name }}</td>
