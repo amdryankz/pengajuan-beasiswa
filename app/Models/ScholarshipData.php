@@ -32,7 +32,7 @@ class ScholarshipData extends Model
     ];
 
     protected $casts = [
-        'start_regis_at' => 'date',
+        'start_regis_at' => 'date', 
         'end_regis_at' => 'date',
         'start_graduation_at' => 'date',
         'end_graduation_at' => 'date',

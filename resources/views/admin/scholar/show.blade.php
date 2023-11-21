@@ -3,7 +3,7 @@
 @section('navbar', 'Detail Beasiswa')
 
 @section('content')
-    <div> 
+    <div>
         <div class="mb-4 text-start text-lg">
             <a href="{{ route('beasiswa.index') }}"
                 class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
@@ -22,7 +22,8 @@
 
             <div>
                 <!-- Tampilkan informasi beasiswa disini -->
-                <p class="mb-2 text-base"><span class="font-semibold text-lg">Nama Beasiswa:</span> {{ $beasiswa->name }}</p>
+                <p class="mb-2 text-base"><span class="font-semibold text-lg">Nama Beasiswa:</span> {{ $beasiswa->name }}
+                </p>
                 <p class="mb-2 text-base"><span class="font-semibold text-lg">Tahun:</span> {{ $beasiswa->year }}</p>
                 <!-- ... tambahkan informasi lainnya ... -->
 
@@ -41,7 +42,7 @@
                 <h3 class="mt-4 text-xl font-semibold">Berkas yang Diperlukan</h3>
                 <ul class="list-disc pl-6 text-base">
                     @foreach ($beasiswa->requirements as $requirement)
-                        <li>{{ $requirement->name }}</li>
+                        <li>{{ $requirement->name}}</li>
                     @endforeach
                 </ul>
             </div>

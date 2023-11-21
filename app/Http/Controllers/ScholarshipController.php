@@ -83,7 +83,7 @@ class ScholarshipController extends Controller
     public function show(string $id)
     {
         $scholarship = ScholarshipData::findOrFail($id);
-
+ 
         return view('admin.scholar.show', ['beasiswa' => $scholarship]);
     }
 

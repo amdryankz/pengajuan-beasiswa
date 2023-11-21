@@ -11,7 +11,7 @@
                     <th class="py-2 px-2 border-r">No</th>
                     <th class="py-2 px-2 border-r">Nama</th>
                     <th class="py-2 px-2 border-r">NIM</th>
-                    <th class="py-2 px-2 border-r">Prodi</th>
+                    <th class="py-2 px-2 border-r">Prodi</th>  
                     <th class="py-2 px-2 border-r">Detail</th>
                     <th class="py-2 px-2 border-r">Status</th>
                     <th class="py-2 px-2">infromasi</th>

@@ -21,7 +21,7 @@
                     <th class="px-2 py-1 text-center border-r">Tahun</th>
                     <th class="px-2 py-1 text-center border-r">Nama Donatur</th>
                     <th class="px-2 py-1 text-center border-r">Nominal (Rp)</th>
-                    <th class="px-2 py-1 text-center border-r">Durasi</th>
+                    <th class="px-3 py-1 text-center border-r">Durasi</th>
                     <th class="px-2 py-1 text-center border-r">Mulai Pendaftaran</th>
                     <th class="px-2 py-1 text-center border-r">Akhir Pendaftaran</th>
                     <th class="px-2 py-1 text-center border-r">Mulai Kelulusan</th>
@@ -40,12 +40,12 @@
                         <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->donor->name }}</td>
                         <td class="px-2 py-1 text-center border-r">Rp.{{ $item->value }}/{{ $item->status_value }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->duration }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->start_graduation_at }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->min_ipk }}</td>
+                        <td class="text-center border-r">{{ $item->duration }} Bulan</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at->format('d-m-Y') }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at->format('d-m-Y') }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->start_graduation_at->format('d-m-Y') }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                         <td class="px-2 py-1 text-center border-r">
                             <a href="{{ route('beasiswa.show', $item->id) }}"
                                 class="flex bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs items-center">
