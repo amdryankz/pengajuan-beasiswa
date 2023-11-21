@@ -157,6 +157,30 @@ class UserScholarshipController extends Controller
         }
     }
 
+    public function showScholarships()
+    {
+        $scholarships = ScholarshipData::all();
+        return view('admin.userscholarship.list')->with('scholarships', $scholarships);
+    }
+
+    public function showRegistrationsByScholarship($scholarship_id)
+    {
+        $scholarship = ScholarshipData::find($scholarship_id);
+
+        if (!$scholarship) {
+            // Handle jika beasiswa tidak ditemukan
+            abort(404);
+        }
+
+        $user = $scholarship->users()->distinct()->get();
+
+        $data = [
+            'scholarship' => $scholarship,
+            'user' => $user,
+        ];
+
+        return view('admin.userscholarship.index')->with('data', $data);
+    }
 
     public function showRegistrations()
     {
@@ -176,6 +200,7 @@ class UserScholarshipController extends Controller
 
         return view('admin.userscholarship.index')->with('data', $data);
     }
+
 
     public function showDetail(string $user_id, string $scholarship_id)
     {
