@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="mb-4 text-start text-lg">
-        <a href="{{ route('registrations.index') }}"
+        <a href="{{ route('registrations.index', ['scholarship_id' => $scholarship->id] ) }}"
             class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
