@@ -141,20 +141,6 @@
                     value="{{ old('end_graduation_at') }}">
             </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-600 mb-1 ml-1">Kuota Fakultas</label>
-                <div class="flex items-center">
-
-                    <input type="number" name="kuota[MIPA]" id="kuota_fakultas_1"
-                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm"
-                        required placeholder="MIPA" value="{{ old('kuota.MIPA') }}">
-
-                    <input type="number" name="kuota[Ekonomi]" id="kuota_fakultas_2"
-                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
-                        required placeholder="Ekonomi" value="{{ old('kuota.Ekonomi') }}">
-                </div>
-            </div>
-
 
             <div class="mb-4">
                 <label class="mb-1 ml-1 block text-sm font-medium text-gray-600">Persyaratan</label>
@@ -183,8 +169,67 @@
                 </table>
             </div>
 
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-600 mb-1 ml-1">Kuota Fakultas</label>
+                <div class="">
+                    <div></div>
+                    <input type="number" name="kuota[MIPA]" id="kuota_fakultas_1"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm"
+                        required placeholder="MIPA" value="{{ old('kuota.MIPA') }}">
+
+                    <input type="number" name="kuota[Ekonomi]" id="kuota_fakultas_2"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Ekonomi" value="{{ old('kuota.Ekonomi') }}">
+
+                    <input type="number" name="kuota[Kedokteran]" id="kuota_fakultas_3"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Kedokteran" value="{{ old('kuota.Kedokteran') }}">
+
+                    <input type="number" name="kuota[Hukum]" id="kuota_fakultas_4"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Hukum" value="{{ old('kuota.Hukum') }}">
+
+                    <input type="number" name="kuota[Teknik]" id="kuota_fakultas_5"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Teknik" value="{{ old('kuota.Teknik') }}">
+
+                    <input type="number" name="kuota[Pertanian]" id="kuota_fakultas_6"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Pertanian" value="{{ old('kuota.Pertanian') }}">
+
+                    <input type="number" name="kuota[KedokteranHewan]" id="kuota_fakultas_7"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Kedokteran Hewan" value="{{ old('kuota.KedokteranHewan') }}">
+
+                    <input type="number" name="kuota[FKIP]" id="kuota_fakultas_8"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="FKIP" value="{{ old('kuota.FKIP') }}">
+
+                    <input type="number" name="kuota[Keperawatan]" id="kuota_fakultas_9"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Keperawatan" value="{{ old('kuota.Keperawatan') }}">
+
+                    <input type="number" name="kuota[Kedokterangigi]" id="kuota_fakultas_10"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Kedokteran Gigi" value="{{ old('kuota.Kedokterangigi') }}">
+
+                    <input type="number" name="kuota[Kelautanperikanan]" id="kuota_fakultas_11"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="kelautan dan Perikanan" value="{{ old('kuota.Kelautanperikanan') }}">
+
+                    <input type="number" name="kuota[FISIP]" id="kuota_fakultas_12"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Ilmu Sosial dan Politik" value="{{ old('kuota.FISIP') }}">
+
+                    <input type="number" name="kuota[Pascasarjana]" id="kuota_fakultas_13"
+                        class="w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 appearance-none text-sm ml-4"
+                        required placeholder="Pasca Sarjana" value="{{ old('kuota.Pascasarjana') }}">
+                </div>
+            </div>
 
         </div>
+
+
 
 
         <!-- Tombol Simpan -->

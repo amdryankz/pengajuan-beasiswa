@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Donor;
 use App\Models\FileRequirement;
+use App\Models\UserScholarship;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -51,4 +52,7 @@ class ScholarshipData extends Model
     {
         return $this->belongsToMany(User::class, 'user_scholarships', 'scholarship_data_id', 'user_id');
     }
+
+
+    
 }

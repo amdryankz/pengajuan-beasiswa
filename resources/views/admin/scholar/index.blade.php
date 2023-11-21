@@ -16,7 +16,7 @@
         <table class="table-auto min-w-full border-2 border-collapse">
             <thead>
                 <tr class="border-b-2 bg-sky-800 text-white text-xs">
-                    <th class="px-1 py-1 text-center border-r">No</th>
+                    <th class="px-2 py-1 text-center border-r">No</th>
                     <th class="px-2 py-1 text-center border-r">Nama Beasiswa</th>
                     <th class="px-2 py-1 text-center border-r">Tahun</th>
                     <th class="px-2 py-1 text-center border-r">Nama Donatur</th>
