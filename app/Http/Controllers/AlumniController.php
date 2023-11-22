@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ScholarshipData;
-use App\Models\UserScholarship;
 
-class AplicantController extends Controller
+class AlumniController extends Controller
 {
     public function index()
     {
@@ -19,7 +18,15 @@ class AplicantController extends Controller
             foreach ($users as $user) {
                 $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-                if ($userScholarship && $userScholarship->pivot->status_file && $userScholarship->pivot->status_scholar) {
+                // Hitung waktu berakhir beasiswa
+                $alumniEndDate = $scholarship->start_regis_at->addMonths($scholarship->duration);
+
+                if (
+                    $userScholarship &&
+                    $userScholarship->pivot->status_file &&
+                    $userScholarship->pivot->status_scholar &&
+                    now() >= $alumniEndDate
+                ) {
                     $data[] = [
                         'scholarship' => $scholarship,
                         'user' => $user,
@@ -28,6 +35,6 @@ class AplicantController extends Controller
             }
         }
 
-        return view('admin.aplicant.index')->with('data', $data);
+        return view('admin.alumni.index')->with('data', $data);
     }
 }
