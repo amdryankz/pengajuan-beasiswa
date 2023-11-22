@@ -126,7 +126,7 @@
 
 
               <li class="relative text-slate-800 mb-1.5">
-                  <a id="alumni" href="{{ url('/adm/#') }}"
+                  <a id="alumni" href="{{ url('/adm/alumni') }}"
                       class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/#') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                       data-te-sidenav-link-ref>
                       <ion-icon class="px-auto text-xl hidden sm:block" name="school-sharp"></ion-icon>

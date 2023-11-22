@@ -9,10 +9,12 @@ use App\Models\UserScholarship;
 class PassFileController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $scholarships = ScholarshipData::all();
-        return view('admin.passfile.list')->with('scholarships', $scholarships);
+        $search = $request->input('search');
+        $scholarships = ScholarshipData::where('name', 'like', '%' . $search . '%')->get();
+
+        return view('admin.passfile.list')->with(['scholarships' => $scholarships, 'search' => $search]);
     }
 
     public function showPassFileByScholarship($scholarship_id)
