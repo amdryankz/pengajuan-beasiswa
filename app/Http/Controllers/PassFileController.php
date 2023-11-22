@@ -8,28 +8,62 @@ use App\Models\UserScholarship;
 
 class PassFileController extends Controller
 {
+
     public function index()
     {
         $scholarships = ScholarshipData::all();
+        return view('admin.passfile.list')->with('scholarships', $scholarships);
+    }
+
+    public function showPassFileByScholarship($scholarship_id)
+    {
+        $scholarship = ScholarshipData::find($scholarship_id);
+
+        if (!$scholarship) {
+            // Handle jika beasiswa tidak ditemukan
+            abort(404);
+        }
+
         $data = [];
+        $users = $scholarship->users()->distinct()->get();
 
-        foreach ($scholarships as $scholarship) {
-            $users = $scholarship->users()->distinct()->get();
+        foreach ($users as $user) {
+            $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-            foreach ($users as $user) {
-                $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
-
-                if ($userScholarship && $userScholarship->pivot->status_file) {
-                    $data[] = [
-                        'scholarship' => $scholarship,
-                        'user' => $user,
-                    ];
-                }
+            if ($userScholarship && $userScholarship->pivot->status_file) {
+                $data[] = [
+                    'scholarship' => $scholarship,
+                    'user' => $user,
+                ];
             }
         }
 
         return view('admin.passfile.index')->with('data', $data);
     }
+
+
+    // public function index()
+    // {
+    //     $scholarships = ScholarshipData::all();
+    //     $data = [];
+
+    //     foreach ($scholarships as $scholarship) {
+    //         $users = $scholarship->users()->distinct()->get();
+
+    //         foreach ($users as $user) {
+    //             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
+
+    //             if ($userScholarship && $userScholarship->pivot->status_file) {
+    //                 $data[] = [
+    //                     'scholarship' => $scholarship,
+    //                     'user' => $user,
+    //                 ];
+    //             }
+    //         }
+    //     }
+
+    //     return view('admin.passfile.index')->with('data', $data);
+    // }
 
     public function validateScholar($scholarship_id)
     {

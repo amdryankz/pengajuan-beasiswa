@@ -57,15 +57,18 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/adm/access/{id}', [AdminAuthController::class, 'destroy'])->name('access.destroy');
 
     // Kelulusan beasiswa
-    Route::get('/adm/passfile', [PassFileController::class, 'index'])->name('passfile.index');
+    Route::get('/adm/passfile', [PassFileController::class, 'index'])->name('passfile.list');
+    Route::get('/adm/passfile/{scholarship_id}', [PassFileController::class, 'showPassFileByScholarship'])->name('passfile.index');
     Route::post('/adm/passfile/pass/{scholarship_id}', [PassFileController::class, 'validateScholar'])->name('passfile.validate');
     Route::post('/adm/passfile/cancel-pass/{scholarship_id}', [PassFileController::class, 'cancelValidation'])->name('passfile.cancelValidate');
 
     // Beasiswa berlangsung
-    Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.index');
+    Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.list');
+    Route::get('/adm/aplicant/{scholarship_id}', [AplicantController::class, 'showAplicantByScholarship'])->name('aplicant.index');
 
     // Alumni beasiswa
-    Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.index');
+    Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
+    Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
 
     // Beranda
     Route::get('/adm/dashboard', [DashboardController::class, 'index']);
