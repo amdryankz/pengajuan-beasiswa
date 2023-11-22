@@ -11,9 +11,11 @@ class DonorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    //  get kuganti paginate beh
+    public function index() 
     {
-        $data = Donor::orderby('name', 'asc')->get();
+        $data = Donor::orderby('name', 'asc')->paginate(10);
 
         return view('admin.donor.index')->with('data', $data);
     }

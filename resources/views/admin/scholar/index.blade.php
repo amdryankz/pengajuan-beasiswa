@@ -12,8 +12,8 @@
         </a>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="table-auto min-w-full border-2 border-collapse">
+    <div class="overflow-x-auto overflow-hidden">
+        <table class="table-auto min-w-full border-2 border-collapse mb-40">
             <thead>
                 <tr class="border-b-2 bg-sky-800 text-white text-xs">
                     <th class="px-2 py-1 text-center border-r">No</th>
@@ -27,7 +27,6 @@
                     <th class="px-2 py-1 text-center border-r">Mulai Kelulusan</th>
                     <th class="px-2 py-1 text-center border-r">Akhir Kelulusan</th>
                     <th class="px-2 py-1 text-center border-r">IPK</th>
-                    <th class="px-2 py-1 text-center border-r">Detail</th>
                     <th class="px-2 py-1 text-center">Aksi</th>
                 </tr>
             </thead>
@@ -47,29 +46,115 @@
                         <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                         <td class="px-2 py-1 text-center border-r">
-                            <a href="{{ route('beasiswa.show', $item->id) }}"
-                                class="flex bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs items-center">
-                                <ion-icon name="information-circle-outline" class="mr-1"></ion-icon> Detail
-                            </a>
-                        </td>
-                        <td class="px-2 py-1 text-sm text-center">
-                            <div class="flex">
-                                <a href="{{ route('beasiswa.edit', $item->id) }}"
-                                    class="flex bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded text-xs items-center mr-1">
-                                    <ion-icon name="pencil-sharp" class="mr-1"></ion-icon>
-                                </a>
-                                <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                    action="{{ route('beasiswa.destroy', $item->id) }}" class="inline-block"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button
-                                        class="flex bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs items-center">
-                                        <ion-icon name="trash-sharp" class="mr-1"></ion-icon>
-                                    </button>
-                                </form>
+                            <div class="relative inline-block text-left" x-data="{ opendropdown: false }">
+                                <button @click="opendropdown = !opendropdown"
+                                    class="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs items-center"
+                                    id="aksiDropdown{{ $loop->iteration }}">
+                                    <span class="mr-2">Aksi</span>
+                                    <i class="bi bi-chevron-down"></i>
+                                </button>
+
+                                {{-- dropdown --}}
+                                <template x-if="opendropdown">
+
+                                    <div id="modalSK" x-cloak x-transition:enter="transition ease-out duration-300"
+                                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                        x-transition:leave="transition ease-in duration-300"
+                                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                        class="z-10 bg-white divide-y divide-gray-100 rounded shadow w-24 absolute right-0 mt-2">
+                                        <ul class="text-sm py-1 text-slate-700 m-2">
+                                            <li>
+                                                <a class="block px-[1px] py-[1px] rounded hover:bg-gray-100"
+                                                    href="{{ route('beasiswa.show', $item->id) }}">
+                                                    <span class="mr-1"><ion-icon
+                                                            name="information-circle"></ion-icon></span>
+                                                    Detail
+                                                </a>
+                                            </li>
+
+                                            <li class="hover:bg-gray-100 rounded block px-[1px] py-[1px] ">
+                                                <div x-data="{ openmodalSK: false }" x-cloak>
+                                                    <button @click="openmodalSK = true"
+                                                        class="block px-[1px] py-[1px] rounded text-sm  hover:text-blue-600">
+                                                        <span class="mr-1"><ion-icon name="Document"></ion-icon></span>
+                                                        Atur SK
+                                                    </button>
+                                                    <!-- Modal SK Kelulusan -->
+                                                    <template x-if="openmodalSK">
+                                                        <div id="modalSK" x-cloak
+                                                            x-transition:enter="ease-out duration-300"
+                                                            x-transition:enter-start="opacity-0 scale-90"
+                                                            x-transition:enter-end="opacity-100 scale-100"
+                                                            x-transition:leave="ease-in duration-300"
+                                                            x-transition:leave-start="opacity-100 scale-100"
+                                                            x-transition:leave-end="opacity-0 scale-90">
+                                                            <div id="modalSK" x-cloak>
+                                                                <div
+                                                                    class="fixed top-0 left-32 w-full h-screen bg-black/50 flex justify-center items-center">
+                                                                    <div
+                                                                        class="p-10 w-1/2 bg-white rounded-lg border border-x-gray-200 shadow-md">
+                                                                        <h2
+                                                                            class="mb-2 text-2xl font-bold text-gray-800 text-center">
+                                                                            Atur SK Kelulusan
+                                                                        </h2>
+
+                                                                        <!-- Tabel -->
+                                                                        <div class="">
+                                                                            <div class="text-lg">
+                                                                                <div class="mb-3">
+                                                                                    <span class="font-bold">Nama
+                                                                                        Mahasiswa:</span>
+                                                                                    Syukriah
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <span class="font-semibold">Jenis
+                                                                                        Kelamin:</span>
+                                                                                    Cewok
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <span class="font-bold">NIM:</span>
+                                                                                    2008107010069
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- Tombol Simpan dan Batal -->
+                                                                        <button
+                                                                            class="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-base px-4 py-2.5">Simpan</button>
+                                                                        <button @click="openmodalSK = false"
+                                                                            class="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-base px-4 py-2.5">Batal</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </template>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <a class="block px-[1px] py-[1px] rounded hover:bg-gray-100"
+                                                    href="{{ route('beasiswa.edit', $item->id) }}">
+                                                    <span class="mr-1"><ion-icon name="create"></ion-icon></span>
+                                                    Edit
+                                                </a>
+                                            </li>
+                                            <li class="hover:bg-gray-100 rounded block px-[1px] py-[1px] ">
+                                                <form onsubmit="return confirm('Yakin mau hapus data ini?')"
+                                                    action="{{ route('beasiswa.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="block px-[1px] py-[1px] rounded text-sm text-red-500 hover:text-red-600">
+                                                        <span class="mr-1"><ion-icon name="trash"></ion-icon></span>
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </template>
                             </div>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

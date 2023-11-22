@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('admin') }}/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('admin') }}/images/favicon.png" />
+
+    {{-- alpine.js --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 
