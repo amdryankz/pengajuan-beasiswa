@@ -42,8 +42,19 @@
                 <h3 class="mt-4 text-xl font-semibold">Berkas yang Diperlukan</h3>
                 <ul class="list-disc pl-6 text-base">
                     @foreach ($beasiswa->requirements as $requirement)
-                        <li>{{ $requirement->name}}</li>
+                        <li>{{ $requirement->name }}</li>
                     @endforeach
+                </ul>
+                <h3 class="mt-4 text-xl font-semibold">Surat Keputusan Kelulusan (SK)</h3>
+                <ul class="list-disc pl-6 text-base">
+                    @if ($beasiswa->file_sk)
+                        <li>
+                            <a href="{{ asset('storage/' . $beasiswa->file_sk) }}" target="_blank">Lihat File
+                                SK</a>
+                        </li>
+                    @else
+                        SK belum diupload
+                    @endif
                 </ul>
             </div>
         </div>

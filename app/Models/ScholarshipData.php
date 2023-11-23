@@ -28,14 +28,18 @@ class ScholarshipData extends Model
         'end_graduation_at',
         'kuota',
         'no_sk',
-        'file_sk'
+        'file_sk',
+        'start_scholarship',
+        'end_scholarship',
     ];
 
     protected $casts = [
-        'start_regis_at' => 'date', 
+        'start_regis_at' => 'date',
         'end_regis_at' => 'date',
         'start_graduation_at' => 'date',
         'end_graduation_at' => 'date',
+        'start_scholarship' => 'date',
+        'end_scholarship' => 'date',
     ];
 
     public function donor()
@@ -52,7 +56,4 @@ class ScholarshipData extends Model
     {
         return $this->belongsToMany(User::class, 'user_scholarships', 'scholarship_data_id', 'user_id');
     }
-
-
-    
 }

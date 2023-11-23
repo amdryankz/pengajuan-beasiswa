@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ScholarshipController extends Controller
 {
@@ -57,8 +58,6 @@ class ScholarshipController extends Controller
             'end_graduation_at' => 'required|date|after_or_equal:start_graduation_at',
             'kuota' => 'required|array',
             'kuota.*' => 'required|integer',
-            'no_sk' => 'string|nullable|max:255',
-            'file_sk' => 'string|nullable|max:255',
         ]);
 
         $kuota = $request->input('kuota');
@@ -83,7 +82,7 @@ class ScholarshipController extends Controller
     public function show(string $id)
     {
         $scholarship = ScholarshipData::findOrFail($id);
- 
+
         return view('admin.scholar.show', ['beasiswa' => $scholarship]);
     }
 
@@ -126,8 +125,6 @@ class ScholarshipController extends Controller
             'end_graduation_at' => 'required|date|after_or_equal:start_graduation_at',
             'kuota' => 'required|array',
             'kuota.*' => 'required|integer',
-            'no_sk' => 'string|nullable|max:255',
-            'file_sk' => 'string|nullable|max:255',
         ]);
 
         $kuota = $request->input('kuota');
@@ -159,5 +156,39 @@ class ScholarshipController extends Controller
         $scholarship->delete();
 
         return redirect()->route('beasiswa.index');
+    }
+
+    public function updateSK(Request $request, string $id)
+    {
+        $request->validate([
+            'no_sk' => 'nullable|string|max:255',
+            'file_sk' => 'nullable|mimes:pdf|max:2048', // Hanya menerima file PDF dengan maksimum 2MB
+            'start_scholarship' => 'nullable|date',
+            'end_scholarship' => 'nullable|date|after_or_equal:start_scholarship',
+        ]);
+
+        $scholarship = ScholarshipData::findOrFail($id);
+
+        // Gunakan metode fill untuk mengisi hanya kolom yang ada dalam permintaan
+        $scholarship->fill($request->only(['no_sk', 'start_scholarship', 'end_scholarship']));
+
+        // Cek apakah file_sk diunggah
+        if ($request->hasFile('file_sk')) {
+            // Hapus file yang ada jika sudah ada
+            if ($scholarship->file_sk) {
+                // Hapus file yang sudah ada (optional, sesuai kebutuhan)
+                Storage::delete($scholarship->file_sk);
+            }
+
+            // Simpan file yang diunggah ke penyimpanan (storage)
+            $file_skPath = $request->file('file_sk')->store('file_sk', 'public');
+            $scholarship->file_sk = $file_skPath;
+        }
+
+        // Simpan perubahan ke dalam database
+        $scholarship->save();
+
+        return redirect()->route('beasiswa.index')
+            ->with('success', 'Scholarship updated successfully');
     }
 }

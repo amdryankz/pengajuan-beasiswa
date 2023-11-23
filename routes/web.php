@@ -34,6 +34,7 @@ Route::middleware('auth:admin')->group(function () {
 
     // Pengelolaan
     Route::resource('/adm/beasiswa', ScholarshipController::class);
+    Route::put('/adm/beasiswa/sk/{id}', [ScholarshipController::class, 'updateSK'])->name('beasiswa.updateSK');
 
     // Beasiswa khusus
     Route::resource('adm/khusus', SpecScholarshipController::class);
