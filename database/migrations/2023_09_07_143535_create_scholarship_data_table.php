@@ -29,6 +29,8 @@ return new class extends Migration
             $table->json('kuota')->nullable();
             $table->string('no_sk')->nullable();
             $table->string('file_sk')->nullable();
+            $table->date('start_scholarship')->nullable();
+            $table->date('end_scholarship')->nullable();
             $table->timestamps();
         });
     }

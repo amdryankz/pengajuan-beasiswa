@@ -38,7 +38,7 @@
                         <td class="px-2 py-1 text-center border-r">{{ $item->name }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->donor->name }}</td>
-                        <td class="px-2 py-1 text-center border-r">Rp.{{ $item->value }}/{{ $item->status_value }}</td>
+                        <td class="px-2 py-1 text-center border-r">Rp {{ $item->value }} / {{ $item->status_value }}</td>
                         <td class="text-center border-r">{{ $item->duration }} Bulan</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at->format('d-m-Y') }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at->format('d-m-Y') }}</td>
@@ -97,32 +97,92 @@
                                                                             class="mb-2 text-2xl font-bold text-gray-800 text-center">
                                                                             Atur SK Kelulusan
                                                                         </h2>
-
-                                                                        <!-- Tabel -->
-                                                                        <div class="">
-                                                                            <div class="text-lg">
-                                                                                <div class="mb-3">
-                                                                                    <span class="font-bold">Nama
-                                                                                        Mahasiswa:</span>
-                                                                                    Syukriah
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <span class="font-semibold">Jenis
-                                                                                        Kelamin:</span>
-                                                                                    Cewok
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <span class="font-bold">NIM:</span>
-                                                                                    2008107010069
+                                                                        <form
+                                                                            action="{{ route('beasiswa.updateSK', $item->id) }}"
+                                                                            method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                            <!-- Tabel -->
+                                                                            <div>
+                                                                                <div class="text-lg">
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Nama
+                                                                                            Beasiswa</span>
+                                                                                        {{ $item->name }}
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span
+                                                                                            class="font-semibold">Tahun</span>
+                                                                                        {{ $item->year }}
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span
+                                                                                            class="font-bold">Durasi</span>
+                                                                                        {{ $item->duration }} Bulan
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Akhir
+                                                                                            Pendaftaran Beasiswa</span>
+                                                                                        {{ $item->end_regis_at->format('d-m-Y') }}
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Akhir
+                                                                                            Seleksi
+                                                                                            Beasiswa</span>
+                                                                                        {{ $item->end_graduation_at->format('d-m-Y') }}
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span
+                                                                                            class="font-bold">Nominal</span>
+                                                                                        Rp {{ $item->value }} /
+                                                                                        {{ $item->status_value }}
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Nomor Surat
+                                                                                            Keputusan Kelulusan</span>
+                                                                                        <input type="text" name="no_sk"
+                                                                                            value="{{ $item->no_sk ?? '' }}"
+                                                                                            class="form-control">
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Dokumen
+                                                                                            Surat
+                                                                                            Keputusan Kelulusan</span>
+                                                                                        <input type="file" name="file_sk"
+                                                                                            value="{{ $item->file_sk }}"
+                                                                                            class="form-control">
+                                                                                        @if ($item->file_sk)
+                                                                                            <p>Dokumen sudah diupload</p>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Tanggal
+                                                                                            Mulai
+                                                                                            Berlaku Beasiswa</span>
+                                                                                        <input type="date"
+                                                                                            name="start_scholarship"
+                                                                                            value="{{ $item->start_scholarship ? $item->start_scholarship->format('Y-m-d') : '' }}"
+                                                                                            class="form-control">
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <span class="font-bold">Tanggal
+                                                                                            Akhir
+                                                                                            Berlaku Beasiswa</span>
+                                                                                        <input type="date"
+                                                                                            name="end_scholarship"
+                                                                                            value="{{ $item->end_scholarship ? $item->end_scholarship->format('Y-m-d') : '' }}"
+                                                                                            class="form-control">
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
 
-                                                                        <!-- Tombol Simpan dan Batal -->
-                                                                        <button
-                                                                            class="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-base px-4 py-2.5">Simpan</button>
-                                                                        <button @click="openmodalSK = false"
-                                                                            class="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-base px-4 py-2.5">Batal</button>
+                                                                            <!-- Tombol Simpan dan Batal -->
+                                                                            <button
+                                                                                class="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-base px-4 py-2.5"
+                                                                                type="submit">Simpan</button>
+                                                                            <button @click="openmodalSK = false"
+                                                                                class="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-base px-4 py-2.5">Batal</button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
