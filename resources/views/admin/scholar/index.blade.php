@@ -142,7 +142,7 @@
                                                                                             Keputusan Kelulusan</span>
                                                                                         <input type="text" name="no_sk"
                                                                                             value="{{ $item->no_sk ?? '' }}"
-                                                                                            class="form-control">
+                                                                                            class="form-control" required>
                                                                                     </div>
                                                                                     <div class="mb-3">
                                                                                         <span class="font-bold">Dokumen
@@ -150,7 +150,7 @@
                                                                                             Keputusan Kelulusan</span>
                                                                                         <input type="file" name="file_sk"
                                                                                             value="{{ $item->file_sk }}"
-                                                                                            class="form-control">
+                                                                                            class="form-control" required>
                                                                                         @if ($item->file_sk)
                                                                                             <p>Dokumen sudah diupload</p>
                                                                                         @endif
@@ -162,7 +162,7 @@
                                                                                         <input type="date"
                                                                                             name="start_scholarship"
                                                                                             value="{{ $item->start_scholarship ? $item->start_scholarship->format('Y-m-d') : '' }}"
-                                                                                            class="form-control">
+                                                                                            class="form-control" required>
                                                                                     </div>
                                                                                     <div class="mb-3">
                                                                                         <span class="font-bold">Tanggal
@@ -171,7 +171,7 @@
                                                                                         <input type="date"
                                                                                             name="end_scholarship"
                                                                                             value="{{ $item->end_scholarship ? $item->end_scholarship->format('Y-m-d') : '' }}"
-                                                                                            class="form-control">
+                                                                                            class="form-control" required>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
