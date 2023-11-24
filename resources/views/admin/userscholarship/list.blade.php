@@ -3,7 +3,7 @@
 @section('navbar', 'Pengusul')
 
 @section('content')
-    <h2 class="text-lg font-semibold mb-4">Daftar Nama Beasiswa</h2>
+    <h2 class="text-lg font-semibold mb-4">Daftar Nama Pengusul Beasiswa</h2>
 
 
     <div class="mb-3 flex items-center relative">
