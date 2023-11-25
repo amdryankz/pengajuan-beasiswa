@@ -1,10 +1,10 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Detail Pengusul')
+@section('navbar', 'Kelulusan')
 
 @section('content')
     <div class="mb-4 text-start text-lg">
-        <a href="{{ route('registrations.index', ['scholarship_id' => $scholarship->id]) }}"
+        <a href="{{ route('passfile.index', ['scholarship_id' => $scholarship->id]) }}"
             class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +53,6 @@
                     <span class="font-semibold">Alamat:</span><br>
                     {{ $user->address }}
                 </div>
-
-
             </div>
 
             <div class="text-lg">
@@ -109,7 +107,7 @@
             @else
                 @if (!$files[0]->status)
                     <form
-                        action="{{ route('admin.scholarship.validate', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
+                        action="{{ route('passfile.validate', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
                         method="POST">
                         @csrf
                         <button type="submit"
@@ -125,7 +123,7 @@
                         </button>
                     </form>
                     <form
-                        action="{{ route('admin.scholarship.cancelValidation', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
+                        action="{{ route('passfile.cancelValidate', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
                         method="POST">
                         @csrf
                         <button type="submit"

@@ -46,7 +46,8 @@
                                 <td class="p-2 border border-gray-300">
                                     <div class="flex items-center justify-center ml-2">
                                         <a href="{{ route('donatur.edit', $item->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded"><ion-icon name="create-sharp" class="mr-1"></ion-icon></a>
+                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded"><ion-icon
+                                                name="create-sharp" class="mr-1"></ion-icon></a>
                                         <button class="bg-red-500 hover:bg-red-600 text-slate-50 px-3 py-1 mr-1 rounded"
                                             data-name="{{ $item->name }}"
                                             data-url="{{ route('donatur.destroy', $item->id) }}">
@@ -63,7 +64,7 @@
     </div>
 
     <div class="mt-4">
-      {{ $data->links() }}
+        {{ $data->links() }}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

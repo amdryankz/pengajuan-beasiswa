@@ -33,13 +33,15 @@
                     <tbody>
                         @php $i = 1; @endphp
                         @foreach ($data as $item)
-                            <tr class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
+                            <tr
+                                class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
                                 <td class="p-2 border text-center border-gray-300">{{ $i++ }}</td>
                                 <td class="p-2 border border-gray-300">{{ $item->name }}</td>
                                 <td class="p-2 border border-gray-300">
                                     <div class="flex items-center justify-center ml-2">
                                         <a href="{{ route('berkas.edit', $item->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded"><ion-icon name="create-sharp" class="mr-1"></ion-icon></a>
+                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded"><ion-icon
+                                                name="create-sharp" class="mr-1"></ion-icon></a>
                                         <button class="bg-red-500 hover:bg-red-600 text-slate-50 px-3 py-1 mr-1 rounded"
                                             data-name="{{ $item->name }}"
                                             data-url="{{ route('berkas.destroy', $item->id) }}">
@@ -83,7 +85,8 @@
                             const deleteForm = document.createElement('form');
                             deleteForm.action = url;
                             deleteForm.method = 'POST';
-                            deleteForm.innerHTML = '<input type="hidden" name="_method" value="DELETE">@csrf';
+                            deleteForm.innerHTML =
+                                '<input type="hidden" name="_method" value="DELETE">@csrf';
                             deleteForm.style.display = 'none';
                             document.body.appendChild(deleteForm);
                             deleteForm.submit();
