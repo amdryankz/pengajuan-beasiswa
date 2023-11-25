@@ -3,7 +3,6 @@
 @section('navbar', 'Pengusul')
 
 @section('content')
-
     <div class="mb-4 text-start text-lg">
         <a href="{{ route('registrations.list') }}"
             class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
@@ -16,6 +15,11 @@
 
     <h2 class="text-lg font-semibold mb-4">List Pendaftar Beasiswa {{ $data['scholarship']->name }}</h2>
     <div class="table-responsive">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <table class="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
                 <tr class="border-b-2 bg-sky-800 text-white text-start">
@@ -67,8 +71,6 @@
                                 </span>
                             </a>
                         </td>
-
-
                     </tr>
                 @endforeach
             </tbody>

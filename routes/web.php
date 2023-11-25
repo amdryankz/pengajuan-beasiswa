@@ -45,8 +45,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/registrations/{scholarship_id}', [UserScholarshipController::class, 'showRegistrationsByScholarship'])->name('registrations.index');
     Route::get('/adm/registrations/{user_id}/{scholarship_id}/detail', [UserScholarshipController::class, 'showDetail'])->name('admin.scholarship.detail');
     Route::get('/adm/scholarship/download/{file_path}', [UserScholarshipController::class, 'downloadFile'])->name('admin.scholarship.download');
-    Route::post('/adm/scholarship/validate/{scholarship_id}', [UserScholarshipController::class, 'validateFile'])->name('admin.scholarship.validate');
-    Route::post('/adm/scholarship/cancel-validation/{scholarship_id}', [UserScholarshipController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
+    Route::post('/adm/scholarship/validate/{scholarship_id}/{user_id}', [UserScholarshipController::class, 'validateFile'])->name('admin.scholarship.validate');
+    Route::post('/adm/scholarship/cancel-validation/{scholarship_id}/{user_id}', [UserScholarshipController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
     Route::get('/adm/scholarship/{user_id}/{scholarship_id}/pdf', [UserScholarshipController::class, 'generatePDF'])->name('admin.scholarship.pdf');
 
     // Access login admin
@@ -60,8 +60,9 @@ Route::middleware('auth:admin')->group(function () {
     // Kelulusan beasiswa
     Route::get('/adm/passfile', [PassFileController::class, 'index'])->name('passfile.list');
     Route::get('/adm/passfile/{scholarship_id}', [PassFileController::class, 'showPassFileByScholarship'])->name('passfile.index');
-    Route::post('/adm/passfile/pass/{scholarship_id}', [PassFileController::class, 'validateScholar'])->name('passfile.validate');
-    Route::post('/adm/passfile/cancel-pass/{scholarship_id}', [PassFileController::class, 'cancelValidation'])->name('passfile.cancelValidate');
+    Route::get('/adm/passfile/{user_id}/{scholarship_id}/detail', [PassFileController::class, 'showDetail'])->name('passfile.detail');
+    Route::post('/adm/passfile/pass/{scholarship_id}/{user_id}', [PassFileController::class, 'validateScholar'])->name('passfile.validate');
+    Route::post('/adm/passfile/cancel-pass/{scholarship_id}/{user_id}', [PassFileController::class, 'cancelValidation'])->name('passfile.cancelValidate');
     Route::get('/adm/passfile/{scholarship_id}/downloadExcel', [PassFileController::class, 'export'])->name('passfile.downloadExcel');
 
     // Beasiswa berlangsung

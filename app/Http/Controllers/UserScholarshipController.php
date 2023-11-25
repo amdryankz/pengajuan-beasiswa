@@ -244,28 +244,28 @@ class UserScholarshipController extends Controller
         }
     }
 
-    public function validateFile($scholarship_id)
+    public function validateFile($scholarship_id, $user_id)
     {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->status_file = true;
             $userScholarship->save();
         }
 
-        return redirect()->back()->with('success', 'Berkas telah divalidasi.');
+        return redirect('/adm/registrations/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
 
-    public function cancelValidation($scholarship_id)
+    public function cancelValidation($scholarship_id, $user_id)
     {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->get();
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->status_file = false;
             $userScholarship->save();
         }
 
-        return redirect()->back()->with('success', 'Berkas batal divalidasi.');
+        return redirect('/adm/registrations/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
 
     public function generatePDF(string $user_id, string $scholarship_id)
