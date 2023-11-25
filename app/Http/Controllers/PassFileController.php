@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserScholarshipExport;
 use Illuminate\Http\Request;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PassFileController extends Controller
 {
@@ -40,32 +42,8 @@ class PassFileController extends Controller
             }
         }
 
-        return view('admin.passfile.index')->with('data', $data);
+        return view('admin.passfile.index')->with('data', $data)->with('scholarship', $scholarship);;
     }
-
-
-    // public function index()
-    // {
-    //     $scholarships = ScholarshipData::all();
-    //     $data = [];
-
-    //     foreach ($scholarships as $scholarship) {
-    //         $users = $scholarship->users()->distinct()->get();
-
-    //         foreach ($users as $user) {
-    //             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
-
-    //             if ($userScholarship && $userScholarship->pivot->status_file) {
-    //                 $data[] = [
-    //                     'scholarship' => $scholarship,
-    //                     'user' => $user,
-    //                 ];
-    //             }
-    //         }
-    //     }
-
-    //     return view('admin.passfile.index')->with('data', $data);
-    // }
 
     public function validateScholar($scholarship_id)
     {
@@ -88,6 +66,34 @@ class PassFileController extends Controller
             $userScholarship->save();
         }
 
-        return redirect()->back()->with('success', 'Mahasiswa batal lulus beasiswa.');
+        return redirect()->back()->with('success', 'Mahasiswa tidak lulus beasiswa.');
+    }
+
+    public function export($scholarship_id)
+    {
+        $scholarship = ScholarshipData::find($scholarship_id);
+
+        if (!$scholarship) {
+            // Handle jika beasiswa tidak ditemukan
+            abort(404);
+        }
+
+        $data = [];
+        $users = $scholarship->users()->distinct()->get();
+
+        foreach ($users as $user) {
+            $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
+
+            if ($userScholarship && $userScholarship->pivot->status_file) {
+                $data[] = [
+                    'scholarship' => $scholarship,
+                    'user' => $user,
+                ];
+            }
+        }
+
+        $export = new UserScholarshipExport($data, $scholarship->name);
+
+        return Excel::download($export, 'userScholarhips.xlsx');
     }
 }

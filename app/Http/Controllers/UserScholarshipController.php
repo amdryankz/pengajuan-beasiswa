@@ -29,8 +29,10 @@ class UserScholarshipController extends Controller
 
         $userScholarships = UserScholarship::where('user_id', $userId)->get();
 
+        $filteredUserScholarships = $userScholarships->unique('scholarship_data_id');
+
         $alumniData = [];
-        foreach ($userScholarships as $userScholarship) {
+        foreach ($filteredUserScholarships as $userScholarship) {
             $scholarshipId = $userScholarship->scholarship_id;
 
             // Pastikan beasiswa masih ada di antara yang sedang berlangsung
@@ -48,8 +50,9 @@ class UserScholarshipController extends Controller
             }
         }
 
-        return view('user.scholar.index')->with('data', $scholarships)->with('dataUser', $userScholarships)->with('alumniData', $alumniData);
+        return view('user.scholar.index')->with('data', $scholarships)->with('dataUser', $filteredUserScholarships)->with('alumniData', $alumniData);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -149,7 +152,9 @@ class UserScholarshipController extends Controller
             }
 
             // Hapus pendaftaran
-            $userScholarship->delete();
+            UserScholarship::where('user_id', $userScholarship->user_id)
+                ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
+                ->delete();
 
             return redirect()->route('dashboard.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
         } else {
@@ -247,7 +252,6 @@ class UserScholarshipController extends Controller
             $userScholarship->status_file = true;
             $userScholarship->save();
         }
-
 
         return redirect()->back()->with('success', 'Berkas telah divalidasi.');
     }

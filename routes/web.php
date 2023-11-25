@@ -62,6 +62,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/passfile/{scholarship_id}', [PassFileController::class, 'showPassFileByScholarship'])->name('passfile.index');
     Route::post('/adm/passfile/pass/{scholarship_id}', [PassFileController::class, 'validateScholar'])->name('passfile.validate');
     Route::post('/adm/passfile/cancel-pass/{scholarship_id}', [PassFileController::class, 'cancelValidation'])->name('passfile.cancelValidate');
+    Route::get('/adm/passfile/{scholarship_id}/downloadExcel', [PassFileController::class, 'export'])->name('passfile.downloadExcel');
 
     // Beasiswa berlangsung
     Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.list');
