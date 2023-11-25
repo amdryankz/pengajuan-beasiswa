@@ -117,7 +117,7 @@
 
               <li class="relative text-slate-800 mb-1.5">
                   <a id="berlangsung" href="{{ url('/adm/aplicant') }}"
-                      class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/aplicant') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                      class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/aplicant*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                       data-te-sidenav-link-ref>
                       <ion-icon class="px-auto text-xl hidden sm:block" name="checkmark-circle-sharp"></ion-icon>
                       <span class="pl-2 text-base">Berlangsung</span>
@@ -127,7 +127,7 @@
 
               <li class="relative text-slate-800 mb-1.5">
                   <a id="alumni" href="{{ url('/adm/alumni') }}"
-                      class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/#') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                      class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/alumni*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                       data-te-sidenav-link-ref>
                       <ion-icon class="px-auto text-xl hidden sm:block" name="school-sharp"></ion-icon>
                       <span class="pl-2 text-base">Alumni</span>

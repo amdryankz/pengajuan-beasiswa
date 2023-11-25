@@ -29,7 +29,7 @@
         <div class="table-responsive border border-gray-300">
             <div>
                 <table class="border-collapse w-full">
-                    <thead class="">
+                    <thead>
                         <tr>
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
                             <th class="p-2 border table-fixed border-gray-300">Nama Donatur</th>

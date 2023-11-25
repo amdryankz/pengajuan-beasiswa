@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Konfirmasi')
+@section('navbar', 'Kelulusan')
 
 @section('content')
     <h2 class="text-lg font-semibold mb-4">List Kelulusan Berkas Beasiswa - {{ $scholarship->name }}</h2>
