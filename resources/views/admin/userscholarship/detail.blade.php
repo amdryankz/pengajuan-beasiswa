@@ -47,7 +47,7 @@
                 </div>
                 <div class="mb-3">
                     <span class="font-semibold">Tempat / Tanggal Lahir:</span><br>
-                    {{ $user->birthplace }} / {{ $user->birthdate }}
+                    {{ $user->birthplace }} / {{ date('d F Y', strtotime($user->birthdate)) }}
                 </div>
                 <div class="mb-3">
                     <span class="font-semibold">Alamat:</span><br>
