@@ -105,7 +105,7 @@
 
           </nav>
 
-          <div class="p-16 pt-32">
+          <div class="p-10 pt-24">
               <div class="grid grid-cols-12 gap-4">
                   <div class="col-span-12">
                       <div class="card p-6 w-full">

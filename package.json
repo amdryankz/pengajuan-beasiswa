@@ -17,6 +17,7 @@
     "dependencies": {
         "alpinejs": "^3.13.3",
         "bootstrap-icons": "^1.11.2",
+        "jquery": "^3.7.1",
         "sweetalert2": "^11.9.0",
         "toastr": "^2.1.4"
     }
