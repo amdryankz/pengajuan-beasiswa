@@ -94,7 +94,8 @@ class UserScholarshipController extends Controller
         }
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {
-            $fileName = $user->nim . '.' . $file->getClientOriginalExtension();
+            $fileRequirement = FileRequirement::findOrFail($file_requirement_id);
+            $fileName = $user->nim . '_' . $fileRequirement->name . '.' . $file->getClientOriginalExtension();
             $file->storeAs('file_requirements', $fileName);
 
             UserScholarship::create([

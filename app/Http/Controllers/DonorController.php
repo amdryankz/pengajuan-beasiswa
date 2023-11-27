@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Donor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class DonorController extends Controller
 {
@@ -13,7 +12,7 @@ class DonorController extends Controller
      */
 
     //  get kuganti paginate beh
-    public function index() 
+    public function index()
     {
         $data = Donor::orderby('name', 'asc')->paginate(10);
 
@@ -33,8 +32,6 @@ class DonorController extends Controller
      */
     public function store(Request $request)
     {
-        
-
         $request->validate([
             'name' => 'required'
         ], [
@@ -88,20 +85,17 @@ class DonorController extends Controller
      */
     public function destroy(string $id)
     {
-    $donor = Donor::find($id);
-    
-    if (!$donor) {
-        return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
+        $donor = Donor::find($id);
+
+        if (!$donor) {
+            return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
+        }
+
+        if ($donor->scholarshipData()->count() > 0) {
+            return redirect()->route('donatur.index')->with('error', 'Tidak dapat menghapus donatur ini karena masih terdapat beasiswa yang terkait.');
+        }
+
+        $donor->delete();
+        return redirect()->route('donatur.index')->with('success', 'Berhasil menghapus Donatur');
     }
-
-    if ($donor->scholarshipData()->count() > 0) {
-        return redirect()->route('donatur.index')->with('error', 'Tidak dapat menghapus donor ini karena masih terdapat beasiswa yang terkait.');
-    }
-
-    $donor->delete();
-    return redirect()->route('donatur.index')->with('success', 'Berhasil menghapus Donatur');
-    }
-
-
-
 }

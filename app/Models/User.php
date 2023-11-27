@@ -35,6 +35,7 @@ class User extends Authenticatable
         'income_parent',
         'no_hp',
         'no_rek',
+        'name_rek',
         'name_bank'
     ];
 
@@ -56,6 +57,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'birthdate' => 'date',
     ];
 
     public function scholarships()

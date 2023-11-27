@@ -8,6 +8,7 @@ use App\Http\Controllers\AplicantController;
 use App\Http\Controllers\PassFileController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\BioUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\FileRequirementController;
@@ -95,5 +96,7 @@ Route::middleware('guest_user')->group(function () {
 Route::middleware('auth_user')->group(function () {
     // Daftar beasiswa
     Route::resource('/mhs/dashboard', UserScholarshipController::class);
+    Route::get('/mhs/biodata', [BioUserController::class, 'index'])->name('biodata.index');
+    Route::put('/mhs/biodata/update', [BioUserController::class, 'update'])->name('biodata.update');
     Route::get('/mhs/logout', [AdminAuthController::class, 'logout']);
 });

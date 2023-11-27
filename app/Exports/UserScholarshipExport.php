@@ -39,6 +39,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                 'No.Hp' => $item['user']->no_hp,
                 'Nama Bank' => $item['user']->name_bank,
                 'No.Rek' => $item['user']->no_rek,
+                'Nama Pada Rekening' => $item['user']->name_rek,
                 'Pekerjaan Ortu' => $item['user']->job_parent,
                 'Penghasilan Ortu' => $item['user']->income_parent
                 // Sesuaikan dengan kolom-kolom lain yang ingin Anda ambil
@@ -64,6 +65,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                 'No. HP',
                 'Nama Bank',
                 'No. Rekening',
+                'Nama Pada Rekening',
                 'Pekerjaan Ortu',
                 'Penghasilan Ortu'
             ]
@@ -75,7 +77,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 // Menambahkan baris di atas heading
-                $event->sheet->mergeCells('A1:M1');
+                $event->sheet->mergeCells('A1:N1');
                 $event->sheet->setCellValue('A1', 'Daftar Kelulusan Beasiswa ' . $this->scholarshipName);
 
                 // Mengatur style untuk baris nama beasiswa
@@ -89,7 +91,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                     ],
                 ]);
 
-                $event->sheet->getStyle('A2:M2')->applyFromArray([
+                $event->sheet->getStyle('A2:N2')->applyFromArray([
                     'font' => [
                         'bold' => true,
                     ],
@@ -102,7 +104,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                     ],
                 ]);
 
-                $event->sheet->getDelegate()->getStyle('A2:M' . ($event->sheet->getDelegate()->getHighestRow()))
+                $event->sheet->getDelegate()->getStyle('A2:N' . ($event->sheet->getDelegate()->getHighestRow()))
                     ->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
             },
         ];

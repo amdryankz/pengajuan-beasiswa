@@ -28,7 +28,7 @@
 
         <div class="table-responsive border border-gray-300">
             <div>
-                <table class="border-collapse w-full">
+                <table id="myTable" class="border-collapse w-full">
                     <thead>
                         <tr>
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>

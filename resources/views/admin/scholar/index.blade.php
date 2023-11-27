@@ -46,7 +46,7 @@
                         <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                         <td class="px-2 py-1 text-center border-r">
-                            <div class="relative inline-block text-left" x-data="{ opendropdown: false } ">
+                            <div class="relative inline-block text-left" x-data="{ opendropdown: false }">
                                 <button @click="opendropdown = !opendropdown"
                                     class="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs items-center"
                                     id="aksiDropdown{{ $loop->iteration }}">
@@ -181,6 +181,9 @@
                                                                                                 required>
                                                                                             @if ($item->file_sk)
                                                                                                 <p>Dokumen sudah diupload
+                                                                                                </p>
+                                                                                            @else
+                                                                                                <p>Dokumen belum diupload
                                                                                                 </p>
                                                                                             @endif
                                                                                         </div>

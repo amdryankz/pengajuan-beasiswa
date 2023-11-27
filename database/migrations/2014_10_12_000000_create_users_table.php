@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('name_parent')->nullable();
             $table->string('job_parent')->nullable();
             $table->string('income_parent')->nullable();
-            $table->bigInteger('no_hp')->nullable();
-            $table->bigInteger('no_rek')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('no_rek')->nullable();
             $table->string('name_rek')->nullable();
             $table->string('name_bank')->nullable();
             $table->timestamps();

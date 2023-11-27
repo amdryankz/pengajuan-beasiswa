@@ -25,7 +25,8 @@
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($scholarships as $item)
-                    <tr class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
+                    <tr
+                        class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
                         <td class="p-2 w-[5%] text-center border border-gray-300">{{ $loop->index + 1 }}</td>
                         <td class="p-2 border table-fixed border-gray-300"><a
                                 href="{{ route('registrations.index', ['scholarship_id' => $item->id]) }}">{{ $item->name }}</a>
