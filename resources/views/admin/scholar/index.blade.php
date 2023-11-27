@@ -55,7 +55,7 @@
                                 </button>
 
                                 {{-- dropdown --}}
-                                <template x-if="opendropdown">
+                                <div x-show="opendropdown" @click.away="opendropdown = false" x-cloak> 
 
                                     <div id="modalSK" x-cloak x-transition:enter="transition ease-out duration-300"
                                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -98,7 +98,7 @@
                                                                 x-transition:leave-end="opacity-0 scale-90">
                                                                 <div id="modalSK" x-cloak>
                                                                     <div
-                                                                        class="fixed top-10 left-1/4 w-1/2 h-screen flex justify-center items-center">
+                                                                        class="fixed top-10 left-1/3 w-1/2 h-screen flex justify-center items-center">
                                                                         <div
                                                                             class="p-10 bg-white rounded-lg border border-x-gray-200 shadow-md w-full max-w-screen-md">
                                                                             <h2
@@ -154,15 +154,15 @@
                                                                                                 Rp {{ $item->value }} /
                                                                                                 {{ $item->status_value }}
                                                                                             </div>
-                                                                                            <div class="mb-3">
+                                                                                            <div class="mb-3 max-w-xs">
                                                                                                 <span
                                                                                                     class="font-bold">Nomor
                                                                                                     Surat Keputusan
-                                                                                                    Kelulusan</span>
+                                                                                                    Kelulusan:</span>
                                                                                                 <input type="text"
                                                                                                     name="no_sk"
                                                                                                     value="{{ $item->no_sk ?? '' }}"
-                                                                                                    class="form-control"
+                                                                                                    class="block form-control rounded-lg py-2  hover:ring-1 hover:ring-sky-500"
                                                                                                     required>
                                                                                             </div>
                                                                                         </div>
@@ -171,16 +171,16 @@
                                                                                     <!-- Kanan -->
                                                                                     <div class="col-span-1">
                                                                                         <div class="mb-3">
-                                                                                            <span class="font-bold">Dokumen
+                                                                                            <span class="font-bold block">Dokumen
                                                                                                 Surat Keputusan
-                                                                                                Kelulusan</span>
+                                                                                                Kelulusan:</span>
                                                                                             <input type="file"
                                                                                                 name="file_sk"
                                                                                                 value="{{ $item->file_sk }}"
-                                                                                                class="form-control"
+                                                                                                class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                 required>
                                                                                             @if ($item->file_sk)
-                                                                                                <p>Dokumen sudah diupload
+                                                                                                <p class="text-red-500 mt-0.5">*Dokumen sudah diupload
                                                                                                 </p>
                                                                                             @else
                                                                                                 <p>Dokumen belum diupload
@@ -194,7 +194,7 @@
                                                                                             <input type="date"
                                                                                                 name="start_scholarship"
                                                                                                 value="{{ $item->start_scholarship ? $item->start_scholarship->format('Y-m-d') : '' }}"
-                                                                                                class="form-control"
+                                                                                                class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                 required>
                                                                                         </div>
                                                                                         <div class="mb-3">
@@ -204,7 +204,7 @@
                                                                                             <input type="date"
                                                                                                 name="end_scholarship"
                                                                                                 value="{{ $item->end_scholarship ? $item->end_scholarship->format('Y-m-d') : '' }}"
-                                                                                                class="form-control"
+                                                                                                class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
@@ -249,7 +249,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </template>
+                                </div>
                             </div>
                         </td>
 

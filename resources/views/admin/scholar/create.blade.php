@@ -206,6 +206,10 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="mt-4">
+        {{ $file->links() }}
+    </div>
 </div>
 
 
