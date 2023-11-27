@@ -2,7 +2,7 @@
 
 @section('content')
     <p class="card-title">List Pendaftaran Beasiswa</p>
-    <div class="table-responsive">
+    <div class="overflow-x-auto border rounded-lg">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -14,25 +14,25 @@
                 {{ session('error') }}
             </div>
         @endif
-        <table class="table table-striped">
+        <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Nama Beasiswa</th>
-                    <th>Mulai Pendaftaran Beasiswa</th>
-                    <th>Akhir Pendaftaran Beasiswa</th>
-                    <th>Aksi</th>
+                    <th class="border border-gray-300">No</th>
+                    <th class="border border-gray-300">Nama Beasiswa</th>
+                    <th class="border border-gray-300">Mulai Pendaftaran Beasiswa</th>
+                    <th class="border border-gray-300">Akhir Pendaftaran Beasiswa</th>
+                    <th class="border border-gray-300">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($data as $item)
                     <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->start_regis_at }}</td>
-                        <td>{{ $item->end_regis_at }}</td>
-                        <td>
+                        <td class="border border-gray-300">{{ $i++ }}</td>
+                        <td class="border border-gray-300">{{ $item->name }}</td>
+                        <td class="border border-gray-300">{{ $item->start_regis_at->format('d-m-Y') }}</td>
+                        <td class="border border-gray-300">{{ $item->end_regis_at->format('d-m-Y') }}</td>
+                        <td class="border border-gray-300">
                             <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-sm btn-warning">Daftar</a>
                         </td>
                     </tr>
@@ -43,24 +43,24 @@
     <br>
     <br>
     <p class="card-title">History Pendaftaran Beasiswa</p>
-    <div class="table-responsive">
-        <table class="table table-striped">
+    <div class="overflow-x-auto border rounded-lg">
+        <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Nama Beasiswa</th>
-                    <th>Status Berkas</th>
-                    <th>Status Beasiswa</th>
-                    <th>Aksi</th>
+                    <th class="border border-gray-300">No</th>
+                    <th class="border border-gray-300">Nama Beasiswa</th>
+                    <th class="border border-gray-300">Status Berkas</th>
+                    <th class="border border-gray-300">Status Beasiswa</th>
+                    <th class="border border-gray-300">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($dataUser as $item)
                     <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $item->scholarshipData->name }}</td>
-                        <td>
+                        <td class="border border-gray-300">{{ $i++ }}</td>
+                        <td class="border border-gray-300">{{ $item->scholarshipData->name }}</td>
+                        <td class="border border-gray-300">
                             @if ($item->status_file === null)
                                 Diproses
                             @elseif ($item->status_file == false)
@@ -69,7 +69,7 @@
                                 Lulus Berkas
                             @endif
                         </td>
-                        <td>
+                        <td class="border border-gray-300">
                             @if ($item->status_scholar === null && $item->status_file == true)
                                 Diproses
                             @elseif ($item->status_scholar === null)
@@ -80,7 +80,7 @@
                                 Lulus
                             @endif
                         </td>
-                        <td>
+                        <td class="border border-gray-300">
                             <form onsubmit="return confirm('Yakin mau hapus data ini?')"
                                 action="{{ route('dashboard.destroy', $item->id) }}" class="d-inline" method="POST">
                                 @csrf
@@ -96,20 +96,20 @@
     <br>
     <br>
     <p class="card-title">History Penerimaan Beasiswa</p>
-    <div class="table-responsive">
-        <table class="table table-striped">
+    <div class="overflow-x-auto border rounded-lg">
+        <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Nama Beasiswa</th>
+                    <th class="border border-gray-300">No</th>
+                    <th class="border border-gray-300">Nama Beasiswa</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($alumniData as $item)
                     <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $item['scholarship']->name }}</td>
+                        <td class="border border-gray-300">{{ $i++ }}</td>
+                        <td class="border border-gray-300">{{ $item['scholarship']->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
