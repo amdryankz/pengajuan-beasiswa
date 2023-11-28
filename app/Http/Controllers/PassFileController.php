@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;

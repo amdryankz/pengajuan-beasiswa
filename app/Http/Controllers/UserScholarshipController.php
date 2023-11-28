@@ -24,7 +24,6 @@ class UserScholarshipController extends Controller
 
         $scholarships = ScholarshipData::where('start_regis_at', '<=', $now)
             ->where('end_regis_at', '>=', $now)
-            ->where('status_scholarship', '=', 'Umum')
             ->get();
 
         $userScholarships = UserScholarship::where('user_id', $userId)->get();
