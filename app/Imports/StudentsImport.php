@@ -2,29 +2,29 @@
 
 namespace App\Imports;
 
-use App\Models\SpecScholarship;
+use App\Models\User;
+use App\Models\UserScholarship;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class StudentsImport implements ToModel
 {
 
-    protected $scholarship_data_id;
+    private $scholarshipId;
 
-    public function __construct($scholarship_data_id)
+    public function __construct($scholarshipId)
     {
-        $this->scholarship_data_id = $scholarship_data_id;
+        $this->scholarshipId = $scholarshipId;
     }
 
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
     public function model(array $row)
     {
-        return new SpecScholarship([
-            'scholarship_data_id' => $this->scholarship_data_id,
-            'list_students' => $row[0],
+        $user = User::where('nim', $row[0])->first();
+
+        return new UserScholarship([
+            'scholarship_data_id' => $this->scholarshipId,
+            'user_id' => $user->id,
+            'status_file' => true,
+            'status_scholar' => true,
         ]);
     }
 }

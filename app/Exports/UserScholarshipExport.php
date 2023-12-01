@@ -42,7 +42,6 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                 'Nama Pada Rekening' => $item['user']->name_rek,
                 'Pekerjaan Ortu' => $item['user']->job_parent,
                 'Penghasilan Ortu' => $item['user']->income_parent
-                // Sesuaikan dengan kolom-kolom lain yang ingin Anda ambil
             ];
         });
 

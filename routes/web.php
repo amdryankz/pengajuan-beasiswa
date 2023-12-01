@@ -69,10 +69,14 @@ Route::middleware('auth:admin')->group(function () {
     // Beasiswa berlangsung
     Route::get('/adm/aplicant', [AplicantController::class, 'index'])->name('aplicant.list');
     Route::get('/adm/aplicant/{scholarship_id}', [AplicantController::class, 'showAplicantByScholarship'])->name('aplicant.index');
+    Route::get('/adm/aplicant/{scholarship_id}/downloadExcel', [AplicantController::class, 'export'])->name('aplicant.downloadExcel');
+
 
     // Alumni beasiswa
     Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
     Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
+    Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
+
 
     // Beranda
     Route::get('/adm/dashboard', [DashboardController::class, 'index']);
@@ -98,5 +102,5 @@ Route::middleware('auth_user')->group(function () {
     Route::resource('/mhs/dashboard', UserScholarshipController::class);
     Route::get('/mhs/biodata', [BioUserController::class, 'index'])->name('biodata.index');
     Route::put('/mhs/biodata/update', [BioUserController::class, 'update'])->name('biodata.update');
-    Route::get('/mhs/logout', [AdminAuthController::class, 'logout']);
+    Route::get('/mhs/logout', [UserAuthController::class, 'logout']);
 });

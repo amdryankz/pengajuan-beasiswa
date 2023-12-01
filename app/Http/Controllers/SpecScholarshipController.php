@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donor;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
+use App\Models\ScholarshipData;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SpecScholarshipController extends Controller
@@ -12,6 +15,9 @@ class SpecScholarshipController extends Controller
      */
     public function index()
     {
+        $data = ScholarshipData::with('donor')->whereNotNull('start_scholarship')->get();
+
+        return view('admin.specscholarship.index')->with('data', $data);
     }
 
     /**
@@ -19,6 +25,13 @@ class SpecScholarshipController extends Controller
      */
     public function create()
     {
+        $data = Donor::all();
+
+        $tahunSekarang = date('Y');
+        $tahunArray = range($tahunSekarang, $tahunSekarang - 10);
+
+        return view('admin.specscholarship.create')->with('data', $data)
+            ->with('tahunArray', $tahunArray);
     }
 
     /**
@@ -26,6 +39,28 @@ class SpecScholarshipController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'donors_id' => 'required|exists:donors,id',
+            'value' => 'required|string|max:255',
+            'status_value' => 'required|string|max:255',
+            'duration' => 'required|integer',
+            'start_scholarship' => 'required|date',
+            'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
+            'list_student_file' => 'required|file|mimes:xlsx',
+        ]);
+
+        $scholarship = ScholarshipData::create($data);
+
+        Excel::import(new StudentsImport($scholarship->id), $request->file('list_student_file'));
+
+        $scholarship->update([
+            'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
+        ]);
+
+        return redirect()->route('khusus.index')
+            ->with('success', 'Scholarship created successfully');
     }
 
     /**
@@ -56,6 +91,9 @@ class SpecScholarshipController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $scholarship = ScholarshipData::findOrFail($id);
+        $scholarship->delete();
+
+        return redirect()->route('khusus.index');
     }
 }

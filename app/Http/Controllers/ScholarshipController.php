@@ -15,10 +15,9 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('donor')->get();
-        $filerequirements = FileRequirement::all();
+        $data = ScholarshipData::with('donor')->whereNotNull('start_regis_at')->get();
 
-        return view('admin.scholar.index')->with('data', $data)->with('file', $filerequirements);
+        return view('admin.scholar.index')->with('data', $data);
     }
 
     /**
