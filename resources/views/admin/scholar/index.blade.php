@@ -24,8 +24,8 @@
                     <th class="px-3 py-1 text-center border-r">Durasi</th>
                     <th class="px-2 py-1 text-center border-r">Mulai Pendaftaran</th>
                     <th class="px-2 py-1 text-center border-r">Akhir Pendaftaran</th>
-                    <th class="px-2 py-1 text-center border-r">Mulai Kelulusan</th>
-                    <th class="px-2 py-1 text-center border-r">Akhir Kelulusan</th>
+                    {{-- <th class="px-2 py-1 text-center border-r">Mulai Kelulusan</th>
+                    <th class="px-2 py-1 text-center border-r">Akhir Kelulusan</th> --}}
                     <th class="px-2 py-1 text-center border-r">IPK</th>
                     <th class="px-2 py-1 text-center">Aksi</th>
                 </tr>
@@ -42,8 +42,8 @@
                         <td class="text-center border-r">{{ $item->duration }} Bulan</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at->format('d-m-Y') }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at->format('d-m-Y') }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->start_graduation_at->format('d-m-Y') }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td>
+                        {{-- <td class="px-2 py-1 text-center border-r">{{ $item->start_graduation_at->format('d-m-Y') }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td> --}}
                         <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                         <td class="px-2 py-1 text-center border-r">
                             <div class="relative inline-block text-left" x-data="{ opendropdown: false }">

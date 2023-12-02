@@ -3,6 +3,8 @@
 @section('navbar', 'Donatur')
 
 @section('content')
+
+
     <div class="">
         <h2 class="text-xl font-semibold mb-4">Donatur</h2>
 
@@ -26,17 +28,18 @@
             </button>
         </div>
 
-        <div class="table-responsive border border-gray-300">
+        <div class="container mx-auto">
             <div>
-                <table id="myTable" class="border-collapse w-full">
+                <table id="myTable" class="table table-striped w-full">
                     <thead>
-                        <tr>
+                        <tr class="border-b-2 bg-sky-800 text-white text-sm">
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
                             <th class="p-2 border table-fixed border-gray-300">Nama Donatur</th>
                             <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Isi tabel disesuaikan dengan data yang dimiliki -->
                         <?php $i = 1; ?>
                         @foreach ($data as $item)
                             <tr
@@ -46,8 +49,9 @@
                                 <td class="p-2 border border-gray-300">
                                     <div class="flex items-center justify-center ml-2">
                                         <a href="{{ route('donatur.edit', $item->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded"><ion-icon
-                                                name="create-sharp" class="mr-1"></ion-icon></a>
+                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded">
+                                            <ion-icon name="create-sharp" class="mr-1"></ion-icon>
+                                        </a>
                                         <button class="bg-red-500 hover:bg-red-600 text-slate-50 px-3 py-1 mr-1 rounded"
                                             data-name="{{ $item->name }}"
                                             data-url="{{ route('donatur.destroy', $item->id) }}">
@@ -61,11 +65,12 @@
                 </table>
             </div>
         </div>
-    </div>
 
+    </div>
+    {{-- 
     <div class="mt-4">
         {{ $data->links() }}
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

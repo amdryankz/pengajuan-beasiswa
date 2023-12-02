@@ -40,7 +40,7 @@
                 </select>
             </div>
 
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <label for="status_scholarship" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
                     Status Beasiswa
                 </label>
@@ -51,7 +51,7 @@
                     <option value="Umum">Umum</option>
                     <option value="Khusus">Khusus</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="mb-4">
                 <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Pilih Donatur</label>
@@ -72,7 +72,7 @@
                     name="value" id="value" placeholder="Nominal" value="{{ old('value') }}">
             </div>
 
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <label for="status_value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
                 <select
                     class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
@@ -81,7 +81,7 @@
                     <option value="Bulan">Bulan</option>
                     <option value="Tahun">Tahun</option>
                 </select>
-            </div>
+            </div> --}}
 
 
 
@@ -130,23 +130,23 @@
                     value="{{ old('min_ipk') }}">
             </div>
 
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <label for="start_graduation_at" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
                     Mulai Penentuan Kelulusan
                 </label>
                 <input type="date" id="start_graduation_at" name="start_graduation_at"
                     class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
                     value="{{ old('start_graduation_at') }}">
-            </div>
+            </div> --}}
 
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <label for="end_graduation_at" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
                     Akhir Penentuan Kelulusan
                 </label>
                 <input type="date" id="end_graduation_at" name="end_graduation_at"
                     class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
                     value="{{ old('end_graduation_at') }}">
-            </div>
+            </div> --}}
         </div>
 
 
@@ -180,38 +180,36 @@
 
 
         {{-- Persyaratan --}}
-<div class="mb-4 col-span-2">
-    <label class="block text-base font-semibold text-gray-600 mb-2 ml-1">Persyaratan</label>
-    <hr class="mb-4 border-t-0 border-gray-300 my-2">
-    <table class="w-full border-collapse border border-white">
-        <thead>
-            <tr class="bg-sky-800 text-slate-50">
-                <th class="border border-white p-3">Nama Persyaratan</th>
-                <th class="border border-white p-3 text-center">Pilih</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($file as $index => $requirement)
-                <tr class="{{ $index % 2 === 0 ? 'bg-white' : 'bg-zinc-50' }}">
-                    <td class="border border-slate-100 p-3">
-                        <div class="overflow-hidden max-w-full">
-                            <span class="break-all">{{ $requirement->name }}</span>
-                        </div>
-                    </td>
-                    <td class="border border-slate-100 p-3 text-center">
-                        <input class="form-checkbox m-0" type="checkbox" name="requirements[]"
-                            value="{{ $requirement->id }}">
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        <div class="mb-4 col-span-2">
+            <label class="block text-base font-semibold text-gray-600 mb-2 ml-1">Persyaratan</label>
+            <hr class="mb-4 border-t-0 border-gray-300 my-2">
+            <table id="myTable" class="w-full border-collapse border border-white">
+                <thead>
+                    <tr class="bg-sky-800 text-slate-50">
+                        <th class="border border-white p-3">Nama Persyaratan</th>
+                        <th class="border border-white p-3 text-center">Pilih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    @foreach ($data as $item)
+                        <tr
+                            class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
+                            <td class="border border-slate-100 p-3">
+                                <div class="overflow-hidden max-w-full">
+                                    <span class="break-all">{{ $item->name }}</span>
+                                </div>
+                            </td>
+                            <td class="border border-slate-100 p-3 text-center">
+                                <input class="form-checkbox m-0" type="checkbox" name="requirements[]"
+                                    value="{{ $item->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
 
-    <div class="mt-4">
-        {{ $file->links() }}
-    </div>
-</div>
-
+            </table>
+        </div>
 
 
         {{-- Save Button --}}
