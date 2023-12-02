@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('file_requirement_id');
-            $table->foreign('file_requirement_id')->references('id')->on('file_requirements');
-            $table->string('file_path');
+            $table->unsignedBigInteger('file_requirement_id')->nullable();
+            $table->foreign('file_requirement_id')->references('id')->on('file_requirements')->onDelete('set null');
+            $table->string('file_path')->nullable();
             $table->boolean('status_file')->nullable();
             $table->boolean('status_scholar')->nullable();
             $table->timestamps();

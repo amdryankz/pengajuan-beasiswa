@@ -6,7 +6,6 @@ use App\Models\Donor;
 use Illuminate\Http\Request;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ScholarshipController extends Controller
@@ -16,10 +15,9 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('donor')->get();
-        $filerequirements = FileRequirement::all();
+        $data = ScholarshipData::with('donor')->whereNotNull('start_regis_at')->get();
 
-        return view('admin.scholar.index')->with('data', $data)->with('file', $filerequirements);
+        return view('admin.scholar.index')->with('data', $data);
     }
 
     /**
@@ -47,15 +45,12 @@ class ScholarshipController extends Controller
             'name' => 'required|string|max:255',
             'year' => 'required|integer',
             'donors_id' => 'required|exists:donors,id',
-            'status_scholarship' => 'required|string|max:255',
             'value' => 'required|string|max:255',
             'status_value' => 'required|string|max:255',
             'duration' => 'required|integer',
             'start_regis_at' => 'required|date',
             'end_regis_at' => 'required|date|after_or_equal:start_regis_at',
             'min_ipk' => 'required|numeric',
-            'start_graduation_at' => 'required|date',
-            'end_graduation_at' => 'required|date|after_or_equal:start_graduation_at',
             'kuota' => 'required|array',
             'kuota.*' => 'required|integer',
         ]);
@@ -114,15 +109,12 @@ class ScholarshipController extends Controller
             'name' => 'required|string|max:255',
             'year' => 'required|integer',
             'donors_id' => 'required|exists:donors,id',
-            'status_scholarship' => 'required|string|max:255',
             'value' => 'required|string|max:255',
             'status_value' => 'required|string|max:255',
             'duration' => 'required|integer',
             'start_regis_at' => 'required|date',
             'end_regis_at' => 'required|date|after_or_equal:start_regis_at',
             'min_ipk' => 'required|numeric',
-            'start_graduation_at' => 'required|date',
-            'end_graduation_at' => 'required|date|after_or_equal:start_graduation_at',
             'kuota' => 'required|array',
             'kuota.*' => 'required|integer',
         ]);
@@ -162,14 +154,13 @@ class ScholarshipController extends Controller
     {
         $request->validate([
             'no_sk' => 'nullable|string|max:255',
-            'file_sk' => 'nullable|mimes:pdf|max:2048', // Hanya menerima file PDF dengan maksimum 2MB
+            'file_sk' => 'nullable|mimes:pdf|max:2048',
             'start_scholarship' => 'nullable|date',
             'end_scholarship' => 'nullable|date|after_or_equal:start_scholarship',
         ]);
 
         $scholarship = ScholarshipData::findOrFail($id);
 
-        // Gunakan metode fill untuk mengisi hanya kolom yang ada dalam permintaan
         $scholarship->fill($request->only(['no_sk', 'start_scholarship', 'end_scholarship']));
 
         // Cek apakah file_sk diunggah

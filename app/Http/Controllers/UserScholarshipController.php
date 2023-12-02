@@ -24,7 +24,6 @@ class UserScholarshipController extends Controller
 
         $scholarships = ScholarshipData::where('start_regis_at', '<=', $now)
             ->where('end_regis_at', '>=', $now)
-            ->where('status_scholarship', '=', 'Umum')
             ->get();
 
         $userScholarships = UserScholarship::where('user_id', $userId)->get();
@@ -36,12 +35,10 @@ class UserScholarshipController extends Controller
             $scholarshipId = $userScholarship->scholarship_id;
 
             // Pastikan beasiswa masih ada di antara yang sedang berlangsung
-            $scholarship = $scholarships->where('id', $scholarshipId)->first();
+            $scholarship = ScholarshipData::where('id', $scholarshipId)->first();
             if ($scholarship) {
                 // Hitung waktu berakhir beasiswa (alumni dimulai setelah waktu berakhir)
-                $alumniEndDate = $scholarship->start_regis_at->addMonths($scholarship->duration);
-
-                if ($now >= $alumniEndDate) {
+                if ($now > $scholarship->end_scholarship) {
                     $alumniData[] = [
                         'scholarship' => $scholarship,
                         'userScholarship' => $userScholarship,
@@ -91,6 +88,16 @@ class UserScholarshipController extends Controller
 
         if ($existingRegistration) {
             return redirect()->route('dashboard.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
+        }
+
+        $activeScholarship = UserScholarship::where('user_id', $user->id)
+            ->where('status_scholar', true)
+            ->join('scholarship_data', 'user_scholarships.scholarship_data_id', '=', 'scholarship_data.id')
+            ->where('scholarship_data.end_scholarship', '>=', now())
+            ->exists();
+
+        if ($activeScholarship) {
+            return redirect()->route('dashboard.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {

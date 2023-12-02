@@ -17,27 +17,23 @@ class ScholarshipData extends Model
         'name',
         'year',
         'donors_id',
-        'status_scholarship',
         'value',
         'status_value',
         'duration',
         'start_regis_at',
         'end_regis_at',
         'min_ipk',
-        'start_graduation_at',
-        'end_graduation_at',
         'kuota',
         'no_sk',
         'file_sk',
         'start_scholarship',
         'end_scholarship',
+        'list_student_file',
     ];
 
     protected $casts = [
         'start_regis_at' => 'date',
         'end_regis_at' => 'date',
-        'start_graduation_at' => 'date',
-        'end_graduation_at' => 'date',
         'start_scholarship' => 'date',
         'end_scholarship' => 'date',
     ];

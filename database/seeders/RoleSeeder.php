@@ -29,6 +29,7 @@ class RoleSeeder extends Seeder
             ['name' => 'Operator Fakultas Kelautan dan Perikanan'],
             ['name' => 'Operator Fakultas Keperawatan'],
             ['name' => 'Operator Fakultas Kedokteran Gigi'],
+            ['name' => 'Operator Umum'],
         ];
 
         foreach ($data as $value) {
