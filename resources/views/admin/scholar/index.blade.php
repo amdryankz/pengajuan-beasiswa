@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Beasiswa')
+@section('navbar', 'Pengelolaan Beasiswa')
 
 @section('content')
     <h2 class="text-xl font-semibold mb-2">Beasiswa</h2>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="overflow-x-auto overflow-hidden">
-        <table class="table-auto min-w-full border-2 border-collapse mb-40">
+        <table id="myTable" class="table-auto min-w-full border-2 border-collapse mb-60">
             <thead>
                 <tr class="border-b-2 bg-sky-800 text-white text-xs">
                     <th class="px-2 py-1 text-center border-r">No</th>
@@ -24,8 +24,6 @@
                     <th class="px-3 py-1 text-center border-r">Durasi</th>
                     <th class="px-2 py-1 text-center border-r">Mulai Pendaftaran</th>
                     <th class="px-2 py-1 text-center border-r">Akhir Pendaftaran</th>
-                    {{-- <th class="px-2 py-1 text-center border-r">Mulai Kelulusan</th>
-                    <th class="px-2 py-1 text-center border-r">Akhir Kelulusan</th> --}}
                     <th class="px-2 py-1 text-center border-r">IPK</th>
                     <th class="px-2 py-1 text-center">Aksi</th>
                 </tr>
@@ -42,8 +40,6 @@
                         <td class="text-center border-r">{{ $item->duration }} Bulan</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at->format('d-m-Y') }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at->format('d-m-Y') }}</td>
-                        {{-- <td class="px-2 py-1 text-center border-r">{{ $item->start_graduation_at->format('d-m-Y') }}</td> --}}
-                        {{-- <td class="px-2 py-1 text-center border-r">{{ $item->end_graduation_at->format('d-m-Y') }}</td> --}}
                         <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                         <td class="px-2 py-1 text-center border-r">
                             <div class="relative inline-block text-left" x-data="{ opendropdown: false }">
@@ -71,7 +67,6 @@
                                                 </a>
                                             </li>
 
-
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <div x-data="{ openmodalSK: false }" x-cloak>
                                                     <button @click="openmodalSK = true"
@@ -80,9 +75,7 @@
                                                         Atur SK
                                                     </button>
 
-
                                                     <!-- Modal SK Kelulusan -->
-
                                                     <template x-if="openmodalSK">
                                                         <div>
                                                             <div
@@ -105,7 +98,6 @@
                                                                                 class="mb-2 text-lg font-bold text-gray-800 text-center">
                                                                                 Atur SK Kelulusan
                                                                             </h2>
-
 
                                                                             <form
                                                                                 action="{{ route('beasiswa.updateSK', $item->id) }}"
@@ -142,12 +134,6 @@
                                                                                                     Beasiswa</span>
                                                                                                 {{ $item->end_regis_at->format('d-m-Y') }}
                                                                                             </div>
-                                                                                            {{-- <div class="mb-3">
-                                                                                                <span
-                                                                                                    class="font-bold">Akhir
-                                                                                                    Seleksi Beasiswa</span>
-                                                                                                {{ $item->end_graduation_at->format('d-m-Y') }}
-                                                                                            </div> --}}
                                                                                             <div class="mb-3">
                                                                                                 <span
                                                                                                     class="font-bold">Nominal</span>
@@ -224,7 +210,6 @@
                                                             </div>
                                                         </div>
                                                     </template>
-
                                                 </div>
                                             </li>
 
@@ -252,10 +237,17 @@
                                 </div>
                             </div>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
 @endsection

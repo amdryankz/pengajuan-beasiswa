@@ -39,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Isi tabel disesuaikan dengan data yang dimiliki -->
+                        
                         <?php $i = 1; ?>
                         @foreach ($data as $item)
                             <tr

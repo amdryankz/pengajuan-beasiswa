@@ -22,9 +22,9 @@
 
         <div class="table-responsive border border-gray-300">
             <div>
-                <table class="border-collapse w-full">
+                <table id="myTable" class="border-collapse w-full">
                     <thead class="">
-                        <tr>
+                        <tr class="border-b-2 bg-sky-800 text-white text-sm">
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
                             <th class="p-2 border table-fixed border-gray-300">Nama Berkas</th>
                             <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
@@ -33,8 +33,7 @@
                     <tbody>
                         @php $i = 1; @endphp
                         @foreach ($data as $item)
-                            <tr
-                                class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
+                            <tr class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
                                 <td class="p-2 border text-center border-gray-300">{{ $i++ }}</td>
                                 <td class="p-2 border border-gray-300">{{ $item->name }}</td>
                                 <td class="p-2 border border-gray-300">
@@ -58,11 +57,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <link rel="stylesheet" href="path/to/toastr.css">
-    <script src="path/to/toastr.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('button[data-url]');
