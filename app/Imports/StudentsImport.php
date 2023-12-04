@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 class StudentsImport implements ToModel
 {
-
     private $scholarshipId;
 
     public function __construct($scholarshipId)

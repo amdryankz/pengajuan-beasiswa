@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserScholarshipExport;
 use App\Models\ScholarshipData;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UserScholarshipExport;
 
 class AplicantController extends Controller
 {
-
     public function index()
     {
         $scholarships = ScholarshipData::where('start_scholarship', '<=', now())
@@ -21,7 +20,7 @@ class AplicantController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             abort(404);
         }
 
@@ -52,7 +51,7 @@ class AplicantController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             abort(404);
         }
 

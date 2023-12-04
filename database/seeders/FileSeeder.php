@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
 use App\Models\FileRequirement;
-use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class FileSeeder extends Seeder
 {
@@ -21,7 +20,7 @@ class FileSeeder extends Seeder
             FileRequirement::create([
                 'name' => $faker->word, // You can use different Faker methods based on your requirements
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]);
         }
     }

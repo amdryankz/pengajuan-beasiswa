@@ -1,19 +1,18 @@
 <?php
 
-use App\Models\FileRequirement;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AplicantController;
-use App\Http\Controllers\PassFileController;
-use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\BioUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ScholarshipController;
+use App\Http\Controllers\DonorController;
 use App\Http\Controllers\FileRequirementController;
+use App\Http\Controllers\PassFileController;
+use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SpecScholarshipController;
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserScholarshipController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +28,7 @@ use App\Http\Controllers\UserScholarshipController;
 Route::middleware('auth:admin')->group(function () {
     // Donatur
     Route::resource('/adm/donatur', DonorController::class);
+    // Route::get('/adm/donatur/{slug}/edit', [DonorController::class, 'edit'])->name('donatur.edit');
 
     // Berkas
     Route::resource('/adm/berkas', FileRequirementController::class);
@@ -71,15 +71,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/aplicant/{scholarship_id}', [AplicantController::class, 'showAplicantByScholarship'])->name('aplicant.index');
     Route::get('/adm/aplicant/{scholarship_id}/downloadExcel', [AplicantController::class, 'export'])->name('aplicant.downloadExcel');
 
-
     // Alumni beasiswa
     Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
     Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
     Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
 
-
     // Beranda
-    Route::get('/adm/dashboard', [DashboardController::class, 'index']);
+    Route::get('/adm/beranda', [DashboardController::class, 'index']);
 
     // Logout admin
     Route::get('/adm/logout', [AdminAuthController::class, 'logout']);

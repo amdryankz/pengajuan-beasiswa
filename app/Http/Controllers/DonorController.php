@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donor;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DonorController extends Controller
 {
@@ -11,10 +12,9 @@ class DonorController extends Controller
      * Display a listing of the resource.
      */
 
-    //  get kuganti paginate beh
     public function index()
     {
-        $data = Donor::orderby('name', 'asc')->paginate(10);
+        $data = Donor::orderby('name', 'asc')->get();
 
         return view('admin.donor.index')->with('data', $data);
     }
@@ -33,9 +33,9 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
         ], [
-            'name.required' => 'Nama wajib diisi'
+            'name.required' => 'Nama wajib diisi',
         ]);
 
         $data = ['name' => $request->name];
@@ -58,7 +58,12 @@ class DonorController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Donor::findOrFail($id);
+        try {
+            $data = Donor::where('slug', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $data = Donor::findOrFail($id);
+        }
+
         return view('admin.donor.edit')->with('data', $data);
     }
 
@@ -68,9 +73,9 @@ class DonorController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
         ], [
-            'name.required' => 'Nama wajib diisi'
+            'name.required' => 'Nama wajib diisi',
         ]);
 
         $data = ['name' => $request->name];
@@ -96,6 +101,7 @@ class DonorController extends Controller
         }
 
         $donor->delete();
+
         return redirect()->route('donatur.index')->with('success', 'Berhasil menghapus Donatur');
     }
 }

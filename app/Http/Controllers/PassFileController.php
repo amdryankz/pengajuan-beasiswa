@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Exports\UserScholarshipExport;
 use App\Models\ScholarshipData;
+use App\Models\User;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UserScholarshipExport;
 
 class PassFileController extends Controller
 {
-
     public function index()
     {
         $scholarships = ScholarshipData::all();
@@ -22,7 +21,7 @@ class PassFileController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             // Handle jika beasiswa tidak ditemukan
             abort(404);
         }
@@ -41,7 +40,7 @@ class PassFileController extends Controller
             }
         }
 
-        return view('admin.passfile.index')->with('data', $data)->with('scholarship', $scholarship);;
+        return view('admin.passfile.index')->with('data', $data)->with('scholarship', $scholarship);
     }
 
     public function showDetail(string $user_id, string $scholarship_id)
@@ -68,7 +67,7 @@ class PassFileController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/passfile/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
+        return redirect('/adm/passfile/'.$scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
     }
 
     public function cancelValidation($scholarship_id, $user_id)
@@ -80,14 +79,14 @@ class PassFileController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/passfile/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
+        return redirect('/adm/passfile/'.$scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
 
     public function export($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             // Handle jika beasiswa tidak ditemukan
             abort(404);
         }

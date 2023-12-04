@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Carbon;
 
 class AdminSeeder extends Seeder
 {
@@ -21,7 +20,7 @@ class AdminSeeder extends Seeder
             'status' => 'Aktif',
             'role_id' => '1',
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

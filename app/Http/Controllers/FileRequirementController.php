@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FileRequirement;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FileRequirementController extends Controller
 {
@@ -14,6 +15,7 @@ class FileRequirementController extends Controller
     public function index()
     {
         $data = FileRequirement::orderby('name', 'asc')->get();
+
         return view('admin.filereq.index')->with('data', $data);
     }
 
@@ -33,9 +35,9 @@ class FileRequirementController extends Controller
         Session::flash('name', $request->name);
 
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
         ], [
-            'name.required' => 'Berkas wajib diisi'
+            'name.required' => 'Berkas wajib diisi',
         ]);
 
         $data = ['name' => $request->name];
@@ -58,7 +60,12 @@ class FileRequirementController extends Controller
      */
     public function edit(string $id)
     {
-        $data = FileRequirement::findOrFail($id);
+        try {
+            $data = FileRequirement::where('slug', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $data = FileRequirement::findOrFail($id);
+        }
+
         return view('admin.filereq.edit')->with('data', $data);
     }
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserAuthController extends Controller
 {
@@ -17,12 +17,13 @@ class UserAuthController extends Controller
     {
         $credentials = $request->validate([
             'nim' => ['required'],
-            'password' => ['required']
+            'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
             // Authentication successful
             $request->session()->regenerate();
+
             return redirect('/mhs/dashboard');
         } else {
             // Authentication failed
@@ -31,6 +32,7 @@ class UserAuthController extends Controller
 
         Session::flash('status', 'failed');
         Session::flash('message', 'Login Invalid');
+
         return redirect('/');
     }
 
@@ -39,6 +41,7 @@ class UserAuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/');
     }
 }

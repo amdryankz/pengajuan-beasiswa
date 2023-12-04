@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Donor;
-use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
+use App\Models\Donor;
 use App\Models\ScholarshipData;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SpecScholarshipController extends Controller
@@ -15,7 +15,7 @@ class SpecScholarshipController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('donor')->whereNotNull('start_scholarship')->get();
+        $data = ScholarshipData::with('donor')->whereNotNull('start_scholarship')->whereNull('start_regis_at')->get();
 
         return view('admin.specscholarship.index')->with('data', $data);
     }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ScholarshipController extends Controller
 {
@@ -76,18 +77,26 @@ class ScholarshipController extends Controller
      */
     public function show(string $id)
     {
-        $scholarship = ScholarshipData::findOrFail($id);
+        try {
+            $scholarship = ScholarshipData::where('slug', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $scholarship = ScholarshipData::findOrFail($id);
+        }
 
         return view('admin.scholar.show', ['beasiswa' => $scholarship]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $scholarship = ScholarshipData::findOrFail($id);
+        try {
+            $scholarship = ScholarshipData::where('slug', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $scholarship = ScholarshipData::findOrFail($id);
+        }
+
         $data = Donor::all();
         $filerequirements = FileRequirement::all();
 

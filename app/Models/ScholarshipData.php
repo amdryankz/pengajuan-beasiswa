@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Donor;
-use App\Models\FileRequirement;
-use App\Models\UserScholarship;
-use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ScholarshipData extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $fillable = [
         'name',
@@ -37,6 +34,16 @@ class ScholarshipData extends Model
         'start_scholarship' => 'date',
         'end_scholarship' => 'date',
     ];
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => true,
+            ]
+        ];
+    }
 
     public function donor()
     {

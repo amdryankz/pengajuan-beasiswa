@@ -2,19 +2,19 @@
 
 namespace App\Exports;
 
-use App\Models\UserScholarship;
-use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents
+class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
      */
     protected $data;
+
     protected $scholarshipName;
 
     public function __construct(array $data, $scholarshipName)
@@ -41,7 +41,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                 'No.Rek' => $item['user']->no_rek,
                 'Nama Pada Rekening' => $item['user']->name_rek,
                 'Pekerjaan Ortu' => $item['user']->job_parent,
-                'Penghasilan Ortu' => $item['user']->income_parent
+                'Penghasilan Ortu' => $item['user']->income_parent,
             ];
         });
 
@@ -66,8 +66,8 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                 'No. Rekening',
                 'Nama Pada Rekening',
                 'Pekerjaan Ortu',
-                'Penghasilan Ortu'
-            ]
+                'Penghasilan Ortu',
+            ],
         ];
     }
 
@@ -96,7 +96,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithHeadi
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FF0FFDDD'], // Warna biru muda
+                        'startColor' => ['argb' => 'FF0FFDDD'],
                     ],
                     'alignment' => [
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,

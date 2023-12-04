@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Faker\Factory as Faker;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -30,11 +29,11 @@ class UserSeeder extends Seeder
             'total_sks' => 120,
             'birthdate' => Carbon::createFromDate(2000, 1, 1),
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
 
         for ($i = 1; $i <= 10; $i++) {
-            $nim = '200810701000' . $i;
+            $nim = '200810701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Informatika';
@@ -59,7 +58,7 @@ class UserSeeder extends Seeder
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
-                'updated_at' => $updated_at
+                'updated_at' => $updated_at,
             ]);
         }
     }

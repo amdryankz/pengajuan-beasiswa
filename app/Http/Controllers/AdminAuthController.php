@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use App\Models\Role;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminAuthController extends Controller
 {
@@ -29,15 +30,18 @@ class AdminAuthController extends Controller
                 $request->session()->regenerateToken();
                 Session::flash('status', 'failed');
                 Session::flash('message', 'Your account is not active');
+
                 return redirect('/adm');
             }
 
             $request->session()->regenerate();
-            return redirect('/adm/dashboard');
+
+            return redirect('/adm/beranda');
         }
 
         Session::flash('status', 'failed');
         Session::flash('message', 'Login Invalid');
+
         return redirect('/adm');
     }
 
@@ -46,6 +50,7 @@ class AdminAuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/adm');
     }
 
@@ -86,8 +91,11 @@ class AdminAuthController extends Controller
 
     public function edit($id)
     {
-
-        $user = Admin::findOrFail($id);
+        try {
+            $user = Admin::where('slug', $id)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $user = Admin::findOrFail($id);
+        }
         $roles = Role::all();
 
         $disabledOptions = [];
@@ -97,7 +105,7 @@ class AdminAuthController extends Controller
             $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->id !== $user->role_id;
         }
 
-        return view('admin.access.edit')->with('user', $user)->with('roles', $roles)->with('disabledOptions', $disabledOptions);;
+        return view('admin.access.edit')->with('user', $user)->with('roles', $roles)->with('disabledOptions', $disabledOptions);
     }
 
     public function update(Request $request, $id)
