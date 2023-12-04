@@ -25,9 +25,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
 
 
 
@@ -37,7 +35,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
 
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.tailwindcss.min.css">
 </head>
 
 @section('navbar', 'Beranda')
@@ -207,12 +207,17 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.tailwindcss.com/3.3.5"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+
+    <script defer>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
+
 </body>
 
 </html>

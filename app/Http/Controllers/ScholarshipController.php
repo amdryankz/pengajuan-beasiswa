@@ -27,7 +27,7 @@ class ScholarshipController extends Controller
     public function create()
     {
         $data = Donor::all();
-        $filerequirements = FileRequirement::paginate(5);
+        $filerequirements = FileRequirement::get();
 
         $tahunSekarang = date('Y');
         $tahunArray = range($tahunSekarang, $tahunSekarang - 2);
