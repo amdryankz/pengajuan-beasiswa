@@ -6,7 +6,7 @@
     <h2 class="text-xl font-semibold mb-2">Beasiswa Khusus</h2>
 
     <div class="mb-4">
-        <a href="{{ route('khusus.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">+
+        <a href="{{ route('beasiswa-khusus.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">+
             Tambah Beasiswa Khusus
         </a>
     </div>
@@ -58,7 +58,7 @@
                                         <ul class="text-sm py-1 text-slate-700 m-2">
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <a class="flex items-center"
-                                                    href="{{ route('beasiswa.show', $item->id) }}">
+                                                    href="{{ route('pengelolaan.show', $item->id) }}">
                                                     <ion-icon name="information-circle" class="mr-1"></ion-icon>
                                                     Detail
                                                 </a>
@@ -226,14 +226,14 @@
 
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <a class="flex items-center"
-                                                    href="{{ route('khusus.edit', $item->id) }}">
+                                                    href="{{ route('beasiswa-khusus.edit', $item->id) }}">
                                                     <ion-icon name="create" class="mr-1"></ion-icon>
                                                     Edit
                                                 </a>
                                             </li>
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                                    action="{{ route('khusus.destroy', $item->id) }}" method="POST">
+                                                    action="{{ route('beasiswa-khusus.destroy', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"

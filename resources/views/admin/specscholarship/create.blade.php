@@ -3,10 +3,10 @@
 @section('navbar', 'Upload Khusus')
 
 @section('content')
-    <div class="pb-3"><a href="{{ route('khusus.index') }}" class="btn btn-secondary">
+    <div class="pb-3"><a href="{{ route('beasiswa-khusus.index') }}" class="btn btn-secondary">
             << Kembali</a>
     </div>
-    <form action="{{ route('khusus.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-4">
+    <form action="{{ route('beasiswa-khusus.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-4">
         @csrf
         <div class="col-span-1">
             <div class="mb-4">

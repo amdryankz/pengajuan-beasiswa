@@ -4,10 +4,7 @@
 
 @section('content')
 
-
-    <div class="">
-        <h2 class="text-xl font-semibold mb-4">Donatur</h2>
-
+    <div class="p-4">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -20,35 +17,35 @@
             </div>
         @endif
 
-        <div class="">
-            <button class="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded mb-3">
-                <a href="{{ route('donatur.create') }}" class="text-white font-bold">
-                    + Tambah Donatur
-                </a>
-            </button>
-        </div>
+        <section class="bg-white p-4 mb-4">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-4">Donatur</h2>
+                <button class="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded mb-3">
+                    <a href="{{ route('donatur.create') }}" class="text-white font-bold">
+                        + Tambah Donatur
+                    </a>
+                </button>
+            </div>
+            <hr>
 
-        <div class="container mx-auto">
-            <div>
+            <div class="container mx-auto  border-gray-300 pb-4 mt-4">
                 <table id="myTable" class="table table-striped w-full">
                     <thead>
                         <tr class="border-b-2 bg-sky-800 text-white text-sm">
-                            <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
-                            <th class="p-2 border table-fixed border-gray-300">Nama Donatur</th>
-                            <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
+                            <th class="p-2 w-[5%] text-center">No</th>
+                            <th class="p-2">Nama Donatur</th>
+                            <th class="p-2 w-1/12 text-center">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <?php $i = 1; ?>
                         @foreach ($data as $item)
-                            <tr
-                                class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
-                                <td class="p-2 border text-center border-gray-300">{{ $i++ }}</td>
-                                <td class="p-2 border border-gray-300">{{ $item->name }}</td>
-                                <td class="p-2 border border-gray-300">
+                            <tr class="border-b border-gray-300 @if ($loop->even) bg-slate-50 @endif">
+                                <td class="p-2 text-center">{{ $i++ }}</td>
+                                <td class="p-2">{{ $item->name }}</td>
+                                <td class="p-2">
                                     <div class="flex items-center justify-center ml-2">
-                                        <a href="{{ route('donatur.edit', $item->id) }}"
+                                        <a href="{{ $item->slug ? route('donatur.edit', $item->slug) : route('donatur.edit', $item->id) }}"
                                             class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded">
                                             <ion-icon name="create-sharp" class="mr-1"></ion-icon>
                                         </a>
@@ -64,22 +61,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
+        </section>
     </div>
-    {{-- 
-    <div class="mt-4">
-        {{ $data->links() }}
-    </div> --}}
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    {{-- <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
-
-    <link rel="stylesheet" href="path/to/toastr.css">
-    <script src="path/to/toastr.js"></script> --}}
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

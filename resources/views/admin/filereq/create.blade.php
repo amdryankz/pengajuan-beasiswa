@@ -1,9 +1,9 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Berkas')
+@section('navbar', 'Donatur')
 
 @section('content')
-    <div>
+    <div class="p-4 pt-8 bg-white">
         <div class="mb-4 text-start text-lg">
             <a href="{{ route('berkas.index') }}"
                 class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
@@ -13,16 +13,17 @@
                     </path>
                 </svg>
             </a>
-        </div>
-        <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
             <div class="mb-4 text-center">
                 <h1 class="text-2xl font-semibold text-slate-700" style="text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                     Tambah Berkas</h1>
             </div>
+        </div>
+        <div class="p-6 rounded-lg shadow-sm bg-gray-200">
+
             <form action="{{ route('berkas.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="name" class="block ml-1 ">
+                    <label for="name" class="block ml-1">
                         <span
                             class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-red-600 after:ml-0.5">
                             Nama Berkas</span>
@@ -32,11 +33,14 @@
                             placeholder="Nama Berkas" value="{{ Session::get('name') }}" required>
                     </label>
                 </div>
+
+
+
         </div>
-        <div class="mt-4 text-white">
-            <button class="bg-blue-500 px-4 py-2 rounded-md float-left hover:bg-blue-600" name="simpan"
+        <div class="mt-4">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" name="simpan"
                 type="submit">Simpan</button>
-            </form>
         </div>
+        </form>
     </div>
 @endsection

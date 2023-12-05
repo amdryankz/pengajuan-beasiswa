@@ -48,8 +48,8 @@
         data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute">
         <ul class="list-none pt-3 px-2" data-te-sidenav-menu-ref>
             <li class="relative text-slate-800">
-                <a id="beranda" href="{{ url('/adm/dashboard') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/dashboard') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="beranda" href="{{ url('/adm/beranda') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beranda') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <span>
                         <ion-icon class="px-auto text-xl hidden sm:block" name="home-sharp"></ion-icon>
@@ -79,8 +79,8 @@
             </li>
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="beasiswa" href="{{ url('/adm/beasiswa') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beasiswa*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="beasiswa" href="{{ url('/adm/pengelolaan') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="create-sharp"></ion-icon>
                     <span class="pl-2 text-base">Pengelolaan</span>
@@ -88,8 +88,8 @@
             </li>
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="beasiswakhusus" href="{{ url('/adm/khusus') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/khusus') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="beasiswakhusus" href="{{ url('/adm/beasiswa-khusus') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beasiswa-khusus*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="clipboard-sharp"></ion-icon>
                     <span class="pl-2 text-base">Beasiswa Khusus</span>
@@ -100,8 +100,8 @@
 
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="pengusul" href="{{ url('/adm/registrations') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/registrations*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="pengusul" href="{{ url('/adm/pengusul') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengusul*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="person-add-sharp"></ion-icon>
                     <span class="pl-2 text-base">Pengusul</span>
@@ -109,8 +109,8 @@
             </li>
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="Kelulusan" href="{{ url('/adm/passfile') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/passfile*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="Kelulusan" href="{{ url('/adm/kelulusan') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/kelulusan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="file-tray-full-sharp"></ion-icon>
                     <span class="pl-2 text-base">Kelulusan</span>
@@ -118,8 +118,8 @@
             </li>
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="berlangsung" href="{{ url('/adm/aplicant') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/aplicant*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="berlangsung" href="{{ url('/adm/berlangsung') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berlangsung*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="checkmark-circle-sharp"></ion-icon>
                     <span class="pl-2 text-base">Berlangsung</span>
@@ -139,8 +139,8 @@
             <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
 
             <li class="relative text-slate-800 mb-1.5">
-                <a id="pengguna" href="{{ url('/adm/access') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/access*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                <a id="pengguna" href="{{ url('/adm/akses') }}"
+                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/akses*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                     data-te-sidenav-link-ref>
                     <ion-icon class="px-auto text-xl hidden sm:block" name="person-sharp"></ion-icon>
                     <span class="pl-2 text-base">Pengguna</span>
@@ -192,10 +192,10 @@
             </div>
         </nav>
 
-        <div class="ml-60 p-16 pt-32">
+        <div class="ml-60 p-12">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
-                    <div class="card p-6 w-full">
+                    <div class="card p-6 w-full bg-gray-200">
                         <div class="card-body text-base">
                             @yield('content')
                         </div>
@@ -203,6 +203,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 
