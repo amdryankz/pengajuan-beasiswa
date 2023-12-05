@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\StudentsImport;
 use App\Models\Donor;
-use App\Models\ScholarshipData;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
+use App\Models\ScholarshipData;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class SpecScholarshipController extends Controller
 {
@@ -95,5 +96,31 @@ class SpecScholarshipController extends Controller
         $scholarship->delete();
 
         return redirect()->route('khusus.index');
+    }
+
+    public function updateSK(Request $request, string $id)
+    {
+        $request->validate([
+            'no_sk' => 'nullable|string|max:255',
+            'file_sk' => 'nullable|mimes:pdf|max:2048',
+        ]);
+
+        $scholarship = ScholarshipData::findOrFail($id);
+
+        $scholarship->fill($request->only(['no_sk', 'start_scholarship', 'end_scholarship']));
+
+        if ($request->hasFile('file_sk')) {
+            if ($scholarship->file_sk) {
+                Storage::delete($scholarship->file_sk);
+            }
+
+            $file_skPath = $request->file('file_sk')->store('file_sk', 'public');
+            $scholarship->file_sk = $file_skPath;
+        }
+
+        $scholarship->save();
+
+        return redirect()->route('beasiswa.index')
+            ->with('success', 'Scholarship updated successfully');
     }
 }
