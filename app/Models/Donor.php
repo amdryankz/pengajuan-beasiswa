@@ -18,7 +18,7 @@ class Donor extends Model
             'slug' => [
                 'source' => 'name',
                 'onUpdate' => true,
-            ]
+            ],
         ];
     }
 

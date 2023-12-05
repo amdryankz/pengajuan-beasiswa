@@ -41,7 +41,7 @@ class ScholarshipData extends Model
             'slug' => [
                 'source' => 'name',
                 'onUpdate' => true,
-            ]
+            ],
         ];
     }
 

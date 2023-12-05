@@ -27,7 +27,7 @@ class Admin extends Authenticatable
             'slug' => [
                 'source' => 'name',
                 'onUpdate' => true,
-            ]
+            ],
         ];
     }
 

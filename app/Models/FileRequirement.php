@@ -18,7 +18,7 @@ class FileRequirement extends Model
             'slug' => [
                 'source' => 'name',
                 'onUpdate' => true,
-            ]
+            ],
         ];
     }
 

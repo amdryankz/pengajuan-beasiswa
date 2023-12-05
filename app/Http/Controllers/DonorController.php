@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donor;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class DonorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
     public function index()
     {
         $data = Donor::orderby('name', 'asc')->get();
@@ -92,7 +91,7 @@ class DonorController extends Controller
     {
         $donor = Donor::find($id);
 
-        if (!$donor) {
+        if (! $donor) {
             return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
         }
 

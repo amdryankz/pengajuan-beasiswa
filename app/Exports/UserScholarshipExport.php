@@ -77,7 +77,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
             AfterSheet::class => function (AfterSheet $event) {
                 // Menambahkan baris di atas heading
                 $event->sheet->mergeCells('A1:N1');
-                $event->sheet->setCellValue('A1', 'Daftar Kelulusan Beasiswa ' . $this->scholarshipName);
+                $event->sheet->setCellValue('A1', 'Daftar Kelulusan Beasiswa '.$this->scholarshipName);
 
                 // Mengatur style untuk baris nama beasiswa
                 $event->sheet->getStyle('A1')->applyFromArray([
@@ -103,7 +103,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
                     ],
                 ]);
 
-                $event->sheet->getDelegate()->getStyle('A2:N' . ($event->sheet->getDelegate()->getHighestRow()))
+                $event->sheet->getDelegate()->getStyle('A2:N'.($event->sheet->getDelegate()->getHighestRow()))
                     ->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
             },
         ];
