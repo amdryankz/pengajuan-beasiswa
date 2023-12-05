@@ -110,8 +110,8 @@
                           class="flex items-center rounded-md px-4 py-2  text-gray-700 transition duration-300 group-hover:text-red-600 group-hover:bg-transparent group-hover:border-pink-300 focus:outline-none focus:border-red-500 focus:ring focus:ring-red-200">
                           <i class="material-icons mr-2 text-gray-700 group-hover:text-red-500">exit_to_app</i> Keluar
                       </a>
-                       <div 
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/logout')) border-blue-500  @endif group-hover:border-red-500">
+                      <div
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/logout')) border-blue-500 @endif group-hover:border-red-500">
                       </div>
                   </li>
 
@@ -130,8 +130,14 @@
               <!-- User Info -->
               <div class="flex items-center mr-4">
                   <div class="text-slate-600 text-sm">
-                      <span class="font-bold">Muhammad Suhail Haritsah</span>
-                      <span class="font-bold block">2008107010069</span>
+                      @if (Auth::check())
+                          <span class="font-bold">
+                              {{ Auth::user()->name }}
+                          </span>
+                          <span class="font-bold block">
+                              {{ Auth::user()->nim }}
+                          </span>
+                      @endif
                   </div>
               </div>
 

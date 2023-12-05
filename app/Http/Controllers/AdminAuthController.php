@@ -86,7 +86,7 @@ class AdminAuthController extends Controller
         $data['password'] = bcrypt($data['password']);
         Admin::create($data);
 
-        return redirect('/adm/access')->with('status', 'success')->with('message', 'User created successfully');
+        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User created successfully');
     }
 
     public function edit($id)
@@ -123,7 +123,7 @@ class AdminAuthController extends Controller
 
         Admin::where('id', $id)->update($data);
 
-        return redirect('/adm/access')->with('status', 'success')->with('message', 'User updated successfully');
+        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User updated successfully');
     }
 
     public function destroy($id)
@@ -131,6 +131,6 @@ class AdminAuthController extends Controller
         $user = Admin::findOrFail($id);
         $user->delete();
 
-        return redirect('/adm/access')->with('status', 'success')->with('message', 'User deleted successfully');
+        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User deleted successfully');
     }
 }

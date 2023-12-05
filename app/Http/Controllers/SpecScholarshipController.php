@@ -60,7 +60,7 @@ class SpecScholarshipController extends Controller
             'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
         ]);
 
-        return redirect()->route('khusus.index')
+        return redirect()->route('beasiswa-khusus.index')
             ->with('success', 'Scholarship created successfully');
     }
 
@@ -120,7 +120,7 @@ class SpecScholarshipController extends Controller
 
         $scholarship->save();
 
-        return redirect()->route('beasiswa.index')
+        return redirect()->route('beasiswa-khusus.index')
             ->with('success', 'Scholarship updated successfully');
     }
 }

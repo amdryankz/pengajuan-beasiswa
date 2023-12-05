@@ -47,114 +47,161 @@
     <nav id="sidebar" class="fixed left-0 top-16 z-50 w-60 h-full overflow-y-auto bg-slate-50 shadow-lg"
         data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute">
         <ul class="list-none pt-3 px-2" data-te-sidenav-menu-ref>
-            <li class="relative text-slate-800">
-                <a id="beranda" href="{{ url('/adm/beranda') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beranda') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <span>
-                        <ion-icon class="px-auto text-xl hidden sm:block" name="home-sharp"></ion-icon>
-                    </span>
-                    <span class="pl-2 text-base">Beranda</span>
-                </a>
-            </li>
+            @if (Auth::user() && Auth::user()->role)
+                @php $roleName = Auth::user()->role->name; @endphp
+                @switch($roleName)
+                    @case('Admin')
+                        <li class="relative text-slate-800">
+                            <a id="beranda" href="{{ url('/adm/beranda') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beranda') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <span>
+                                    <ion-icon class="px-auto text-xl hidden sm:block" name="home-sharp"></ion-icon>
+                                </span>
+                                <span class="pl-2 text-base">Beranda</span>
+                            </a>
+                        </li>
+                        <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Beasiswa</p>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="donatur" href="{{ url('/adm/donatur') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/donatur**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="wallet-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Donatur</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="berkas" href="{{ url('/adm/berkas') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berkas**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="documents-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Berkas</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="beasiswa" href="{{ url('/adm/pengelolaan') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="create-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Pengelolaan</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="beasiswakhusus" href="{{ url('/adm/beasiswa-khusus') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beasiswa-khusus') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="clipboard-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Beasiswa Khusus</span>
+                            </a>
+                        </li>
+                        <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Laporan</p>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="pengusul" href="{{ url('/adm/pengusul') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengusul*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="person-add-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Pengusul</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="Kelulusan" href="{{ url('/adm/kelulusan') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/kelulusan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="file-tray-full-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Kelulusan</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="berlangsung" href="{{ url('/adm/berlangsung') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berlangsung*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="checkmark-circle-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Berlangsung</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="alumni" href="{{ url('/adm/alumni') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/alumni*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="school-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Alumni</span>
+                            </a>
+                        </li>
+                        <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="pengguna" href="{{ url('/adm/akses') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/akses*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="person-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Pengguna</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Logout</span>
+                            </a>
+                        </li>
+                    @break
 
-            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Beasiswa</p>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="donatur" href="{{ url('/adm/donatur') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/donatur**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="wallet-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Donatur</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="berkas" href="{{ url('/adm/berkas') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berkas**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="documents-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Berkas</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="beasiswa" href="{{ url('/adm/pengelolaan') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="create-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Pengelolaan</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="beasiswakhusus" href="{{ url('/adm/beasiswa-khusus') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beasiswa-khusus*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="clipboard-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Beasiswa Khusus</span>
-                </a>
-            </li>
-
-            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Laporan</p>
-
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="pengusul" href="{{ url('/adm/pengusul') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengusul*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="person-add-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Pengusul</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="Kelulusan" href="{{ url('/adm/kelulusan') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/kelulusan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="file-tray-full-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Kelulusan</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="berlangsung" href="{{ url('/adm/berlangsung') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berlangsung*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="checkmark-circle-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Berlangsung</span>
-                </a>
-            </li>
-
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="alumni" href="{{ url('/adm/alumni') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/alumni*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="school-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Alumni</span>
-                </a>
-            </li>
-
-            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="pengguna" href="{{ url('/adm/akses') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/akses*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="person-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Pengguna</span>
-                </a>
-            </li>
-
-            <li class="relative text-slate-800 mb-1.5">
-                <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
-                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
-                    data-te-sidenav-link-ref>
-                    <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
-                    <span class="pl-2 text-base">Logout</span>
-                </a>
-            </li>
+                    @case('Operator Fakultas Hukum')
+                        <li class="relative text-slate-800">
+                            <a id="beranda" href="{{ url('/adm/beranda') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beranda') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <span>
+                                    <ion-icon class="px-auto text-xl hidden sm:block" name="home-sharp"></ion-icon>
+                                </span>
+                                <span class="pl-2 text-base">Beranda</span>
+                            </a>
+                        </li>
+                        <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Laporan</p>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="pengusul" href="{{ url('/adm/pengusul') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengusul*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="person-add-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Pengusul</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="Kelulusan" href="{{ url('/adm/kelulusan') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/kelulusan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="file-tray-full-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Kelulusan</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="berlangsung" href="{{ url('/adm/berlangsung') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berlangsung*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="checkmark-circle-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Berlangsung</span>
+                            </a>
+                        </li>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="alumni" href="{{ url('/adm/alumni') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/alumni*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="school-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Alumni</span>
+                            </a>
+                        </li>
+                        <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
+                        <li class="relative text-slate-800 mb-1.5">
+                            <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
+                                class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                data-te-sidenav-link-ref>
+                                <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
+                                <span class="pl-2 text-base">Logout</span>
+                            </a>
+                        </li>
+                    @break
+                @endswitch
+            @endif
         </ul>
     </nav>
     {{-- end sidebar --}}

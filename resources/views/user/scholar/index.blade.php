@@ -86,14 +86,21 @@
                                 @endif
                             </td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                    action="{{ route('dashboard.destroy', $item->id) }}" class="inline-block" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="bg-red-500 text-white px-2 py-1 rounded" type="submit" name="submit">
-                                        Batal Daftar
-                                    </button>
-                                </form>
+                                @if ($item->status_scholar != true)
+                                    {{-- Tampilkan tombol hanya jika status_scholar tidak true --}}
+                                    <form onsubmit="return confirm('Yakin mau hapus data ini?')"
+                                        action="{{ route('dashboard.destroy', $item->id) }}" class="inline-block"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded" type="submit"
+                                            name="submit">
+                                            Batal Daftar
+                                        </button>
+                                    </form>
+                                @else
+                                    -
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -111,6 +118,7 @@
                     <tr>
                         <th class="border border-gray-300 px-4 py-2">No</th>
                         <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
+                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,7 +126,8 @@
                     @foreach ($alumniData as $item)
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item['scholarship']->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
                         </tr>
                     @endforeach
                 </tbody>

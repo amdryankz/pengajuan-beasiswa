@@ -58,7 +58,7 @@
                                         <ul class="text-sm py-1 text-slate-700 m-2">
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <a class="flex items-center"
-                                                    href="{{ route('pengelolaan.show', $item->id) }}">
+                                                    href="{{ route('beasiswa-khusus.show', $item->id) }}">
                                                     <ion-icon name="information-circle" class="mr-1"></ion-icon>
                                                     Detail
                                                 </a>
@@ -128,19 +128,19 @@
                                                                                                     class="font-bold">Durasi</span>
                                                                                                 {{ $item->duration }} Bulan
                                                                                             </div>
-                                                                                            <div class="mb-3">
+                                                                                            {{-- <div class="mb-3">
                                                                                                 <span
                                                                                                     class="font-bold">Akhir
                                                                                                     Pendaftaran
                                                                                                     Beasiswa</span>
                                                                                                 {{ $item->end_regis_at }}
-                                                                                            </div>
-                                                                                            <div class="mb-3">
+                                                                                            </div> --}}
+                                                                                            {{-- <div class="mb-3">
                                                                                                 <span
                                                                                                     class="font-bold">Akhir
                                                                                                     Seleksi Beasiswa</span>
                                                                                                 {{ $item->end_graduation_at }}
-                                                                                            </div>
+                                                                                            </div> --}}
                                                                                             <div class="mb-3">
                                                                                                 <span
                                                                                                     class="font-bold">Nominal</span>
@@ -183,7 +183,7 @@
                                                                                                 </p>
                                                                                             @endif
                                                                                         </div>
-                                                                                        <div class="mb-3">
+                                                                                        {{-- <div class="mb-3">
                                                                                             <span class="font-bold">Tanggal
                                                                                                 Mulai Berlaku
                                                                                                 Beasiswa</span>
@@ -192,8 +192,8 @@
                                                                                                 value="{{ $item->start_scholarship ? $item->start_scholarship->format('Y-m-d') : '' }}"
                                                                                                 class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                 required>
-                                                                                        </div>
-                                                                                        <div class="mb-3">
+                                                                                        </div> --}}
+                                                                                        {{-- <div class="mb-3">
                                                                                             <span class="font-bold">Tanggal
                                                                                                 Akhir Berlaku
                                                                                                 Beasiswa</span>
@@ -202,7 +202,7 @@
                                                                                                 value="{{ $item->end_scholarship ? $item->end_scholarship->format('Y-m-d') : '' }}"
                                                                                                 class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                 required>
-                                                                                        </div>
+                                                                                        </div> --}}
                                                                                     </div>
                                                                                 </div>
 
