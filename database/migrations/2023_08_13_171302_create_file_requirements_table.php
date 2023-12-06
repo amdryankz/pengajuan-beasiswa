@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('file_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug', 255)->nullable();
             $table->timestamps();
         });
     }
