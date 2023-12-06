@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('scholarship_data', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedBigInteger('scholarships_id');
+            $table->foreign('scholarships_id')->references('id')->on('scholarships');
             $table->year('year');
-            $table->unsignedBigInteger('donors_id');
-            $table->foreign('donors_id')->references('id')->on('donors');
             $table->string('value');
             $table->string('status_value');
             $table->integer('duration');
@@ -29,6 +28,7 @@ return new class extends Migration
             $table->date('start_scholarship')->nullable();
             $table->date('end_scholarship')->nullable();
             $table->string('list_student_file')->nullable();
+            $table->string('slug', 255)->nullable();
             $table->timestamps();
         });
     }

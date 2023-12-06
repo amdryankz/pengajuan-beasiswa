@@ -11,9 +11,8 @@ class ScholarshipData extends Model
     use HasFactory, Sluggable;
 
     protected $fillable = [
-        'name',
+        'scholarships_id',
         'year',
-        'donors_id',
         'value',
         'status_value',
         'duration',
@@ -45,9 +44,9 @@ class ScholarshipData extends Model
         ];
     }
 
-    public function donor()
+    public function scholarship()
     {
-        return $this->belongsTo(Donor::class, 'donors_id');
+        return $this->belongsTo(Scholarship::class, 'scholarships_id');
     }
 
     public function requirements()

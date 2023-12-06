@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status')->default('Aktif');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
+            $table->string('slug', 255)->nullable();
             $table->timestamps();
         });
     }

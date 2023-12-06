@@ -91,11 +91,11 @@ class DonorController extends Controller
     {
         $donor = Donor::find($id);
 
-        if (! $donor) {
+        if (!$donor) {
             return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
         }
 
-        if ($donor->scholarshipData()->count() > 0) {
+        if ($donor->scholarships()->count() > 0) {
             return redirect()->route('donatur.index')->with('error', 'Tidak dapat menghapus donatur ini karena masih terdapat beasiswa yang terkait.');
         }
 

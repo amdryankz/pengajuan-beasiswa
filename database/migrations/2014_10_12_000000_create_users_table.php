@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('no_rek')->nullable();
             $table->string('name_rek')->nullable();
             $table->string('name_bank')->nullable();
+            $table->string('slug', 255)->nullable();
             $table->timestamps();
         });
     }

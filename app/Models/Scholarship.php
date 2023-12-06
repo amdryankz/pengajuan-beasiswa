@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Donor extends Model
+class Scholarship extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'donors_id'];
 
     public function sluggable(): array
     {
@@ -22,8 +22,13 @@ class Donor extends Model
         ];
     }
 
-    public function scholarships()
+    public function donors()
     {
-        return $this->hasMany(Scholarship::class, 'donors_id');
+        return $this->belongsTo(Donor::class, 'donors_id');
+    }
+
+    public function scholarshipData()
+    {
+        return $this->hasMany(ScholarshipData::class, 'scholarships_id');
     }
 }

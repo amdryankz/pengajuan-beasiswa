@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\AdminAuthController;
-use App\Http\Controllers\AlumniController;
-use App\Http\Controllers\AplicantController;
-use App\Http\Controllers\BioUserController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DonorController;
-use App\Http\Controllers\FileRequirementController;
-use App\Http\Controllers\PassFileController;
-use App\Http\Controllers\ScholarshipController;
-use App\Http\Controllers\SpecScholarshipController;
-use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\UserScholarshipController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonorController;
+use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\BioUserController;
+use App\Http\Controllers\AplicantController;
+use App\Http\Controllers\PassFileController;
+use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ScholarshipController;
+use App\Http\Controllers\FileRequirementController;
+use App\Http\Controllers\ScholarshipDataController;
+use App\Http\Controllers\SpecScholarshipController;
+use App\Http\Controllers\UserScholarshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,12 @@ Route::middleware('auth:admin')->group(function () {
     // Berkas
     Route::resource('/adm/berkas', FileRequirementController::class);
 
+    // Beasiswa
+    Route::resource('/adm/beasiswa', ScholarshipController::class);
+
     // Pengelolaan
-    Route::resource('/adm/pengelolaan', ScholarshipController::class);
-    Route::put('/adm/pengelolaan/sk/{id}', [ScholarshipController::class, 'updateSK'])->name('beasiswa.updateSK');
+    Route::resource('/adm/pengelolaan', ScholarshipDataController::class);
+    Route::put('/adm/pengelolaan/sk/{id}', [ScholarshipDataController::class, 'updateSK'])->name('beasiswa.updateSK');
 
     // Beasiswa khusus
     Route::resource('adm/beasiswa-khusus', SpecScholarshipController::class);

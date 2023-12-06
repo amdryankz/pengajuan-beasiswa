@@ -91,11 +91,11 @@ class FileRequirementController extends Controller
         $fileRequirement = FileRequirement::findOrFail($id);
 
         if ($fileRequirement->requireFiles()->count() > 0) {
-            return redirect()->back()->withErrors(['error' => 'Tidak dapat menghapus persyaratan ini karena masih terdapat beasiswa yang terkait.']);
+            return redirect()->back()->withErrors(['error' => 'Tidak dapat menghapus berkas ini karena masih terdapat beasiswa yang terkait.']);
         }
 
         $fileRequirement->delete();
 
-        return redirect()->route('berkas.index')->with('success', 'Berhasil delete berkas');
+        return redirect()->route('berkas.index')->with('success', 'Berhasil hapus berkas');
     }
 }
