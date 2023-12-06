@@ -78,7 +78,7 @@ Route::middleware('auth:admin')->group(function () {
     // Alumni beasiswa
     Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
     Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
-    Route::get('/adm/alumni/{user_id}/{scholarship_id}/detail', [AplicantController::class, 'showDetail'])->name('alumni.detail');
+    Route::get('/adm/alumni/{user_id}/{scholarship_id}/detail', [AlumniController::class, 'showDetail'])->name('alumni.detail');
     Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
 
     // Beranda
