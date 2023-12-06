@@ -23,7 +23,7 @@
                             class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
                             <td class="p-2 w-[5%] text-center border border-gray-300">{{ $loop->index + 1 }}</td>
                             <td class="p-2 border table-fixed border-gray-300"><a
-                                    href="{{ route('registrations.index', ['scholarship_id' => $item->scholarship->id]) }}">{{ $item->scholarship->name }}</a>
+                                    href="{{ route('registrations.index', ['scholarship_id' => $item->id]) }}">{{ $item->scholarship->name }}</a>
                             </td>
                             <td class="p-2 border w-1/12 text-center border-gray-300">{{ $item->year }}</td>
                         </tr>

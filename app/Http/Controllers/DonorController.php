@@ -91,7 +91,7 @@ class DonorController extends Controller
     {
         $donor = Donor::find($id);
 
-        if (!$donor) {
+        if (! $donor) {
             return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
         }
 

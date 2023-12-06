@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Donor;
 use Carbon\Carbon;
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
 class DonorSeeder extends Seeder
@@ -14,11 +13,17 @@ class DonorSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $data = [
+            ['name' => 'Bank Indonesia'],
+            ['name' => 'BUMN'],
+            ['name' => 'Osaka Gas Jepang'],
+            ['name' => 'PT. Djarum'],
+            ['name' => 'Yayasan Dompet Dhuafa'],
+        ];
 
-        for ($i = 1; $i <= 10; $i++) {
-            Donor::create([
-                'name' => $faker->company,
+        foreach ($data as $value) {
+            Donor::insert([
+                'name' => $value['name'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

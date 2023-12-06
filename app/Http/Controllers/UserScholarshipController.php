@@ -172,7 +172,6 @@ class UserScholarshipController extends Controller
         $scholarship = ScholarshipData::find($scholarship_id);
 
         if (! $scholarship) {
-            // Handle jika beasiswa tidak ditemukan
             abort(404);
         }
 

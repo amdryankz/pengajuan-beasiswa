@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
-use App\Http\Controllers\AlumniController;
-use App\Http\Controllers\BioUserController;
-use App\Http\Controllers\AplicantController;
-use App\Http\Controllers\PassFileController;
-use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\AplicantController;
+use App\Http\Controllers\BioUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ScholarshipController;
+use App\Http\Controllers\DonorController;
 use App\Http\Controllers\FileRequirementController;
+use App\Http\Controllers\PassFileController;
+use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\ScholarshipDataController;
 use App\Http\Controllers\SpecScholarshipController;
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserScholarshipController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

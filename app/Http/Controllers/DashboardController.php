@@ -24,6 +24,15 @@ class DashboardController extends Controller
             ->where('scholarship_data.end_scholarship', '>=', now())
             ->count();
 
-        return view('admin.homepage.index', compact('totalScholarship', 'totalAlumni', 'totalActive'));
+        $totalActiveByScholarship = ScholarshipData::withCount([
+            'users' => function ($query) {
+                $query->where('status_file', true)
+                    ->where('status_scholar', true)
+                    ->where('start_scholarship', '<=', now())
+                    ->where('end_scholarship', '>=', now());
+            },
+        ])->get();
+
+        return view('admin.homepage.index', compact('totalScholarship', 'totalAlumni', 'totalActive', 'totalActiveByScholarship'));
     }
 }

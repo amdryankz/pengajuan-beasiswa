@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Exports\UserScholarshipExport;
 use App\Models\ScholarshipData;
+use App\Models\User;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UserScholarshipExport;
 
 class AlumniController extends Controller
 {
@@ -21,7 +21,7 @@ class AlumniController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             abort(404);
         }
 
@@ -67,7 +67,7 @@ class AlumniController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             abort(404);
         }
 
@@ -91,7 +91,7 @@ class AlumniController extends Controller
             }
         }
 
-        $export = new UserScholarshipExport($data, $scholarship->name);
+        $export = new UserScholarshipExport($data, $scholarship->scholarship->name);
 
         return Excel::download($export, 'userScholarhips.xlsx');
     }

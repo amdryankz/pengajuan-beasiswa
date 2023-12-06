@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Donor;
 use App\Models\Scholarship;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class ScholarshipController extends Controller
 {
@@ -39,7 +39,7 @@ class ScholarshipController extends Controller
             'donors_id' => 'required',
         ], [
             'name.required' => 'Nama wajib diisi',
-            'donors_id.required' => 'Donatur wajib diisi'
+            'donors_id.required' => 'Donatur wajib diisi',
         ]);
 
         $data = [
@@ -86,7 +86,7 @@ class ScholarshipController extends Controller
             'donors_id' => 'required',
         ], [
             'name.required' => 'Nama wajib diisi',
-            'donors_id.required' => 'Donatur wajib diisi'
+            'donors_id.required' => 'Donatur wajib diisi',
         ]);
 
         $data = [
@@ -106,7 +106,7 @@ class ScholarshipController extends Controller
     {
         $scholarship = Scholarship::find($id);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             return redirect()->route('beasiswa.index')->with('error', 'Beasiswa tidak ditemukan.');
         }
 

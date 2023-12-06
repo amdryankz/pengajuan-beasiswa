@@ -56,8 +56,6 @@
                         <span class="font-semibold">Alamat:</span><br>
                         {{ $user->address }}
                     </div>
-
-
                 </div>
 
                 <div class="text-lg">
@@ -97,11 +95,15 @@
             <ul class="list-disc pl-4 mx-auto max-w-2xl">
                 @foreach ($files as $file)
                     <li class="mb-2">
-                        <label for="{{ $file->file_requirement_id }}">{{ $file->files->name }}</label><br>
-                        <a href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}"
-                            class="text-blue-500 hover:underline text-base" target="_blank">
-                            {{ $file->file_path }}
-                        </a>
+                        @if ($file->files)
+                            <label for="{{ $file->file_requirement_id }}">{{ $file->files->name }}</label><br>
+                            <a href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}"
+                                class="text-blue-500 hover:underline text-base" target="_blank">
+                                {{ $file->file_path }}
+                            </a>
+                        @else
+                            <span class="text-red-500">File not available</span>
+                        @endif
                     </li>
                 @endforeach
             </ul>

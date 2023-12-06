@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Scholarship;
-use Illuminate\Http\Request;
 use App\Models\FileRequirement;
+use App\Models\Scholarship;
 use App\Models\ScholarshipData;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ScholarshipDataController extends Controller
 {

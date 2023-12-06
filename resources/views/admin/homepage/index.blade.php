@@ -4,7 +4,8 @@
 
 @section('content')
     <div class="flex justify-center items-start h-screen">
-        <div class="flex">
+        <div class="flex flex-wrap justify-center">
+
             <!-- Card 1 -->
             <div
                 class="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 p-8 m-6 rounded-3xl w-80 flex flex-col items-center">
@@ -37,6 +38,26 @@
                 </p>
             </div>
 
+            <div class="w-full m-6">
+                <h2 class="text-2xl mb-4">Jumlah Aktif Mahasiswa per Beasiswa</h2>
+                <table id="myTable" class="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2">Beasiswa</th>
+                            <th class="border border-gray-300 px-4 py-2">Tahun</th>
+                            <th class="border border-gray-300 px-4 py-2">Jumlah Mahasiswa Aktif</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($totalActiveByScholarship as $scholarship)
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->scholarship->name }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->year }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->users_count }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-@endsection
+    @endsection

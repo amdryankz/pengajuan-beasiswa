@@ -87,7 +87,6 @@ class PassFileController extends Controller
         $scholarship = ScholarshipData::find($scholarship_id);
 
         if (! $scholarship) {
-            // Handle jika beasiswa tidak ditemukan
             abort(404);
         }
 
@@ -105,7 +104,7 @@ class PassFileController extends Controller
             }
         }
 
-        $export = new UserScholarshipExport($data, $scholarship->name);
+        $export = new UserScholarshipExport($data, $scholarship->scholarship->name);
 
         return Excel::download($export, 'userScholarhips.xlsx');
     }

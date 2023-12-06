@@ -20,7 +20,7 @@
                     Detail Beasiswa: {{ $scholarship->name }}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Nama Beasiswa: {{ $scholarship->name }}</h5>
+                    <h5 class="card-title">Nama Beasiswa: {{ $scholarship->scholarship->name }}</h5>
                     <p class="card-text">Durasi Beasiswa: {{ $scholarship->duration }} Bulan</p>
                     <p class="card-text">Mulai Pendaftaran: {{ $scholarship->start_regis_at }}</p>
                     <p class="card-text">Akhir Pendaftaran: {{ $scholarship->end_regis_at }}</p>

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\FileRequirement;
 use Carbon\Carbon;
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
 class FileSeeder extends Seeder
@@ -14,11 +13,17 @@ class FileSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $data = [
+            ['name' => 'CV'],
+            ['name' => 'Fotokopi Kartu Keluarga'],
+            ['name' => 'Fotokopi KTP'],
+            ['name' => 'Surat Tanah'],
+            ['name' => 'Fotokopi keadaan rumah orang tua tinggal'],
+        ];
 
-        for ($i = 1; $i <= 10; $i++) {
-            FileRequirement::create([
-                'name' => $faker->word, // You can use different Faker methods based on your requirements
+        foreach ($data as $value) {
+            FileRequirement::insert([
+                'name' => $value['name'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
