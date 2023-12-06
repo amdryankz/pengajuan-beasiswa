@@ -45,7 +45,7 @@ class AlumniController extends Controller
             }
         }
 
-        return view('admin.alumni.index')->with('data', $data);
+        return view('admin.alumni.index')->with('data', $data)->with('scholarship', $scholarship);
     }
 
     public function showDetail(string $user_id, string $scholarship_id)

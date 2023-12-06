@@ -32,6 +32,7 @@
                             <th class="py-1 px-1 border-r text-center">No</th>
                             <th class="py-1 px-4 border-r">Nama</th>
                             <th class="py-1 px-4 border-r">NIM</th>
+                            <th class="py-1 px-4 border-r">Fakultas</th>
                             <th class="py-1 px-4 border-r">Prodi</th>
                             <th class="py-2 px-4 border-r">Detail</th>
                             <th class="py-1 px-4 border-r">Status</th>
@@ -45,6 +46,7 @@
                                 <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
                                 <td class="py-1 px-4 border-r">{{ $item['user']->name }}</td>
                                 <td class="py-1 px-4 border-r">{{ $item['user']->nim }}</td>
+                                <td class="py-1 px-4 border-r font-normal">{{ $item['user']->fakultas }}</td>
                                 <td class="py-1 px-4 border-r font-normal">{{ $item['user']->prodi }}</td>
                                 <td class="py-2 px-4 border-r text-center">
                                     <a href="{{ route('passfile.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">Detail</a>

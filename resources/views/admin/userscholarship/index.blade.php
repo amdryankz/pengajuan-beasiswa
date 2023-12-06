@@ -27,6 +27,7 @@
                             <th class="py-1 px-1 border-r text-center">No</th>
                             <th class="py-1 px-4 border-r">Nama</th>
                             <th class="py-1 px-4 border-r">NIM</th>
+                            <th class="py-1 px-4 border-r">Fakultas</th>
                             <th class="py-1 px-4 border-r">Prodi</th>
                             <th class="py-2 px-4 border-r">Detail</th>
                             <th class="py-1 px-4 border-r">Status</th>
@@ -40,6 +41,7 @@
                                 <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
                                 <td class="py-1 px-4 border-r">{{ $item->name }}</td>
                                 <td class="py-1 px-4 border-r">{{ $item->nim }}</td>
+                                <td class="py-1 px-4 border-r">{{ $item->fakultas }}</td>
                                 <td class="py-1 px-4 border-r">{{ $item->prodi }}</td>
                                 <td class="py-2 px-4 border-r text-center">
                                     <a href="{{ route('admin.scholarship.detail', ['user_id' => $item->id, 'scholarship_id' => $data['scholarship']->id]) }}"
