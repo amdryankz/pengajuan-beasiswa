@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\UserScholarshipExport;
+use App\Models\User;
 use App\Models\ScholarshipData;
+use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserScholarshipExport;
 
 class AlumniController extends Controller
 {
@@ -19,7 +21,7 @@ class AlumniController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 
@@ -46,11 +48,26 @@ class AlumniController extends Controller
         return view('admin.alumni.index')->with('data', $data);
     }
 
+    public function showDetail(string $user_id, string $scholarship_id)
+    {
+        $user = User::findOrFail($user_id);
+        $scholarship = ScholarshipData::findOrFail($scholarship_id);
+
+        $files = UserScholarship::where('user_id', $user_id)
+            ->where('scholarship_data_id', $scholarship_id)
+            ->get();
+
+        return view('admin.alumni.detail')
+            ->with('user', $user)
+            ->with('scholarship', $scholarship)
+            ->with('files', $files);
+    }
+
     public function export($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 

@@ -68,11 +68,13 @@ Route::middleware('auth:admin')->group(function () {
     // Beasiswa berlangsung
     Route::get('/adm/berlangsung', [AplicantController::class, 'index'])->name('aplicant.list');
     Route::get('/adm/berlangsung/{scholarship_id}', [AplicantController::class, 'showAplicantByScholarship'])->name('aplicant.index');
+    Route::get('/adm/berlangsung/{user_id}/{scholarship_id}/detail', [AplicantController::class, 'showDetail'])->name('aplicant.detail');
     Route::get('/adm/berlangsung/{scholarship_id}/downloadExcel', [AplicantController::class, 'export'])->name('aplicant.downloadExcel');
 
     // Alumni beasiswa
     Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
     Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
+    Route::get('/adm/alumni/{user_id}/{scholarship_id}/detail', [AplicantController::class, 'showDetail'])->name('alumni.detail');
     Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
 
     // Beranda
