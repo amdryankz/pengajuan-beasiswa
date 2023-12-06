@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <div class="mb-4 text-start text-lg bg-white p-4">
+    <div class="mb-4 text-start bg-white p-4">
         <a href="{{ route('pengelolaan.index') }}"
-            class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
+            class="inline-flex items-start px-2 py-1 mb-4 text-blue-600 hover:bg-blue-100 rounded-lg">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -177,16 +177,15 @@
 
 
 
-
             {{-- Persyaratan --}}
-            <div class="mb-4 col-span-2">
-                <label class="block text-base font-semibold text-gray-600 mb-2 ml-1">Persyaratan</label>
+            <div class="mb-4 col-span-2 text-base">
+                <label class="block font-semibold text-gray-600 mb-2 ml-1">Persyaratan</label>
                 <hr class="mb-4 border-t-0 border-gray-300 my-2">
-                <table id="myTable" class="w-full border-collapse border border-white">
+                <table id="myTable" class="w-full border-collapse border border-white font-normal text-base">
                     <thead>
                         <tr class="bg-sky-800 text-slate-50">
-                            <th class="border border-white p-3 text-sm">Nama Persyaratan</th>
-                            <th class="border border-white p-3 text-center text-sm">Pilih</th>
+                            <th class="border border-white px-4 py-2">Nama Persyaratan</th>
+                            <th class="border border-white px-4 py-2 text-center">Pilih</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,12 +193,12 @@
                         @foreach ($file as $item)
                             <tr
                                 class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
-                                <td class="border border-slate-100 p-3 text-sm">
-                                    <div class="overflow-hidden max-w-full">
-                                        <span class="break-all">{{ $item->name }}</span>
+                                <td class="border border-slate-100 px-4 py-3 text-base whitespace-pre-wrap">
+                                    <div class="max-w-full">
+                                        {{ $item->name }}
                                     </div>
                                 </td>
-                                <td class="border border-slate-100 p-3 text-center text-sm">
+                                <td class="border border-slate-100 px-4 py-3 text-center text-base">
                                     <input class="form-checkbox m-0" type="checkbox" name="requirements[]"
                                         value="{{ $item->id }}">
                                 </td>
@@ -210,9 +209,8 @@
             </div>
 
 
-
             {{-- Save Button --}}
-            <div class="mb-4 text-start col-span-2">
+            <div class="mb-4 text-start text-sm col-span-2">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
                     type="submit">SIMPAN</button>
             </div>

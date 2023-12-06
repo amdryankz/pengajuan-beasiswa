@@ -29,27 +29,28 @@
             <hr>
 
             <div class="container mx-auto  border-gray-300 pb-4 mt-4">
-                <table id="myTable" class="table table-striped w-full">
+                <table id="myTable" class="border-collapse w-full">
                     <thead>
                         <tr class="border-b-2 bg-sky-800 text-white text-sm">
-                            <th class="p-2 w-[5%] text-center">No</th>
-                            <th class="p-2">Nama Donatur</th>
-                            <th class="p-2 w-1/12 text-center">Tindakan</th>
+                            <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
+                            <th class="p-2 border table-fixed border-gray-300">Nama Donatur</th>
+                            <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1; ?>
+                        @php $i = 1; @endphp
                         @foreach ($data as $item)
-                            <tr class="border-b border-gray-300 @if ($loop->even) bg-slate-50 @endif">
-                                <td class="p-2 text-center">{{ $i++ }}</td>
-                                <td class="p-2">{{ $item->name }}</td>
-                                <td class="p-2">
-                                    <div class="flex items-center justify-center ml-2">
+                            <tr
+                                class="table-fixed border border-gray-300 @if ($loop->even) bg-slate-50 @endif">
+                                <td class="p-2 border text-center border-gray-300">{{ $i++ }}</td>
+                                <td class="p-2 border border-gray-300">{{ $item->name }}</td>
+                                <td class="p-2 border border-gray-300">
+                                    <div class="flex justify-center space-x-2">
                                         <a href="{{ $item->slug ? route('donatur.edit', $item->slug) : route('donatur.edit', $item->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded">
+                                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded flex items-center">
                                             <ion-icon name="create-sharp" class="mr-1"></ion-icon>
                                         </a>
-                                        <button class="bg-red-500 hover:bg-red-600 text-slate-50 px-3 py-1 mr-1 rounded"
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center"
                                             data-name="{{ $item->name }}"
                                             data-url="{{ route('donatur.destroy', $item->id) }}">
                                             <ion-icon name="trash-sharp" class="mr-1"></ion-icon>
