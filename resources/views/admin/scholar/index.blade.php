@@ -32,12 +32,11 @@
                 <tbody>
                     <?php $i = 1; ?>
                     @foreach ($data as $item)
-                        
                         <tr class="border-b-2 text-sm font-normal">
                             <td class="px-1 py-1 text-center border-r">{{ $loop->iteration }}</td>
-                            <td class="px-2 py-1 text-center border-r">{{ $item->name }}</td>
+                            <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->name }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
-                            <td class="px-2 py-1 text-center border-r">{{ $item->donor->name }}</td>
+                            <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->donors->name }}</td>
                             <td class="px-2 py-1 text-center border-r">Rp {{ $item->value }} / {{ $item->status_value }}
                             </td>
                             <td class="text-center border-r">{{ $item->duration }} Bulan</td>

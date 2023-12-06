@@ -6,7 +6,8 @@
     <h2 class="text-xl font-semibold mb-2">Beasiswa Khusus</h2>
 
     <div class="mb-4">
-        <a href="{{ route('beasiswa-khusus.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">+
+        <a href="{{ route('beasiswa-khusus.create') }}"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">+
             Tambah Beasiswa Khusus
         </a>
     </div>
@@ -31,9 +32,9 @@
                     @php $rowColor = $loop->iteration % 2 == 0 ? 'bg-gray-100' : 'bg-white'; @endphp
                     <tr class="border-b-2 text-xs {{ $rowColor }}">
                         <td class="px-1 py-1 text-center border-r">{{ $loop->iteration }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->name }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->name }}</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
-                        <td class="px-2 py-1 text-center border-r">{{ $item->donor->name }}</td>
+                        <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->donors->name }}</td>
                         <td class="px-2 py-1 text-center border-r">Rp {{ $item->value }} / {{ $item->status_value }}</td>
                         <td class="text-center border-r">{{ $item->duration }} Bulan</td>
                         <td class="px-2 py-1 text-center border-r">{{ $item->start_scholarship->format('d-m-Y') }}</td>
@@ -233,7 +234,8 @@
                                             </li>
                                             <li class="flex items-center hover:bg-gray-100 rounded mb-0.5">
                                                 <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                                    action="{{ route('beasiswa-khusus.destroy', $item->id) }}" method="POST">
+                                                    action="{{ route('beasiswa-khusus.destroy', $item->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"

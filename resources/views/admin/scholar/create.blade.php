@@ -3,7 +3,6 @@
 @section('navbar', 'Beasiswa')
 
 @section('content')
-
     <div class="mb-4 text-start bg-white p-4">
         <a href="{{ route('pengelolaan.index') }}"
             class="inline-flex items-start px-2 py-1 mb-4 text-blue-600 hover:bg-blue-100 rounded-lg">
@@ -12,19 +11,30 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
         </a>
-
         <form action="{{ route('pengelolaan.store') }}" method="POST" class="grid grid-cols-2 gap-4">
             @csrf
-
-
             {{-- kiri --}}
             <div class="col-span-1">
+                <div class="mb-4">
+                    <label for="scholarships_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Pilih
+                        Beasiswa</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="scholarships_id" id="scholarships_id">
+                        <option value="" disabled selected class="text-gray-600 hidden">Nama Beasiswa</option>
+                        @foreach ($data as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="mb-4">
-                    <label for="name" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Beasiswa</label>
-                    <input type="text"
-                        class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md focus:border-sky-500 text-sm"
-                        name="name" id="name" placeholder="Nama Beasiswa" value="{{ old('name') }}" required>
+                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Donatur</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="donors_id" id="donors_id" disabled>
+                        <option value="" class="text-gray-600 hidden">Donatur</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
@@ -35,31 +45,6 @@
                         <option value="" disabled selected class="text-gray-600 hidden">Tahun</option>
                         @foreach ($tahunArray as $tahun)
                             <option value="{{ $tahun }}">{{ $tahun }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- <div class="mb-4">
-                <label for="status_scholarship" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
-                    Status Beasiswa
-                </label>
-                <select
-                    class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                    name="status_scholarship" id="status_scholarship">
-                    <option value="" disabled selected class="text-gray-600 hidden">Status</option>
-                    <option value="Umum">Umum</option>
-                    <option value="Khusus">Khusus</option>
-                </select>
-            </div> --}}
-
-                <div class="mb-4">
-                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Pilih Donatur</label>
-                    <select
-                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                        name="donors_id" id="donors_id">
-                        <option value="" disabled selected class="text-gray-600 hidden">Nama Donatur</option>
-                        @foreach ($data as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -81,15 +66,10 @@
                         <option value="Tahun">Tahun</option>
                     </select>
                 </div>
-
-
-
             </div>
 
             {{-- kanan --}}
-
             <div class="col-span-1">
-
                 <div class="mb-4">
                     <label for="duration" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Durasi</label>
                     <select
@@ -128,26 +108,7 @@
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
                         value="{{ old('min_ipk') }}">
                 </div>
-
-                {{-- <div class="mb-4">
-                <label for="start_graduation_at" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
-                    Mulai Penentuan Kelulusan
-                </label>
-                <input type="date" id="start_graduation_at" name="start_graduation_at"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
-                    value="{{ old('start_graduation_at') }}">
-            </div> --}}
-
-                {{-- <div class="mb-4">
-                <label for="end_graduation_at" class="mb-1 ml-1 block text-sm font-medium text-gray-600">
-                    Akhir Penentuan Kelulusan
-                </label>
-                <input type="date" id="end_graduation_at" name="end_graduation_at"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
-                    value="{{ old('end_graduation_at') }}">
-            </div> --}}
             </div>
-
 
             {{-- Kuota fakultas --}}
             <div class="mb-4 col-span-2">
@@ -160,7 +121,6 @@
                     @php
                         $fakultasList = ['MIPA', 'Ekonomi', 'Kedokteran', 'Hukum', 'Teknik', 'Pertanian', 'Kedokteran Hewan', 'Keguruan dan Ilmu Pendidikan', 'Keperawatan', 'Kedokteran Gigi', 'Kelautan dan Perikanan', 'Ilmu Sosial dan Politik', 'Pascasarjana'];
                     @endphp
-
                     @foreach ($fakultasList as $fakultas)
                         <div class="m-2">
                             <label for="kuota_fakultas_{{ $loop->index + 1 }}"
@@ -173,9 +133,6 @@
                     @endforeach
                 </div>
             </div>
-
-
-
 
             {{-- Persyaratan --}}
             <div class="mb-4 col-span-2 text-base">
@@ -208,7 +165,6 @@
                 </table>
             </div>
 
-
             {{-- Save Button --}}
             <div class="mb-4 text-start text-sm col-span-2">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
@@ -216,4 +172,20 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('scholarships_id').addEventListener('change', function() {
+            var scholarshipId = this.value;
+            var donorSelect = document.getElementById('donors_id');
+            donorSelect.innerHTML = '';
+            @foreach ($data as $item)
+                if ({{ $item->id }} == scholarshipId) {
+                    var option = document.createElement('option');
+                    option.value = '{{ $item->donors->id }}';
+                    option.text = '{{ $item->donors->name }}';
+                    donorSelect.add(option);
+                }
+            @endforeach
+        });
+    </script>
 @endsection

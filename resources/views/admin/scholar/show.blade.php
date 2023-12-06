@@ -22,42 +22,57 @@
 
             <div>
                 <!-- Tampilkan informasi beasiswa disini -->
-                <p class="mb-2 text-base"><span class="font-semibold text-lg">Nama Beasiswa:</span> {{ $beasiswa->name }}
+                <p class="mb-2 text-base"><span class="font-semibold text-lg">Nama Beasiswa :</span>
+                    {{ $beasiswa->scholarship->name }}
                 </p>
-                <p class="mb-2 text-base"><span class="font-semibold text-lg">Tahun:</span> {{ $beasiswa->year }}</p>
+                <p class="mb-2 text-base"><span class="font-semibold text-lg">Tahun :</span> {{ $beasiswa->year }}</p>
                 <!-- ... tambahkan informasi lainnya ... -->
 
                 <!-- Tampilkan informasi Kuota -->
-                <h3 class="mt-4 text-xl font-semibold">Kuota Fakultas</h3>
+                <h3 class="mt-4 text-xl font-semibold">Kuota :</h3>
                 @php
                     $kuotaFakultas = json_decode($beasiswa->kuota, true);
                 @endphp
-                {{-- <ul class="list-disc pl-6 text-base">
-                    @foreach ($kuotaFakultas as $fakultas => $kuota)
-                        <li>{{ $fakultas }}: {{ $kuota }}</li>
-                    @endforeach
-                </ul> --}}
+
+                <table class="table-auto mt-2 w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Fakultas</th>
+                            <th class="px-4 py-2">Kuota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($kuotaFakultas as $fakultas => $kuota)
+                            <tr>
+                                <td class="border px-4 py-2">{{ $fakultas }}</td>
+                                <td class="border px-4 py-2">{{ $kuota }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
                 <!-- Tampilkan informasi Berkas -->
-                <h3 class="mt-4 text-xl font-semibold">Berkas yang Diperlukan</h3>
+                <h3 class="mt-4 text-xl font-semibold">Berkas yang Diperlukan :</h3>
                 <ul class="list-disc pl-6 text-base">
                     @foreach ($beasiswa->requirements as $requirement)
                         <li>{{ $requirement->name }}</li>
                     @endforeach
                 </ul>
-                <h3 class="mt-4 text-xl font-semibold">Surat Keputusan Kelulusan (SK)</h3>
+                <h3 class="mt-4 text-xl font-semibold">Surat Keputusan Kelulusan (SK) :</h3>
                 <ul class="list-disc pl-6 text-base">
                     @if ($beasiswa->file_sk)
                         <li>
-                            <a href="{{ asset('storage/' . $beasiswa->file_sk) }}" target="_blank">Lihat File
+                            <a href="{{ asset('storage/' . $beasiswa->file_sk) }}" target="_blank"
+                                class="text-blue-500 hover:underline">Lihat File
                                 SK</a>
                         </li>
                     @else
-                        SK belum diupload
+                        <li>
+                            SK belum diupload
+                        </li>
                     @endif
                 </ul>
             </div>
         </div>
-
     </div>
 @endsection
