@@ -32,7 +32,7 @@
                     @foreach ($data as $item)
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->start_regis_at->format('d-m-Y') }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->end_regis_at->format('d-m-Y') }}</td>
@@ -67,7 +67,8 @@
                     @foreach ($dataUser as $item)
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->scholarship->name }}
+                            </td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->year }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($item->status_file === null)
@@ -130,7 +131,7 @@
                     @foreach ($alumniData as $item)
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
                         </tr>
                     @endforeach

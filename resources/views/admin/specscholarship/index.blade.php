@@ -102,7 +102,7 @@
 
 
                                                                             <form
-                                                                                action="{{ route('beasiswa.updateSK', $item->id) }}"
+                                                                                action="{{ route('khusus.updateSK', $item->id) }}"
                                                                                 method="POST"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf

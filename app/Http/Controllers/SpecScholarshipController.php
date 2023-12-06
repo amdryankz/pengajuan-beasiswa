@@ -42,7 +42,7 @@ class SpecScholarshipController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'scholarships_id' => 'required|exists:donors,id',
+            'scholarships_id' => 'required|exists:scholarships,id',
             'year' => 'required|integer',
             'value' => 'required|string|max:255',
             'status_value' => 'required|string|max:255',

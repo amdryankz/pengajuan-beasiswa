@@ -13,7 +13,8 @@
         </a>
 
         <div>
-            <h2 class="text-lg font-semibold mb-4">List Pendaftar Beasiswa {{ $data['scholarship']->name }}</h2>
+            <h2 class="text-lg font-semibold mb-4">List Pendaftar Beasiswa {{ $data['scholarship']->scholarship->name }}
+            </h2>
 
             <div class="container mx-auto table-responsive border-gray-300 pb-4 mt-4">
                 @if (session('success'))
@@ -57,9 +58,11 @@
                                         @if ($statusFile === null)
                                             Belum Diverifikasi
                                         @elseif ($statusFile == true)
-                                            <span class="px-1 py-1 rounded text-green-500 bg-green-200 font-normal">Lengkap</span>
+                                            <span
+                                                class="px-1 py-1 rounded text-green-500 bg-green-200 font-normal">Lengkap</span>
                                         @else
-                                            <span class="px-1 py-1 rounded text-red-500 bg-red-100 font-normal">Tidak Lengkap</span>
+                                            <span class="px-1 py-1 rounded text-red-500 bg-red-100 font-normal">Tidak
+                                                Lengkap</span>
                                         @endif
                                     @else
                                         Tidak Mendaftar
