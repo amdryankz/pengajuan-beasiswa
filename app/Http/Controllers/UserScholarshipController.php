@@ -251,7 +251,7 @@ class UserScholarshipController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/registrations/'.$scholarship_id)->with('success', 'Berkas telah divalidasi.');
+        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
 
     public function cancelValidation($scholarship_id, $user_id)
@@ -263,7 +263,7 @@ class UserScholarshipController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/registrations/'.$scholarship_id)->with('success', 'Berkas batal divalidasi.');
+        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
 
     public function generatePDF(string $user_id, string $scholarship_id)

@@ -191,7 +191,7 @@
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        @foreach ($data as $item)
+                        @foreach ($file as $item)
                             <tr
                                 class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
                                 <td class="border border-slate-100 p-3 text-sm">

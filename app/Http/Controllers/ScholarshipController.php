@@ -68,7 +68,7 @@ class ScholarshipController extends Controller
             $scholarshipData->requirements()->attach($request->requirements);
         }
 
-        return redirect()->route('beasiswa.index')
+        return redirect()->route('pengelolaan.index')
             ->with('success', 'Scholarship created successfully');
     }
 
@@ -143,7 +143,7 @@ class ScholarshipController extends Controller
             $scholarship->requirements()->detach();
         }
 
-        return redirect()->route('beasiswa.index')
+        return redirect()->route('pengelolaan.index')
             ->with('success', 'Scholarship updated successfully');
     }
 
@@ -156,7 +156,7 @@ class ScholarshipController extends Controller
         $scholarship->requirements()->detach();
         $scholarship->delete();
 
-        return redirect()->route('beasiswa.index');
+        return redirect()->route('pengelolaan.index');
     }
 
     public function updateSK(Request $request, string $id)
@@ -188,7 +188,7 @@ class ScholarshipController extends Controller
         // Simpan perubahan ke dalam database
         $scholarship->save();
 
-        return redirect()->route('beasiswa.index')
+        return redirect()->route('pengelolaan.index')
             ->with('success', 'Scholarship updated successfully');
     }
 }

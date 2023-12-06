@@ -67,7 +67,7 @@ class PassFileController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/passfile/'.$scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
+        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
     }
 
     public function cancelValidation($scholarship_id, $user_id)
@@ -79,7 +79,7 @@ class PassFileController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/passfile/'.$scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
+        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
 
     public function export($scholarship_id)

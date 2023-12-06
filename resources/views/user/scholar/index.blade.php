@@ -21,6 +21,7 @@
                     <tr>
                         <th class="border border-gray-300 px-4 py-2">No</th>
                         <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
+                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
                         <th class="border border-gray-300 px-4 py-2">Mulai Pendaftaran Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Akhir Pendaftaran Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Aksi</th>
@@ -32,6 +33,7 @@
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->start_regis_at->format('d-m-Y') }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->end_regis_at->format('d-m-Y') }}</td>
                             <td class="border border-gray-300 px-4 py-2">
@@ -54,6 +56,7 @@
                     <tr>
                         <th class="border border-gray-300 px-4 py-2">No</th>
                         <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
+                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
                         <th class="border border-gray-300 px-4 py-2">Status Berkas</th>
                         <th class="border border-gray-300 px-4 py-2">Status Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Aksi</th>
@@ -65,6 +68,7 @@
                         <tr>
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->year }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($item->status_file === null)
                                     Diproses
