@@ -39,12 +39,12 @@
                                 <td class="p-2 border text-center border-gray-300">{{ $i++ }}</td>
                                 <td class="p-2 border border-gray-300">{{ $item->name }}</td>
                                 <td class="p-2 border border-gray-300">
-                                    <div class="flex items-center justify-center ml-2">
+                                    <div class="flex justify-center space-x-2">
                                         <a href="{{ route('berkas.edit', $item->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 hover:text-white text-slate-50 px-3 py-1 mr-2 rounded">
-                                            <ion-icon name="create-sharp" class="mr-1"></ion-icon>
+                                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded flex items-center">
+                                        <ion-icon name="create-sharp" class="mr-1"></ion-icon>
                                         </a>
-                                        <button class="bg-red-500 hover:bg-red-600 text-slate-50 px-3 py-1 mr-1 rounded"
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center"
                                             data-name="{{ $item->name }}"
                                             data-url="{{ route('berkas.destroy', $item->id) }}">
                                             <ion-icon name="trash-sharp" class="mr-1"></ion-icon>

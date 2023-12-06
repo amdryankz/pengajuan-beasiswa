@@ -13,27 +13,27 @@
             </a>
         </div>
 
-        <div class="">
+        <div class="p-2">
             <table id="myTable" class="table-auto min-w-full border border-collapse max-h-[500px] overflow-y-auto">
                 <thead>
-                    <tr class="border-b-2 bg-sky-800 text-white text-xs">
-                        <th class="px-2 py-1 text-center border-r">No</th>
-                        <th class="px-2 py-1 text-center border-r">Nama Beasiswa</th>
-                        <th class="px-2 py-1 text-center border-r">Tahun</th>
-                        <th class="px-2 py-1 text-center border-r">Nama Donatur</th>
-                        <th class="px-2 py-1 text-center border-r">Nominal (Rp)</th>
-                        <th class="px-3 py-1 text-center border-r">Durasi</th>
-                        <th class="px-2 py-1 text-center border-r">Mulai Pendaftaran</th>
-                        <th class="px-2 py-1 text-center border-r">Akhir Pendaftaran</th>
-                        <th class="px-2 py-1 text-center border-r">IPK</th>
-                        <th class="px-2 py-1 text-center">Aksi</th>
+                    <tr class="border-b-2 bg-sky-800 text-white text-sm font-semibold">
+                        <th class="px-2 py-2 text-center border-r">No</th>
+                        <th class="px-2 py-2 text-center border-r">Nama Beasiswa</th>
+                        <th class="px-2 py-2 text-center border-r">Tahun</th>
+                        <th class="px-2 py-2 text-center border-r">Nama Donatur</th>
+                        <th class="px-2 py-2 text-center border-r">Nominal (Rp)</th>
+                        <th class="px-3 py-2 text-center border-r">Durasi</th>
+                        <th class="px-2 py-2 text-center border-r">Mulai Pendaftaran</th>
+                        <th class="px-2 py-2 text-center border-r">Akhir Pendaftaran</th>
+                        <th class="px-2 py-2 text-center border-r">IPK</th>
+                        <th class="px-2 py-2 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     @foreach ($data as $item)
                         
-                        <tr class="border-b-2 text-xs">
+                        <tr class="border-b-2 text-sm font-normal">
                             <td class="px-1 py-1 text-center border-r">{{ $loop->iteration }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->name }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>

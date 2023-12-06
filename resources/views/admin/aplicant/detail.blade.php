@@ -1,11 +1,11 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Kelulusan')
+@section('navbar', 'Berlangsung')
 
 @section('content')
     <div class="bg-white mx-auto max-w-4xl p-4 border rounded-md  mb-8 text-start text-lg">
         <div class="mb-4">
-            <a href="{{ route('passfile.index', ['scholarship_id' => $scholarship->id]) }}"
+            <a href="{{ route('aplicant.index', ['scholarship_id' => $scholarship->id]) }}"
                 class="inline-flex items-start p-2 text-blue-600 hover:bg-blue-100 rounded-lg">
                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@
 
 
         <div class="mx-auto max-w-4xl p-4 border shadow-sm rounded-md">
-            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa - {{ $scholarship->name }}</h1>
             <div class="mb-10 max-w-xl mx-auto flex justify-between">
                 <div class="text-lg">
                     <div class="mb-3">
@@ -108,49 +108,6 @@
                     </li>
                 @endforeach
             </ul>
-
-            <div class="mx-auto mt-6 mb-6 p-4 flex justify-center items-center">
-                @if ($files->isEmpty())
-                    <p>Tidak ada berkas yang tersedia</p>
-                @else
-                    @if (!$files[0]->status)
-                        <form
-                            action="{{ route('passfile.validate', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
-                            method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out">
-                                <span class="flex items-center">
-                                    <span class="mr-2">Validasi</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                </span>
-                            </button>
-                        </form>
-                        <form
-                            action="{{ route('passfile.cancelValidate', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
-                            method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out ml-4">
-                                <span class="flex items-center">
-                                    <span class="mr-2">Tolak Validasi</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" class="h-4 w-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </span>
-                            </button>
-                        </form>
-                    @else
-                        <p>Berkas sudah divalidasi</p>
-                    @endif
-                @endif
-            </div>
         </div>
     </div>
 @endsection
