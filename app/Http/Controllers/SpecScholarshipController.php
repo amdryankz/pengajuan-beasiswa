@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\StudentsImport;
 use App\Models\Scholarship;
-use App\Models\ScholarshipData;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Imports\StudentsImport;
+use App\Models\ScholarshipData;
+use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SpecScholarshipController extends Controller
 {
@@ -54,7 +55,14 @@ class SpecScholarshipController extends Controller
 
         $scholarship = ScholarshipData::create($data);
 
-        Excel::import(new StudentsImport($scholarship->id), $request->file('list_student_file'));
+        $import = new StudentsImport($scholarship->id);
+        Excel::import($import, $request->file('list_student_file'));
+
+        if ($import->hasUnlinkedNIM()) {
+            UserScholarship::where('scholarship_data_id', $scholarship->id)->delete();
+            ScholarshipData::findOrFail($scholarship->id)->delete();
+            return redirect()->back()->with('error', 'Terdapat nim yang tidak terdata.');
+        }
 
         $scholarship->update([
             'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
@@ -63,6 +71,7 @@ class SpecScholarshipController extends Controller
         return redirect()->route('beasiswa-khusus.index')
             ->with('success', 'Berhasil menambahkan data beasiswa');
     }
+
 
     /**
      * Display the specified resource.

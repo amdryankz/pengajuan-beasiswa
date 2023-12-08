@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="flex justify-center items-start h-screen">
-        <div class="flex flex-wrap justify-center">
+        <div class="flex flex-wrap justify-center gap-6">
 
             <!-- Card 1 -->
             <div
@@ -16,7 +16,6 @@
                 </p>
             </div>
 
-
             <!-- Card 2 -->
             <div
                 class="bg-gradient-to-r from-teal-500 via-green-500 to-lime-500 p-8 m-6 rounded-3xl w-80 flex flex-col items-center">
@@ -26,7 +25,6 @@
                     <span class="font-bold text-xl">{{ $totalScholarship }}</span>
                 </p>
             </div>
-
 
             <!-- Card 3 -->
             <div
@@ -38,26 +36,34 @@
                 </p>
             </div>
 
+            <!-- Table -->
             <div class="w-full m-6">
-                <h2 class="text-2xl mb-4">Jumlah Aktif Mahasiswa per Beasiswa</h2>
-                <table id="myTable" class="min-w-full bg-white border border-gray-300">
+                <h2 class="text-xl ml-6 mb-4">Jumlah Mahasiswa per Beasiswa</h2>
+                <table class="w-full border-collapse border border-gray-300">
                     <thead>
-                        <tr>
-                            <th class="border border-gray-300 px-4 py-2">Beasiswa</th>
-                            <th class="border border-gray-300 px-4 py-2">Tahun</th>
-                            <th class="border border-gray-300 px-4 py-2">Jumlah Mahasiswa Aktif</th>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border-b">Nama Beasiswa</th>
+                            <th class="py-2 px-4 border-b">Tahun Beasiswa</th>
+                            @foreach ($fakultasList as $fakultas)
+                                <th class="py-2 px-4 border-b">{{ $fakultas }}</th>
+                            @endforeach
+                            <th class="py-2 px-4 border-b">Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($totalActiveByScholarship as $scholarship)
+                        @foreach ($scholarshipData as $scholarshipId => $data)
                             <tr>
-                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->scholarship->name }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->year }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $scholarship->users_count }}</td>
+                                <td class="py-2 px-4 border-b">{{ $data['name'] }}</td>
+                                <td class="py-2 px-4 border-b">{{ $data['year'] }}</td>
+                                @foreach ($fakultasList as $fakultas)
+                                    <td class="py-2 px-4 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}</td>
+                                @endforeach
+                                <td class="py-2 px-4 border-b">{{ $data['total'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

@@ -6,6 +6,11 @@
     <div class="pb-3"><a href="{{ route('beasiswa-khusus.index') }}" class="btn btn-secondary">
             << Kembali</a>
     </div>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <form action="{{ route('beasiswa-khusus.store') }}" method="POST" enctype="multipart/form-data"
         class="grid grid-cols-2 gap-4">
         @csrf
@@ -15,7 +20,7 @@
                     Beasiswa</label>
                 <select
                     class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                    name="scholarships_id" id="scholarships_id">
+                    name="scholarships_id" id="scholarships_id" required>
                     <option value="" disabled selected class="text-gray-600 hidden">Nama Beasiswa</option>
                     @foreach ($data as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -45,7 +50,7 @@
                 <label for="duration" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Durasi</label>
                 <select
                     class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                    name="duration" id="duration">
+                    name="duration" id="duration" required>
                     <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa</option>
                     @for ($i = 1; $i <= 48; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -55,7 +60,7 @@
             <div class="mb-4">
                 <label for="list_student_file" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Upload daftar
                     mahasiswa</label>
-                <input type="file" name="list_student_file" id="list_student_file">
+                <input type="file" name="list_student_file" id="list_student_file" required>
             </div>
         </div>
         <div class="col-span-1">
@@ -63,13 +68,13 @@
                 <label for="value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
                 <input type="text"
                     class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                    name="value" id="value" placeholder="Nominal">
+                    name="value" id="value" placeholder="Nominal" required>
             </div>
             <div class="mb-4">
                 <label for="status_value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
                 <select
                     class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                    name="status_value" id="status_value">
+                    name="status_value" id="status_value" required>
                     <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
                     <option value="Bulan">Bulan</option>
                     <option value="Tahun">Tahun</option>
@@ -80,14 +85,16 @@
                     Mulai Beasiswa
                 </label>
                 <input type="date" id="start_scholarship" name="start_scholarship"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm">
+                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
+                    required>
             </div>
             <div class="mb-4">
                 <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">
                     Akhir Beasiswa
                 </label>
                 <input type="date" id="end_scholarship" name="end_scholarship"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm">
+                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
+                    required>
             </div>
             <div class="mb-4 text-start col-span-2">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"

@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AplicantController;
 use App\Http\Controllers\BioUserController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\FileRequirementController;
 use App\Http\Controllers\PassFileController;
@@ -82,7 +82,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
 
     // Beranda
-    Route::get('/adm/beranda', [DashboardController::class, 'index']);
+    Route::get('/adm/beranda', [HomepageController::class, 'index']);
 
     // Logout admin
     Route::get('/adm/logout', [AdminAuthController::class, 'logout']);
