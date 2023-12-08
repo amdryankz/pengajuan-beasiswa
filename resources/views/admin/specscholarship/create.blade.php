@@ -35,8 +35,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama
-                        Donatur</label>
+                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Donatur</label>
                     <select
                         class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
                         name="donors_id" id="donors_id" disabled>
@@ -54,19 +53,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="duration" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Durasi</label>
-                    <select
-                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                        name="duration" id="duration" required>
-                        <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa
-                        </option>
-                        @for ($i = 1; $i <= 48; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                </div>
-
                 <div class="mb-6 relative">
                     <label for="list_student_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
                         Mahasiswa</label>
@@ -75,39 +61,51 @@
                             class="mt-1 p-2 border rounded-md w-full bg-white cursor-pointer pr-10" required>
                     </div>
                 </div>
-
             </div>
-            <div class="mb-4">
-                <label for="status_value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
-                <select
-                    class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                    name="status_value" id="status_value" required>
-                    <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
-                    <option value="Bulan">Bulan</option>
-                    <option value="Tahun">Tahun</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="start_scholarship" class="block text-sm font-medium text-gray-600 mb-1">
-                    Mulai Beasiswa
-                </label>
-                <input type="date" id="start_scholarship" name="start_scholarship"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
-                    required>
-            </div>
-            <div class="mb-4">
-                <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">
-                    Akhir Beasiswa
-                </label>
-                <input type="date" id="end_scholarship" name="end_scholarship"
-                    class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
-                    required>
-            </div>
-            <div class="mb-4 text-start col-span-2">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
-                    type="submit">SIMPAN</button>
+            <div class="col-span-1">
+                <div class="mb-4 flex items-start">
+                    <div class="me-4 flex-1">
+                        <label for="duration" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Durasi</label>
+                        <select
+                            class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                            name="duration" id="duration" required>
+                            <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa</option>
+                            @for ($i = 1; $i <= 48; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label for="status_value" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Per</label>
+                        <select
+                            class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                            name="status_value" id="status_value" required>
+                            <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
+                            <option value="Bulan">Bulan</option>
+                            <option value="Tahun">Tahun</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="start_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Mulai
+                        Beasiswa</label>
+                    <input type="date" id="start_scholarship" name="start_scholarship"
+                        class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
+                        required>
+                </div>
+                <div class="mb-14">
+                    <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Akhir Beasiswa</label>
+                    <input type="date" id="end_scholarship" name="end_scholarship"
+                        class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
+                        required>
+                </div>
+                <div class="mb-4 text-start col-span-2">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
+                        type="submit">SIMPAN</button>
+                </div>
             </div>
         </form>
+
     </div>
 
     <script>
