@@ -53,7 +53,7 @@
                     <label for="value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
                     <input type="text"
                         class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                        name="value" id="value" placeholder="Nominal" value="{{ old('value') }}">
+                        name="value" id="value" placeholder="Nominal" value="{{ old('value') }}" required>
                 </div>
 
                 <div class="mb-4">

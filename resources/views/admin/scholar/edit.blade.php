@@ -3,8 +3,8 @@
 @section('navbar', 'Edit Beasiswa')
 
 @section('content')
-    <div>
-        <div class="mb-4 text-start text-lg">
+    <div class=" text-start bg-white p-4">
+        <div class="text-start bg-white mb-4 flex items-center">
             <a href="{{ route('pengelolaan.index') }}"
                 class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -13,37 +13,216 @@
                     </path>
                 </svg>
             </a>
-        </div>
-        <div class="flex justify-center">
-            <div class="w-1/2 bg-gray-100 p-4 rounded-lg shadow-sm">
-                <div class="mb-4 text-center">
-                    <h1 class="text-2xl font-semibold text-slate-700" style="text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-                        Edit Beasiswa
-                    </h1>
-                </div>
-
-                <form action="{{ route('pengelolaan.update', $scholarship->id) }}" method="POST">
-                    @csrf
-                    @method('put')
-                    <div class="mb-4">
-                        <label for="name" class="block ml-1">
-                            <span
-                                class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-red-600 after:ml-0.5">
-                                Nama Donatur
-                            </span>
-                            <input type="text" name="name" id="name"
-                                class="border-solid border-1 border-neutral-200 w-full block focus:border-blue-500 rounded-md text-sm py-2 px-3 placeholder:text-slate-400"
-                                placeholder="Nama Donatur" value="{{ $scholarship->name }}" required>
-                        </label>
-                    </div>
-                    <div class="text-white mt-4">
-                        <button class="bg-blue-500 px-4 py-2 rounded-md float-left hover:bg-blue-600" name="simpan"
-                            type="submit">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
+            <div class="ml-4">
+                <h2 class="text-2xl font-semibold text-slate-700 mb-1">Edit Beasiswa</h2>
             </div>
         </div>
+
+        <form action="{{ route('pengelolaan.update', $scholarship->id) }}" method="POST">
+            @csrf
+            @method('put')
+            {{-- kiri --}}
+            <div class="col-span-1">
+                <div class="mb-4">
+                    <label for="scholarships_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Pilih
+                        Beasiswa</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="scholarships_id" id="scholarships_id" required>
+                        <option value="" disabled selected class="text-gray-600 hidden">Nama
+                            Beasiswa
+                        </option>
+                        @foreach ($data as $item)
+                            <option value="{{ $item->id }}" @if ($item->id == $scholarship->scholarships_id) selected @endif>
+                                {{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Donatur</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="donors_id" id="donors_id" disabled>
+                        <option value="" class="text-gray-600 hidden">Donatur</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="year" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Tahun</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="year" id="year" required>
+                        <option value="" disabled class="text-gray-600 hidden">Tahun</option>
+                        @foreach ($tahunArray as $tahun)
+                            <option value="{{ $tahun }}" @if ($tahun == $scholarship->year) selected @endif>
+                                {{ $tahun }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="value" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nominal</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md focus:border-sky-500 text-sm"
+                        name="value" id="value" placeholder="Nominal"
+                        value="{{ $scholarship->value ?? old('value') }}" required>
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="status_value" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Per</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="status_value" id="status_value" required>
+                        <option value="" disabled class="text-gray-600 hidden">Bulan/Tahun</option>
+                        <option value="Bulan" @if ($scholarship->status_value == 'Bulan') selected @endif>Bulan</option>
+                        <option value="Tahun" @if ($scholarship->status_value == 'Tahun') selected @endif>Tahun</option>
+                    </select>
+                </div>
+
+            </div>
+
+            {{-- kanan --}}
+            <div class="col-span-1">
+                <div class="mb-4">
+                    <label for="duration" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Durasi</label>
+                    <select
+                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                        name="duration" id="duration" required>
+                        <option value="" disabled class="text-gray-600 hidden">Durasi Beasiswa</option>
+                        @for ($i = 1; $i <= 48; $i++)
+                            <option value="{{ $i }}" @if ($scholarship->duration == $i) selected @endif>
+                                {{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="start_regis_at" class="block text-sm font-medium text-gray-600 mb-1">
+                        Mulai Pendaftaran Beasiswa
+                    </label>
+                    <input type="date" id="start_regis_at" name="start_regis_at"
+                        class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
+                        value="{{ $scholarship->start_regis_at ? $scholarship->start_regis_at->format('Y-m-d') : old('start_regis_at') }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="end_regis_at" class="block text-sm font-medium text-gray-600 mb-1">
+                        Akhir Pendaftaran Beasiswa
+                    </label>
+                    <input type="date" id="end_regis_at" name="end_regis_at"
+                        class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
+                        value="{{ $scholarship->end_regis_at ? $scholarship->end_regis_at->format('Y-m-d') : old('end_regis_at') }}" required>
+                </div>
+
+
+
+                <div class="mb-4">
+                    <label for="min_ipk" class="block text-sm font-medium text-gray-600 mb-1">
+                        Minimal IPK
+                    </label>
+                    <input type="text" id="min_ipk" name="min_ipk" placeholder="IPK"
+                        class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
+                        value="{{ $scholarship->min_ipk ?? old('min_ipk') }}" required>
+                </div>
+
+            </div>
+
+            {{-- Kuota fakultas --}}
+            <div class="mb-4 col-span-2">
+                <label class="block text-base font-semibold text-gray-600 mb-2 ml-1">Kuota Fakultas</label>
+                <p class="text-sm text-red-400 mb-2 ml-1">
+                    <span class="text-red-500">*</span> Isi dengan jumlah kuota yang tersedia untuk setiap fakultas.
+                </p>
+                <hr class="mb-4 border-t border-gray-300 my-2">
+                <div class="grid grid-cols-4 gap-4">
+                    @php
+                        $fakultasList = ['MIPA', 'Ekonomi', 'Kedokteran', 'Hukum', 'Teknik', 'Pertanian', 'Kedokteran Hewan', 'Keguruan dan Ilmu Pendidikan', 'Keperawatan', 'Kedokteran Gigi', 'Kelautan dan Perikanan', 'Ilmu Sosial dan Politik', 'Pascasarjana'];
+                    @endphp
+                    @foreach ($fakultasList as $fakultas)
+                        <div class="m-2">
+                            <label for="kuota_fakultas_{{ $loop->index + 1 }}"
+                                class="mb-1 ml-1 block text-sm font-medium text-gray-600">{{ $fakultas }}</label>
+                            <input type="number" name="kuota[{{ $fakultas }}]"
+                                id="kuota_fakultas_{{ $loop->index + 1 }}"
+                                class="px-3 py-2 border-1 border-sky-500 rounded-md focus:ring-2 focus:ring-sky-700 appearance-none text-sm"
+                                required placeholder="{{ $fakultas }}"
+                                value="{{ old('kuota.' . $fakultas, json_decode($scholarship->kuota)->$fakultas ?? '') }}" required>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Persyaratan --}}
+            <div class="mb-4 col-span-2 text-base">
+                <label class="block font-semibold text-gray-600 mb-2 ml-1">Persyaratan</label>
+                <hr class="mb-4 border-t-0 border-gray-300 my-2">
+                <table id="myTable" class="w-full border-collapse border border-white font-normal text-base">
+                    <thead>
+                        <tr class="bg-sky-800 text-slate-50">
+                            <th class="border border-white px-4 py-2">Nama Persyaratan</th>
+                            <th class="border border-white px-4 py-2 text-center">Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        @foreach ($file as $item)
+                            <tr
+                                class="table-fixed border border-gray-300 @if ($loop->even) @else bg-slate-50 @endif">
+                                <td class="border border-slate-100 px-4 py-3 text-base whitespace-pre-wrap">
+                                    <div class="max-w-full">
+                                        {{ $item->name }}
+                                    </div>
+                                </td>
+                                <td class="border border-slate-100 px-4 py-3 text-center text-base">
+                                    <input class="form-checkbox m-0" type="checkbox" name="requirements[]"
+                                        value="{{ $item->id }}" @if (in_array($item->id, $scholarship->requirements->pluck('id')->toArray())) checked @endif>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+
+            {{-- Save Button --}}
+            <div class="mb-4 text-start text-sm col-span-2">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
+                    type="submit">SIMPAN</button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        // Inisialisasi pilihan donatur sesuai dengan data beasiswa yang sudah ada
+        var scholarshipId = document.getElementById('scholarships_id').value;
+        var donorSelect = document.getElementById('donors_id');
+        donorSelect.innerHTML = '';
+        @foreach ($data as $item)
+            if ({{ $item->id }} == scholarshipId) {
+                var option = document.createElement('option');
+                option.value = '{{ $item->donors->id }}';
+                option.text = '{{ $item->donors->name }}';
+                donorSelect.add(option);
+            }
+        @endforeach
+
+        // Menangani perubahan pada dropdown beasiswa
+        document.getElementById('scholarships_id').addEventListener('change', function() {
+            var scholarshipId = this.value;
+            var donorSelect = document.getElementById('donors_id');
+            donorSelect.innerHTML = '';
+            @foreach ($data as $item)
+                if ({{ $item->id }} == scholarshipId) {
+                    var option = document.createElement('option');
+                    option.value = '{{ $item->donors->id }}';
+                    option.text = '{{ $item->donors->name }}';
+                    donorSelect.add(option);
+                }
+            @endforeach
+        });
+    </script>
 @endsection
