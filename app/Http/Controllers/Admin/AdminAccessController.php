@@ -1,59 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class AdminAuthController extends Controller
+class AdminAccessController extends Controller
 {
-    public function login()
-    {
-        return view('admin.login');
-    }
-
-    public function authenticating(Request $request)
-    {
-        $credentials = $request->validate([
-            'nip' => ['required'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            if (Auth::guard('admin')->user()->status != 'Aktif') {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                Session::flash('status', 'failed');
-                Session::flash('message', 'Your account is not active');
-
-                return redirect('/adm');
-            }
-
-            $request->session()->regenerate();
-
-            return redirect('/adm/beranda');
-        }
-
-        Session::flash('status', 'failed');
-        Session::flash('message', 'Login Invalid');
-
-        return redirect('/adm');
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/adm');
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $data = Admin::all();
@@ -61,6 +20,9 @@ class AdminAuthController extends Controller
         return view('admin.access.index')->with('data', $data);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         $roles = Role::all();
@@ -74,6 +36,9 @@ class AdminAuthController extends Controller
         return view('admin.access.create')->with('roles', $roles)->with('disabledOptions', $disabledOptions);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -89,7 +54,18 @@ class AdminAuthController extends Controller
         return redirect('/adm/akses')->with('status', 'success')->with('message', 'User created successfully');
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         try {
             $user = Admin::where('slug', $id)->firstOrFail();
@@ -108,7 +84,10 @@ class AdminAuthController extends Controller
         return view('admin.access.edit')->with('user', $user)->with('roles', $roles)->with('disabledOptions', $disabledOptions);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $data = $request->validate([
             'nip' => ['required'],
@@ -126,7 +105,10 @@ class AdminAuthController extends Controller
         return redirect('/adm/akses')->with('status', 'success')->with('message', 'User updated successfully');
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $user = Admin::findOrFail($id);
         $user->delete();

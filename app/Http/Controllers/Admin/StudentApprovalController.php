@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Exports\UserScholarshipExport;
+use App\Http\Controllers\Controller;
 use App\Models\ScholarshipData;
 use App\Models\User;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
 
-class PassFileController extends Controller
+class StudentApprovalController extends Controller
 {
     public function index()
     {

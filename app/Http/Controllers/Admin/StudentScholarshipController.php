@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Exports\UserScholarshipExport;
+use App\Http\Controllers\Controller;
 use App\Models\ScholarshipData;
 use App\Models\User;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AlumniController extends Controller
+class StudentScholarshipController extends Controller
 {
     public function index()
     {
-        $scholarships = ScholarshipData::where('end_scholarship', '<', now())->get();
+        $scholarships = ScholarshipData::where('start_scholarship', '<=', now())
+            ->where('end_scholarship', '>=', now())->get();
 
-        return view('admin.alumni.list')->with('scholarships', $scholarships);
+        return view('admin.aplicant.list')->with('scholarships', $scholarships);
     }
 
-    public function showAlumniByScholarship($scholarship_id)
+    public function showAplicantByScholarship($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
@@ -30,13 +32,13 @@ class AlumniController extends Controller
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
-            $alumniEndDate = $scholarship->end_scholarship;
 
             if (
                 $userScholarship &&
                 $userScholarship->pivot->status_file &&
                 $userScholarship->pivot->status_scholar &&
-                now() > $alumniEndDate
+                $scholarship->start_scholarship <= now() &&
+                now() <= $scholarship->end_scholarship
             ) {
                 $data[] = [
                     'scholarship' => $scholarship,
@@ -45,7 +47,7 @@ class AlumniController extends Controller
             }
         }
 
-        return view('admin.alumni.index')->with('data', $data)->with('scholarship', $scholarship);
+        return view('admin.aplicant.index')->with('data', $data)->with('scholarship', $scholarship);
     }
 
     public function showDetail(string $user_id, string $scholarship_id)
@@ -57,7 +59,7 @@ class AlumniController extends Controller
             ->where('scholarship_data_id', $scholarship_id)
             ->get();
 
-        return view('admin.alumni.detail')
+        return view('admin.aplicant.detail')
             ->with('user', $user)
             ->with('scholarship', $scholarship)
             ->with('files', $files);
@@ -76,13 +78,13 @@ class AlumniController extends Controller
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
-            $alumniEndDate = $scholarship->end_scholarship;
 
             if (
                 $userScholarship &&
                 $userScholarship->pivot->status_file &&
                 $userScholarship->pivot->status_scholar &&
-                now() > $alumniEndDate
+                $scholarship->start_scholarship <= now() &&
+                now() <= $scholarship->end_scholarship
             ) {
                 $data[] = [
                     'scholarship' => $scholarship,

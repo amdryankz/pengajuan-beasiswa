@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
         ]);
 
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200810701000' . $i;
+            $nim = '200810701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Informatika';
@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200110701000' . $i;
+            $nim = '200110701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Teknik Komputer';
@@ -91,7 +91,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200210701000' . $i;
+            $nim = '200210701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Akuntansi';
@@ -120,7 +120,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200310701000' . $i;
+            $nim = '200310701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Manajemen Agribisnis';
@@ -149,7 +149,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200410701000' . $i;
+            $nim = '200410701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Ilmu Hukum';
@@ -178,7 +178,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200510701000' . $i;
+            $nim = '200510701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'PPKN';
@@ -207,7 +207,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200610701000' . $i;
+            $nim = '200610701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Sosiologi';
@@ -236,7 +236,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200710701000' . $i;
+            $nim = '200710701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Pendidikan Dokter';
@@ -265,7 +265,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '200910701000' . $i;
+            $nim = '200910701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Pendidikan Dokter Gigi';
@@ -294,7 +294,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '201010701000' . $i;
+            $nim = '201010701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Kesehatan Hewan';
@@ -323,7 +323,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '201110701000' . $i;
+            $nim = '201110701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Ilmu Kelautan';
@@ -352,7 +352,7 @@ class UserSeeder extends Seeder
             ]);
         }
         for ($i = 1; $i <= 5; $i++) {
-            $nim = '201210701000' . $i;
+            $nim = '201210701000'.$i;
             $name = $faker->name;
             $password = Hash::make('testing');
             $prodi = 'Ilmu Keperawatan';

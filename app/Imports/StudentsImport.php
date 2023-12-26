@@ -2,13 +2,14 @@
 
 namespace App\Imports;
 
-use Maatwebsite\Excel\Concerns\ToModel;
-use App\Models\UserScholarship;
 use App\Models\User;
+use App\Models\UserScholarship;
+use Maatwebsite\Excel\Concerns\ToModel;
 
 class StudentsImport implements ToModel
 {
     private $scholarshipId;
+
     public $unlinkedNIMCount = 0;
 
     public function __construct($scholarshipId)
@@ -25,8 +26,9 @@ class StudentsImport implements ToModel
     {
         $user = User::where('nim', $row[0])->first();
 
-        if (!$user) {
+        if (! $user) {
             $this->unlinkedNIMCount++;
+
             return null;
         }
 

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Scholarship;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Imports\StudentsImport;
+use App\Models\Scholarship;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
-class SpecScholarshipController extends Controller
+class SpecialScholarshipDataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,6 +62,7 @@ class SpecScholarshipController extends Controller
         if ($import->hasUnlinkedNIM()) {
             UserScholarship::where('scholarship_data_id', $scholarship->id)->delete();
             ScholarshipData::findOrFail($scholarship->id)->delete();
+
             return redirect()->back()->with('error', 'Terdapat nim yang tidak terdata.');
         }
 
@@ -68,10 +70,9 @@ class SpecScholarshipController extends Controller
             'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
         ]);
 
-        return redirect()->route('beasiswa-khusus.index')
+        return redirect()->route('pengelolaan-khusus.index')
             ->with('success', 'Berhasil menambahkan data beasiswa');
     }
-
 
     /**
      * Display the specified resource.
@@ -140,7 +141,7 @@ class SpecScholarshipController extends Controller
             ]);
         }
 
-        return redirect()->route('beasiswa-khusus.index')
+        return redirect()->route('pengelolaan-khusus.index')
             ->with('success', 'Berhasil mengupdate data beasiswa');
     }
 
@@ -152,7 +153,7 @@ class SpecScholarshipController extends Controller
         $scholarship = ScholarshipData::findOrFail($id);
         $scholarship->delete();
 
-        return redirect()->route('beasiswa-khusus.index');
+        return redirect()->route('pengelolaan-khusus.index');
     }
 
     public function updateSK(Request $request, string $id)
@@ -177,7 +178,7 @@ class SpecScholarshipController extends Controller
 
         $scholarship->save();
 
-        return redirect()->route('beasiswa-khusus.index')
+        return redirect()->route('pengelolaan-khusus.index')
             ->with('success', 'Berhasil mengupdate SK beasiswa');
     }
 }

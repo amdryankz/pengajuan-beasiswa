@@ -51,19 +51,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($scholarshipData as $scholarshipId => $data)
+                        @if ($scholarshipData)
+                            @foreach ($scholarshipData as $scholarshipId => $data)
+                                <tr>
+                                    <td class="py-2 px-4 border-b">{{ $data['name'] }}</td>
+                                    <td class="py-2 px-4 border-b">{{ $data['year'] }}</td>
+                                    @foreach ($fakultasList as $fakultas)
+                                        <td class="py-2 px-4 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}</td>
+                                    @endforeach
+                                    <td class="py-2 px-4 border-b">{{ $data['total'] }}</td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
-                                <td class="py-2 px-4 border-b">{{ $data['name'] }}</td>
-                                <td class="py-2 px-4 border-b">{{ $data['year'] }}</td>
-                                @foreach ($fakultasList as $fakultas)
-                                    <td class="py-2 px-4 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}</td>
-                                @endforeach
-                                <td class="py-2 px-4 border-b">{{ $data['total'] }}</td>
+                                <td colspan="{{ count($fakultasList) + 3 }}" class="py-2 px-4 border-b text-center">Data
+                                    Beasiswa tidak tersedia.</td>
                             </tr>
-                        @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 @endsection
