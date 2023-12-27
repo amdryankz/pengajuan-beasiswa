@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\ScholarshipData;
 use App\Models\User;
-use App\Models\UserScholarship;
 use Barryvdh\DomPDF\PDF;
+use Illuminate\Http\Request;
+use App\Models\ScholarshipData;
+use App\Models\UserScholarship;
+use App\Http\Controllers\Controller;
 
 class StudentApplicationController extends Controller
 {
@@ -81,23 +82,26 @@ class StudentApplicationController extends Controller
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->status_file = true;
+            $userScholarship->reason_for_rejection = null;
             $userScholarship->save();
         }
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
 
-    public function cancelValidation($scholarship_id, $user_id)
+    public function cancelValidation(Request $request, $scholarship_id, $user_id)
     {
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->status_file = false;
+            $userScholarship->reason_for_rejection = $request->input('reason');
             $userScholarship->save();
         }
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
+
 
     public function generatePDF(string $user_id, string $scholarship_id)
     {
