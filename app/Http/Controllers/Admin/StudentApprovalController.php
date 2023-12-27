@@ -22,13 +22,15 @@ class StudentApprovalController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             // Handle jika beasiswa tidak ditemukan
             abort(404);
         }
 
         $data = [];
         $users = $scholarship->users()->distinct()->get();
+
+        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -37,6 +39,7 @@ class StudentApprovalController extends Controller
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,
+                    'fakultasList' => $fakultasList,
                 ];
             }
         }
@@ -68,7 +71,7 @@ class StudentApprovalController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
+        return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
     }
 
     public function cancelValidation($scholarship_id, $user_id)
@@ -80,14 +83,14 @@ class StudentApprovalController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
+        return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
 
     public function export($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 

@@ -21,35 +21,19 @@ class StudentApplicationController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 
         $user = $scholarship->users()->distinct()->get();
 
+        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
+
         $data = [
             'scholarship' => $scholarship,
             'user' => $user,
+            'fakultasList' => $fakultasList,
         ];
-
-        return view('admin.userscholarship.index')->with('data', $data);
-    }
-
-    public function showRegistrations()
-    {
-        $scholarships = ScholarshipData::all();
-        $data = [];
-
-        foreach ($scholarships as $scholarship) {
-            $users = $scholarship->users()->distinct()->get();
-
-            foreach ($users as $user) {
-                $data[] = [
-                    'scholarship' => $scholarship,
-                    'user' => $user,
-                ];
-            }
-        }
 
         return view('admin.userscholarship.index')->with('data', $data);
     }
@@ -71,7 +55,7 @@ class StudentApplicationController extends Controller
 
     public function downloadFile($file_path)
     {
-        $path = storage_path('app/file_requirements/'.$file_path);
+        $path = storage_path('app/file_requirements/' . $file_path);
 
         if (file_exists($path)) {
             $filename = pathinfo($path, PATHINFO_FILENAME);
@@ -83,7 +67,7 @@ class StudentApplicationController extends Controller
                 200,
                 [
                     'Content-Type' => mime_content_type($path),
-                    'Content-Disposition' => 'inline; filename="'.$filename.'"',
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
                 ]
             );
         } else {
@@ -100,7 +84,7 @@ class StudentApplicationController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas telah divalidasi.');
+        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
 
     public function cancelValidation($scholarship_id, $user_id)
@@ -112,7 +96,7 @@ class StudentApplicationController extends Controller
             $userScholarship->save();
         }
 
-        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas batal divalidasi.');
+        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
 
     public function generatePDF(string $user_id, string $scholarship_id)
@@ -123,7 +107,7 @@ class StudentApplicationController extends Controller
         $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
 
         // Nama file PDF yang akan diunduh
-        $pdfFileName = $user->nim.'_'.$scholarship->name.'.pdf';
+        $pdfFileName = $user->nim . '_' . $scholarship->name . '.pdf';
 
         // Unduh file PDF
         return $pdf->stream($pdfFileName);

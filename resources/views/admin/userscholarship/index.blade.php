@@ -18,22 +18,16 @@
 
             <div class="flex items-center mb-2 md:w-1/2">
                 <div class="w-3/4 pr-2">
-                    <label for="faculty" class="block text-sm font-medium text-gray-700">Pilih Fakultas:</label>
-                    <select id="faculty" name="faculty"
+                    <label for="facultyFilter" class="block text-sm font-medium text-gray-700">Pilih Fakultas:</label>
+                    <select id="facultyFilter" name="facultyFilter"
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
-                        <!-- Tambahkan opsi untuk setiap fakultas -->
-                        <option value="fakultas1">Fakultas 1</option>
-                        <option value="fakultas2">Fakultas 2</option>
-                        <option value="fakultas3">Fakultas 3</option>
-                        <!-- Tambahkan lebih banyak opsi jika diperlukan -->
+                        <option value="">Semua Fakultas</option>
+                        @foreach ($data['fakultasList'] as $fakultas)
+                            <option value="{{ $fakultas }}">{{ $fakultas }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="w-1/4"> <br>
-                    <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700">Submit</button>
-                </div>
             </div>
-
 
             @if (session('success'))
                 <div class="alert alert-success">

@@ -23,12 +23,14 @@ class StudentScholarshipController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 
         $data = [];
         $users = $scholarship->users()->distinct()->get();
+
+        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -43,6 +45,7 @@ class StudentScholarshipController extends Controller
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,
+                    'fakultasList' => $fakultasList,
                 ];
             }
         }
@@ -69,7 +72,7 @@ class StudentScholarshipController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 
