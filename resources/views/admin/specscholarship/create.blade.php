@@ -53,14 +53,13 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-6 relative">
-                    <label for="list_student_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
-                        Mahasiswa</label>
-                    <div class="flex items-center">
-                        <input type="file" name="list_student_file" id="list_student_file" accept=".xlsx, .xls"
-                            class="mt-1 p-2 border rounded-md w-full bg-white cursor-pointer pr-10" required>
-                    </div>
+                <div class="mb-4">
+                    <label for="value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
+                    <input type="text"
+                        class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
+                        name="value" id="value" placeholder="Nominal" value="{{ old('value') }}" required>
                 </div>
+
             </div>
             <div class="col-span-1">
                 <div class="mb-4 flex items-start">
@@ -93,16 +92,25 @@
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
                         required>
                 </div>
-                <div class="mb-14">
+                <div class="mb-4">
                     <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Akhir Beasiswa</label>
                     <input type="date" id="end_scholarship" name="end_scholarship"
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
                         required>
                 </div>
-                <div class="mb-4 text-start col-span-2">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
-                        type="submit">SIMPAN</button>
+
+                <div class="mb-6 relative">
+                    <label for="list_student_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
+                        Mahasiswa</label>
+                    <div class="flex items-center">
+                        <input type="file" name="list_student_file" id="list_student_file" accept=".xlsx, .xls"
+                            class="mt-1 p-2 border rounded-md w-full bg-white cursor-pointer pr-10" required>
+                    </div>
                 </div>
+            </div>
+            <div class="mb-4 text-start col-span-2">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" name="simpan"
+                    type="submit">SIMPAN</button>
             </div>
         </form>
 

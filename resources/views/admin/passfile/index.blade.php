@@ -5,7 +5,7 @@
 @section('content')
     <div class="mb-8 text-start text-sm bg-white p-4">
         <a href="{{ route('passfile.list') }}"
-            class="inline-flex items-start px-2 py-1 mb-4 text-blue-600 hover:bg-blue-100 rounded-lg">
+            class="inline-flex items-start px-2 py-1 mb-2 text-blue-600 hover:bg-blue-100 rounded-lg">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="w-1/4"> <br>
                         <button type="submit"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700">Submit</button>
+                            class="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700">Cari</button>
                     </div>
                 </div>
 
