@@ -9,7 +9,7 @@ class UserScholarship extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'scholarship_data_id', 'file_requirement_id', 'file_path', 'status_file', 'status_scholar'];
+    protected $fillable = ['user_id', 'scholarship_data_id', 'file_requirement_id', 'file_path', 'status_file', 'status_scholar', 'dosen_wali_approval'];
 
     public function user()
     {

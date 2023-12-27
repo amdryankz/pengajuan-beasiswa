@@ -55,22 +55,23 @@ class UserScholarshipController extends Controller
     {
         $request->validate([
             'file_requirements.*' => 'required|mimes:pdf|max:2048',
+            'dosen_wali_approval' => 'required|mimes:pdf|max:2048',
+        ], [
+            'file_requirements.*.max' => 'File tidak boleh lebih dari 2MB',
+            'dosen_wali_approval.max' => 'File tidak boleh lebih dari 2MB',
         ]);
 
         $scholarshipDataId = $request->input('scholarship_data_id');
         $user = $request->user();
         $userIpk = $user->ipk;
 
-        // Dapatkan informasi beasiswa
         $scholarship = ScholarshipData::findOrFail($scholarshipDataId);
         $minIpkRequired = $scholarship->min_ipk;
 
-        // Verifikasi IPK
         if ($userIpk < $minIpkRequired) {
             return redirect()->route('dashboard.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
         }
 
-        // Verifikasi apakah pengguna sudah mendaftar
         $existingRegistration = UserScholarship::where('user_id', $user->id)
             ->where('scholarship_data_id', $scholarshipDataId)
             ->exists();
@@ -89,16 +90,21 @@ class UserScholarshipController extends Controller
             return redirect()->route('dashboard.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
+        $dosenWaliLetter = $request->file('dosen_wali_approval');
+        $dosenWaliFileName = $user->nim . '_izin_dosen_wali.' . $dosenWaliLetter->getClientOriginalExtension();
+        $dosenWaliLetter->storeAs('dosen_wali_letters', $dosenWaliFileName, 'public');
+
         foreach ($request->file_requirements as $file_requirement_id => $file) {
             $fileRequirement = FileRequirement::findOrFail($file_requirement_id);
-            $fileName = $user->nim.'_'.$fileRequirement->name.'.'.$file->getClientOriginalExtension();
-            $file->storeAs('file_requirements', $fileName);
+            $fileName = $user->nim . '_' . $fileRequirement->name . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('file_requirements', $fileName, 'public');
 
             UserScholarship::create([
                 'scholarship_data_id' => $scholarshipDataId,
                 'user_id' => $user->id,
                 'file_requirement_id' => $file_requirement_id,
                 'file_path' => $fileName,
+                'dosen_wali_approval' => $dosenWaliFileName
             ]);
         }
 
@@ -141,14 +147,22 @@ class UserScholarshipController extends Controller
     {
         $userScholarship = UserScholarship::findOrFail($id);
 
-        // Verifikasi apakah pengguna dapat membatalkan pendaftaran
         if ($userScholarship->status_file === null) {
-            // Hapus berkas terkait jika ada (optional)
-            if ($userScholarship->file_path) {
-                Storage::delete('file_requirements/'.$userScholarship->file_path);
+            $filePaths = UserScholarship::where('user_id', $userScholarship->user_id)
+                ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
+                ->pluck('file_path')
+                ->toArray();
+
+            foreach ($filePaths as $filePath) {
+                if ($filePath) {
+                    Storage::disk('public')->delete('file_requirements/' . $filePath);
+                }
             }
 
-            // Hapus pendaftaran
+            if ($userScholarship->dosen_wali_approval) {
+                Storage::disk('public')->delete('dosen_wali_letters/' . $userScholarship->dosen_wali_approval);
+            }
+
             UserScholarship::where('user_id', $userScholarship->user_id)
                 ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
                 ->delete();
