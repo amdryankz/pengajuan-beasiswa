@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\ScholarshipData;
+use App\Models\User;
 use App\Models\UserScholarship;
 
 class HomepageController extends Controller
@@ -47,6 +48,8 @@ class HomepageController extends Controller
                 'total' => $facultyTotals->sum(),
             ];
         }
+
+        $scholarshipData = empty($scholarshipData) ? null : $scholarshipData;
 
         return view('admin.homepage.index', compact('totalScholarship', 'totalAlumni', 'totalActive', 'totalsByFaculty', 'fakultasList', 'scholarshipData'));
     }

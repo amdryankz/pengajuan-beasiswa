@@ -1,46 +1,56 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Exports\UserScholarshipExport;
+use App\Http\Controllers\Controller;
 use App\Models\ScholarshipData;
 use App\Models\User;
 use App\Models\UserScholarship;
 use Maatwebsite\Excel\Facades\Excel;
 
-class PassFileController extends Controller
+class StudentScholarshipController extends Controller
 {
     public function index()
     {
-        $scholarships = ScholarshipData::all();
+        $scholarships = ScholarshipData::where('start_scholarship', '<=', now())
+            ->where('end_scholarship', '>=', now())->get();
 
-        return view('admin.passfile.list')->with('scholarships', $scholarships);
+        return view('admin.aplicant.list')->with('scholarships', $scholarships);
     }
 
-    public function showPassFileByScholarship($scholarship_id)
+    public function showAplicantByScholarship($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
-            // Handle jika beasiswa tidak ditemukan
+        if (!$scholarship) {
             abort(404);
         }
 
         $data = [];
         $users = $scholarship->users()->distinct()->get();
 
+        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
+
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-            if ($userScholarship && $userScholarship->pivot->status_file) {
+            if (
+                $userScholarship &&
+                $userScholarship->pivot->status_file &&
+                $userScholarship->pivot->status_scholar &&
+                $scholarship->start_scholarship <= now() &&
+                now() <= $scholarship->end_scholarship
+            ) {
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,
+                    'fakultasList' => $fakultasList,
                 ];
             }
         }
 
-        return view('admin.passfile.index')->with('data', $data)->with('scholarship', $scholarship);
+        return view('admin.aplicant.index')->with('data', $data)->with('scholarship', $scholarship);
     }
 
     public function showDetail(string $user_id, string $scholarship_id)
@@ -52,41 +62,17 @@ class PassFileController extends Controller
             ->where('scholarship_data_id', $scholarship_id)
             ->get();
 
-        return view('admin.passfile.detail')
+        return view('admin.aplicant.detail')
             ->with('user', $user)
             ->with('scholarship', $scholarship)
             ->with('files', $files);
-    }
-
-    public function validateScholar($scholarship_id, $user_id)
-    {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
-
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_scholar = true;
-            $userScholarship->save();
-        }
-
-        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
-    }
-
-    public function cancelValidation($scholarship_id, $user_id)
-    {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
-
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_scholar = false;
-            $userScholarship->save();
-        }
-
-        return redirect('/adm/kelulusan/'.$scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
 
     public function export($scholarship_id)
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (! $scholarship) {
+        if (!$scholarship) {
             abort(404);
         }
 
@@ -96,7 +82,13 @@ class PassFileController extends Controller
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-            if ($userScholarship && $userScholarship->pivot->status_file) {
+            if (
+                $userScholarship &&
+                $userScholarship->pivot->status_file &&
+                $userScholarship->pivot->status_scholar &&
+                $scholarship->start_scholarship <= now() &&
+                now() <= $scholarship->end_scholarship
+            ) {
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,

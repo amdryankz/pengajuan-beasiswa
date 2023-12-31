@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
-use App\Models\User;
 use App\Models\UserScholarship;
-use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -56,22 +55,23 @@ class UserScholarshipController extends Controller
     {
         $request->validate([
             'file_requirements.*' => 'required|mimes:pdf|max:2048',
+            'dosen_wali_approval' => 'required|mimes:pdf|max:2048',
+        ], [
+            'file_requirements.*.max' => 'File tidak boleh lebih dari 2MB',
+            'dosen_wali_approval.max' => 'File tidak boleh lebih dari 2MB',
         ]);
 
         $scholarshipDataId = $request->input('scholarship_data_id');
         $user = $request->user();
         $userIpk = $user->ipk;
 
-        // Dapatkan informasi beasiswa
         $scholarship = ScholarshipData::findOrFail($scholarshipDataId);
         $minIpkRequired = $scholarship->min_ipk;
 
-        // Verifikasi IPK
         if ($userIpk < $minIpkRequired) {
             return redirect()->route('dashboard.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
         }
 
-        // Verifikasi apakah pengguna sudah mendaftar
         $existingRegistration = UserScholarship::where('user_id', $user->id)
             ->where('scholarship_data_id', $scholarshipDataId)
             ->exists();
@@ -90,16 +90,21 @@ class UserScholarshipController extends Controller
             return redirect()->route('dashboard.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
+        $dosenWaliLetter = $request->file('dosen_wali_approval');
+        $dosenWaliFileName = $user->nim . '_izin_dosen_wali.' . $dosenWaliLetter->getClientOriginalExtension();
+        $dosenWaliLetter->storeAs('dosen_wali_letters', $dosenWaliFileName, 'public');
+
         foreach ($request->file_requirements as $file_requirement_id => $file) {
             $fileRequirement = FileRequirement::findOrFail($file_requirement_id);
-            $fileName = $user->nim.'_'.$fileRequirement->name.'.'.$file->getClientOriginalExtension();
-            $file->storeAs('file_requirements', $fileName);
+            $fileName = $user->nim . '_' . $fileRequirement->name . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('file_requirements', $fileName, 'public');
 
             UserScholarship::create([
                 'scholarship_data_id' => $scholarshipDataId,
                 'user_id' => $user->id,
                 'file_requirement_id' => $file_requirement_id,
                 'file_path' => $fileName,
+                'dosen_wali_approval' => $dosenWaliFileName
             ]);
         }
 
@@ -142,14 +147,22 @@ class UserScholarshipController extends Controller
     {
         $userScholarship = UserScholarship::findOrFail($id);
 
-        // Verifikasi apakah pengguna dapat membatalkan pendaftaran
         if ($userScholarship->status_file === null) {
-            // Hapus berkas terkait jika ada (optional)
-            if ($userScholarship->file_path) {
-                Storage::delete('file_requirements/'.$userScholarship->file_path);
+            $filePaths = UserScholarship::where('user_id', $userScholarship->user_id)
+                ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
+                ->pluck('file_path')
+                ->toArray();
+
+            foreach ($filePaths as $filePath) {
+                if ($filePath) {
+                    Storage::disk('public')->delete('file_requirements/' . $filePath);
+                }
             }
 
-            // Hapus pendaftaran
+            if ($userScholarship->dosen_wali_approval) {
+                Storage::disk('public')->delete('dosen_wali_letters/' . $userScholarship->dosen_wali_approval);
+            }
+
             UserScholarship::where('user_id', $userScholarship->user_id)
                 ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
                 ->delete();
@@ -158,124 +171,5 @@ class UserScholarshipController extends Controller
         } else {
             return redirect()->route('dashboard.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
         }
-    }
-
-    public function showScholarships()
-    {
-        $scholarships = ScholarshipData::all();
-
-        return view('admin.userscholarship.list')->with('scholarships', $scholarships);
-    }
-
-    public function showRegistrationsByScholarship($scholarship_id)
-    {
-        $scholarship = ScholarshipData::find($scholarship_id);
-
-        if (! $scholarship) {
-            abort(404);
-        }
-
-        $user = $scholarship->users()->distinct()->get();
-
-        $data = [
-            'scholarship' => $scholarship,
-            'user' => $user,
-        ];
-
-        return view('admin.userscholarship.index')->with('data', $data);
-    }
-
-    public function showRegistrations()
-    {
-        $scholarships = ScholarshipData::all();
-        $data = [];
-
-        foreach ($scholarships as $scholarship) {
-            $users = $scholarship->users()->distinct()->get();
-
-            foreach ($users as $user) {
-                $data[] = [
-                    'scholarship' => $scholarship,
-                    'user' => $user,
-                ];
-            }
-        }
-
-        return view('admin.userscholarship.index')->with('data', $data);
-    }
-
-    public function showDetail(string $user_id, string $scholarship_id)
-    {
-        $user = User::findOrFail($user_id);
-        $scholarship = ScholarshipData::findOrFail($scholarship_id);
-
-        $files = UserScholarship::where('user_id', $user_id)
-            ->where('scholarship_data_id', $scholarship_id)
-            ->get();
-
-        return view('admin.userscholarship.detail')
-            ->with('user', $user)
-            ->with('scholarship', $scholarship)
-            ->with('files', $files);
-    }
-
-    public function downloadFile($file_path)
-    {
-        $path = storage_path('app/file_requirements/'.$file_path);
-
-        if (file_exists($path)) {
-            $filename = pathinfo($path, PATHINFO_FILENAME);
-
-            return response()->stream(
-                function () use ($path) {
-                    readfile($path);
-                },
-                200,
-                [
-                    'Content-Type' => mime_content_type($path),
-                    'Content-Disposition' => 'inline; filename="'.$filename.'"',
-                ]
-            );
-        } else {
-            abort(404, 'File not found');
-        }
-    }
-
-    public function validateFile($scholarship_id, $user_id)
-    {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
-
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_file = true;
-            $userScholarship->save();
-        }
-
-        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas telah divalidasi.');
-    }
-
-    public function cancelValidation($scholarship_id, $user_id)
-    {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
-
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_file = false;
-            $userScholarship->save();
-        }
-
-        return redirect('/adm/pengusul/'.$scholarship_id)->with('success', 'Berkas batal divalidasi.');
-    }
-
-    public function generatePDF(string $user_id, string $scholarship_id)
-    {
-        $user = User::findOrFail($user_id);
-        $scholarship = ScholarshipData::findOrFail($scholarship_id);
-
-        $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
-
-        // Nama file PDF yang akan diunduh
-        $pdfFileName = $user->nim.'_'.$scholarship->name.'.pdf';
-
-        // Unduh file PDF
-        return $pdf->stream($pdfFileName);
     }
 }

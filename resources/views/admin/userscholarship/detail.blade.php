@@ -15,7 +15,6 @@
             </a>
         </div>
 
-
         <div class="mx-auto max-w-4xl p-4 border rounded-md">
             <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa</h1>
             <div class="mb-10 max-w-xl mx-auto flex justify-between">
@@ -133,6 +132,12 @@
                             action="{{ route('admin.scholarship.cancelValidation', ['scholarship_id' => $scholarship->id, 'user_id' => $user->id]) }}"
                             method="POST">
                             @csrf
+                            <div class="mb-4">
+                                <label for="reason" class="block text-sm font-medium text-gray-700">Alasan
+                                    Penolakan</label>
+                                <textarea id="reason" name="reason" rows="3"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                            </div>
                             <button type="submit"
                                 class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out ml-4">
                                 <span class="flex items-center">

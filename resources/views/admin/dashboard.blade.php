@@ -28,7 +28,7 @@
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
 
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
@@ -263,17 +263,26 @@
             </div>
         </div>
 
-
-
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        {{-- <script src="https://cdn.tailwindcss.com/3.3.5"></script> --}}
-        {{-- <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#facultyFilter').select2();
+            });
+        </script>
 
         <script defer>
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                var table = $('#myTable').DataTable(); // Inisialisasi objek DataTable
+
+                $('#facultyFilter').on('change', function() {
+                    var faculty = $(this).val();
+                    table.columns(3).search(faculty)
+                .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
+                });
             });
         </script>
 
