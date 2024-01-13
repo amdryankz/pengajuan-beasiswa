@@ -69,7 +69,7 @@ class UserScholarshipController extends Controller
         $minIpkRequired = $scholarship->min_ipk;
 
         if ($userIpk < $minIpkRequired) {
-            return redirect()->route('dashboard.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
+            return redirect()->route('beasiswa.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
         }
 
         $existingRegistration = UserScholarship::where('user_id', $user->id)
@@ -77,7 +77,7 @@ class UserScholarshipController extends Controller
             ->exists();
 
         if ($existingRegistration) {
-            return redirect()->route('dashboard.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
+            return redirect()->route('beasiswa.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
         }
 
         $activeScholarship = UserScholarship::where('user_id', $user->id)
@@ -87,7 +87,7 @@ class UserScholarshipController extends Controller
             ->exists();
 
         if ($activeScholarship) {
-            return redirect()->route('dashboard.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
+            return redirect()->route('beasiswa.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
         $dosenWaliLetter = $request->file('dosen_wali_approval');
@@ -108,7 +108,7 @@ class UserScholarshipController extends Controller
             ]);
         }
 
-        return redirect()->route('dashboard.index')->with('success', 'Pendaftaran berhasil.');
+        return redirect()->route('beasiswa.index')->with('success', 'Pendaftaran berhasil.');
     }
 
     /**
@@ -167,9 +167,9 @@ class UserScholarshipController extends Controller
                 ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
                 ->delete();
 
-            return redirect()->route('dashboard.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
+            return redirect()->route('beasiswa.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
         } else {
-            return redirect()->route('dashboard.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
+            return redirect()->route('beasiswa.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
         }
     }
 }

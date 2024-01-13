@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminAccessController;
-use App\Http\Controllers\Admin\AdminAuthController;
-use App\Http\Controllers\Admin\AlumniController;
-use App\Http\Controllers\Admin\DonorController;
-use App\Http\Controllers\Admin\FileRequirementController;
-use App\Http\Controllers\Admin\HomepageController;
-use App\Http\Controllers\Admin\ScholarshipController;
-use App\Http\Controllers\Admin\ScholarshipDataController;
-use App\Http\Controllers\Admin\SpecialScholarshipDataController;
-use App\Http\Controllers\Admin\StudentApplicationController;
-use App\Http\Controllers\Admin\StudentApprovalController;
-use App\Http\Controllers\Admin\StudentScholarshipController;
-use App\Http\Controllers\User\UserAuthController;
-use App\Http\Controllers\User\UserProfileController;
-use App\Http\Controllers\User\UserScholarshipController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DonorController;
+use App\Http\Controllers\Admin\AlumniController;
+use App\Http\Controllers\User\UserAuthController;
+use App\Http\Controllers\Admin\HomepageController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\Admin\AdminAccessController;
+use App\Http\Controllers\Admin\ScholarshipController;
+use App\Http\Controllers\User\UserHomepageController;
+use App\Http\Controllers\User\UserScholarshipController;
+use App\Http\Controllers\Admin\FileRequirementController;
+use App\Http\Controllers\Admin\ScholarshipDataController;
+use App\Http\Controllers\Admin\StudentApprovalController;
+use App\Http\Controllers\Admin\StudentApplicationController;
+use App\Http\Controllers\Admin\StudentScholarshipController;
+use App\Http\Controllers\Admin\SpecialScholarshipDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +100,8 @@ Route::middleware('guest_user')->group(function () {
 
 Route::middleware('auth_user')->group(function () {
     // Daftar beasiswa
-    Route::resource('/mhs/dashboard', UserScholarshipController::class);
+    Route::resource('/mhs/beasiswa', UserScholarshipController::class);
+    Route::get('/mhs/beranda', [UserHomepageController::class, 'index']);
     Route::get('/mhs/biodata', [UserProfileController::class, 'index'])->name('biodata.index');
     Route::put('/mhs/biodata/update', [UserProfileController::class, 'update'])->name('biodata.update');
     Route::get('/mhs/logout', [UserAuthController::class, 'logout']);

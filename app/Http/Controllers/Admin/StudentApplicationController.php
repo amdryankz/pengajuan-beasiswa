@@ -95,6 +95,7 @@ class StudentApplicationController extends Controller
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->status_file = false;
+            $userScholarship->status_scholar = null;
             $userScholarship->reason_for_rejection = $request->input('reason');
             $userScholarship->save();
         }
