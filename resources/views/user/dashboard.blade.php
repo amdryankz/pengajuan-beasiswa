@@ -44,25 +44,25 @@
       <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
-      
+
   </head>
 
   <body class="bg-gray-200 flex">
 
       <!-- Sidebar -->
       <aside x-data="{ open: false }"
-          class="bg-white text-gray-800 shadow h-screen w-1/6 relative transform translate-x-0 overflow-y-auto 
-          transition-transform duration-300 flex-none">
+          class="bg-white text-gray-800 shadow w-1/6 fixed h-full transform translate-x-0 overflow-y-auto 
+              transition-transform duration-300 flex-none">
 
           <!-- Logo -->
-          <div class="p-2 mb-2 relative">
-              <img src="https://mbkmunggul.usk.ac.id/assets/img/logo/logo_mbkm_dark.png" alt="Logo"
-                  class="h-12 pl-2">
+          <div class="p-2 relative bg-blue-600 ">
+              <img src="https://beasiswa.usk.ac.id/adm/public/images/logo_beasiswa_admin.png" alt="Logo"
+                  class="w-48 h-auto pl-2">
           </div>
 
           <!-- Daftar Menu -->
           <div class="p-4">
-              <ul class="mt-4 space-y-4">
+              <ul class="mt-2 space-y-4">
 
                   <li class="group relative" :class="{ 'active': isActive('mhs/#') }">
                       <a href="{{ url('/mhs/#') }}"
@@ -89,10 +89,6 @@
                   </li>
 
 
-
-
-
-
                   <li class="group relative" :class="{ 'active': isActive('mhs/biodata') }">
                       <a href="{{ url('/mhs/biodata') }}"
                           class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/biodata')) text-blue-500 @endif">
@@ -100,7 +96,7 @@
                               class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/biodata0')) text-blue-500 @endif">person</i>
                           Biodata
                       </a>
-                      <div <div
+                      <div
                           class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/biodata')) border-blue-500 @endif group-hover:border-blue-500">
                       </div>
                   </li>
@@ -123,7 +119,7 @@
       </aside>
 
       <!-- Content -->
-      <div class="flex-1">
+      <div class="flex-1 ml-60">
           <!-- Navbar -->
           <nav class="bg-white p-2 py-2 shadow flex items-center justify-between">
               <div class="flex items-center">

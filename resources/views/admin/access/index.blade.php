@@ -6,7 +6,7 @@
     <div class="bg-white p-6 rounded-md shadow-md">
         <p class="text-2xl font-bold mb-4">Pengguna</p>
         <div class="mb-4">
-            <a href="{{ route('access.create') }}"
+            <a href="{{ route('akses.create') }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 + Tambah Pengguna
             </a>
@@ -34,12 +34,12 @@
                             <td class="py-1 px-2 border-b">{{ $item->status }}</td>
                             <td class="py-1 px-4 border-b text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('access.edit', $item->id) }}"
+                                    <a href="{{ route('akses.edit', $item->id) }}"
                                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded flex items-center">
                                         <ion-icon name="create-sharp" class="mr-1"></ion-icon>
                                     </a>
                                     <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                        action="{{ route('access.destroy', $item->id) }}" class="inline-block"
+                                        action="{{ route('akses.destroy', $item->id) }}" class="inline-block"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')

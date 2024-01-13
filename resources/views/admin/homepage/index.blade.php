@@ -39,7 +39,7 @@
             <!-- Table -->
             <div class="w-full m-6">
                 <h2 class="text-xl ml-6 mb-4">Jumlah Mahasiswa per Beasiswa</h2>
-                <table class="w-full border-collapse border border-gray-300">
+                <table id="myTable" class="min-w-full bg-white border border-gray-300 text-sm">
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="py-2 px-4 border-b">Nama Beasiswa</th>

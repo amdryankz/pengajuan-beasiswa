@@ -90,15 +90,15 @@
                             </li>
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="beasiswa" href="{{ url('/adm/pengelolaan') }}"
-                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="create-sharp"></ion-icon>
                                     <span class="pl-2 text-base">Pengelolaan</span>
                                 </a>
                             </li>
                             <li class="relative text-slate-800 mb-1.5">
-                                <a id="beasiswakhusus" href="{{ url('/adm/beasiswa-khusus') }}"
-                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/beasiswa-khusus') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                <a id="beasiswakhusus" href="{{ url('/adm/pengelolaan-khusus') }}"
+                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengelolaan-khusus') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="clipboard-sharp"></ion-icon>
                                     <span class="pl-2 text-base">Beasiswa Khusus</span>

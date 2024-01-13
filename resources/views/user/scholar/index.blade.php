@@ -58,6 +58,7 @@
                         <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Tahun</th>
                         <th class="border border-gray-300 px-4 py-2">Status Berkas</th>
+                        <th class="border border-gray-300 px-4 py-2">Alasan Penolakan Berkas</th>
                         <th class="border border-gray-300 px-4 py-2">Status Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Aksi</th>
                     </tr>
@@ -79,6 +80,15 @@
                                     Lulus Berkas
                                 @endif
                             </td>
+                            
+                            <td class="border border-gray-300 px-4 py-2">
+                                @if ($item->status_file == false)
+                                    {{ $item->reason_for_rejection }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($item->status_scholar === null && $item->status_file == true)
                                     Diproses
@@ -90,6 +100,7 @@
                                     Lulus
                                 @endif
                             </td>
+
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($item->status_scholar != true)
                                     {{-- Tampilkan tombol hanya jika status_scholar tidak true --}}

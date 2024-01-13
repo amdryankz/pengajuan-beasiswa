@@ -13,43 +13,43 @@
         </a>
 
         <div class="container mx-auto table-responsive border-gray-300 pb-4">
-            <h2 class="text-lg font-semibold mb-4">List Nama Mahasiswa yang Lulus Berkas - {{ $scholarship->name }}</h2>
+            <h2 class="text-lg font-semibold mb-4">List Nama Mahasiswa yang Lulus Berkas - {{ $scholarship->scholarship->name }}</h2>
 
-            <div class="flex mb-4 text-sm justify-between items-center">
-                <!-- Export to Excel link on the right -->
-                <div class="flex items-center w-1/2">
-                    <div class="w-3/4 pr-2">
-                        <label for="faculty" class="block text-sm font-medium text-gray-700">Pilih Fakultas:</label>
-                        <select id="faculty" name="faculty"
-                            class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
-                            <!-- Tambahkan opsi untuk setiap fakultas -->
-                            <option value="fakultas1">Fakultas 1</option>
-                            <option value="fakultas2">Fakultas 2</option>
-                            <option value="fakultas3">Fakultas 3</option>
-                            <!-- Tambahkan lebih banyak opsi jika diperlukan -->
-                        </select>
-                    </div>
-                    <div class="w-1/4"> <br>
-                        <button type="submit"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700">Cari</button>
-                    </div>
-                </div>
-
-
-                <!-- Dropdown on the left -->
+            <div class="mb-10">
                 <a href="{{ route('passfile.downloadExcel', ['scholarship_id' => $scholarship->id]) }}"
                     class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                     Export to Excel <ion-icon name="logo-buffer"></ion-icon>
                 </a>
-
             </div>
 
+            <div class="flex items-center mb-2 md:w-1/2">
+                <div class="w-3/4 pr-2">
+                    <label for="facultyFilter" class="block text-sm font-medium text-gray-700">Pilih Fakultas:</label>
+                    <select id="facultyFilter" name="facultyFilter"
+                        class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
+                        <option value="">Semua Fakultas</option>
+                        @foreach ($data as $item)
+                            @if (is_array($item['fakultasList']))
+                                @foreach ($item['fakultasList'] as $fakultas)
+                                    <option value="{{ htmlspecialchars($fakultas) }}">{{ htmlspecialchars($fakultas) }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="{{ htmlspecialchars($item['fakultasList']) }}">
+                                    {{ htmlspecialchars($item['fakultasList']) }}</option>
+                            @endif
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
 
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
+
             <table id="myTable" class="min-w-full bg-white border border-gray-300 text-sm">
                 <thead>
                     <tr class="border-b-2 bg-sky-800 text-white text-sm">
