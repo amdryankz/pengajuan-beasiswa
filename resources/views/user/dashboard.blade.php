@@ -64,27 +64,27 @@
           <div class="p-4">
               <ul class="mt-2 space-y-4">
 
-                  <li class="group relative" :class="{ 'active': isActive('mhs/#') }">
-                      <a href="{{ url('/mhs/#') }}"
-                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/#')) text-blue-500 @endif">
+                  <li class="group relative" :class="{ 'active': isActive('mhs/beranda') }">
+                      <a href="{{ url('/mhs/beranda') }}"
+                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beranda')) text-blue-500 @endif">
                           <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/#')) text-blue-500 @endif">home</i>
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/beranda')) text-blue-500 @endif">home</i>
                           Beranda
                       </a>
                       <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/#')) border-blue-500 @endif group-hover:border-blue-500">
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/beranda')) border-blue-500 @endif group-hover:border-blue-500">
                       </div>
                   </li>
 
-                  <li class="group relative" :class="{ 'active': isActive('mhs/dashboard') }">
-                      <a href="{{ url('/mhs/dashboard') }}"
-                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/dashboard')) text-blue-500 @endif">
+                  <li class="group relative" :class="{ 'active': isActive('mhs/beasiswa') }">
+                      <a href="{{ url('/mhs/beasiswa') }}"
+                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">
                           <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/dashboard')) text-blue-500 @endif">assignment</i>
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">assignment</i>
                           Pendaftaran
                       </a>
                       <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/dashboard')) border-blue-500 @endif group-hover:border-blue-500">
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/beasiswa')) border-blue-500 @endif group-hover:border-blue-500">
                       </div>
                   </li>
 

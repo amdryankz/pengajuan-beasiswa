@@ -63,7 +63,7 @@
                                     <span class="pl-2 text-base">Beranda</span>
                                 </a>
                             </li>
-                            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Beasiswa</p>
+                            <p class="pt-1 pb-1 pl-1 text-slate-500 opacity-50">Beasiswa</p>
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="donatur" href="{{ url('/adm/donatur') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/donatur**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
@@ -104,7 +104,7 @@
                                     <span class="pl-2 text-base">Beasiswa Khusus</span>
                                 </a>
                             </li>
-                            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Laporan</p>
+                            <p class="pt-1 pb-1 pl-1 text-slate-500 opacity-50">Laporan</p>
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="pengusul" href="{{ url('/adm/pengusul') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengusul*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
@@ -137,7 +137,9 @@
                                     <span class="pl-2 text-base">Alumni</span>
                                 </a>
                             </li>
-                            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
+
+                            <p class="pt-1 pb-1 pl-1 text-slate-500 opacity-50">Akun</p>
+                            
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="pengguna" href="{{ url('/adm/akses') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/akses*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
