@@ -39,38 +39,45 @@
             <!-- Table -->
             <div class="w-full m-6">
                 <h2 class="text-xl ml-6 mb-4">Jumlah Mahasiswa per Beasiswa</h2>
-                <table id="myTable" class="min-w-full bg-white border border-gray-300 text-sm">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="py-2 px-4 border-b">Nama Beasiswa</th>
-                            <th class="py-2 px-4 border-b">Tahun Beasiswa</th>
-                            @foreach ($fakultasList as $fakultas)
-                                <th class="py-2 px-4 border-b">{{ $fakultas }}</th>
-                            @endforeach
-                            <th class="py-2 px-4 border-b">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($scholarshipData)
-                            @foreach ($scholarshipData as $scholarshipId => $data)
-                                <tr>
-                                    <td class="py-2 px-4 border-b">{{ $data['name'] }}</td>
-                                    <td class="py-2 px-4 border-b">{{ $data['year'] }}</td>
-                                    @foreach ($fakultasList as $fakultas)
-                                        <td class="py-2 px-4 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}</td>
-                                    @endforeach
-                                    <td class="py-2 px-4 border-b">{{ $data['total'] }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="{{ count($fakultasList) + 3 }}" class="py-2 px-4 border-b text-center">Data
-                                    Beasiswa tidak tersedia.</td>
+                <div class="overflow-x-auto">
+                    <table id="{{-- myTable --}}" class="min-w-full bg-white border border-gray-300 text-sm">
+                        <thead>
+                            <tr class="bg-blue-500 text-white">
+                                <th class="py-2 px-4 border-b">Nama Beasiswa</th>
+                                <th class="py-2 px-4 border-b text-center">Tahun Beasiswa</th>
+                                <th class="py-2 px-4 border-b">Fakultas</th>
+                                <th class="py-2 px-4 border-b">Jumlah</th>
                             </tr>
-                        @endif
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @if ($scholarshipData)
+                                @foreach ($scholarshipData as $scholarshipId => $data)
+                                    @foreach ($fakultasList as $fakultas)
+                                        <tr>
+                                            <td class="py-2 px-4 border-b">{{ $data['name'] }}</td>
+                                            <td class="py-2 px-4 border-b text-center">{{ $data['year'] }}</td>
+                                            <td class="py-2 px-4 border-b">{{ $fakultas }}</td>
+                                            <td class="py-2 px-4 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="2" class="py-2 px-4 border-b"></td>
+                                        <td class="py-2 px-4 border-b font-semibold">Total</td>
+                                        <td class="py-2 px-4 border-b font-semibold">{{ $data['total'] }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4" class="py-2 px-4 border-b text-center">Data Beasiswa tidak tersedia.
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
 
         </div>
     </div>

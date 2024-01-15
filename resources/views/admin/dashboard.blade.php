@@ -69,7 +69,7 @@
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/donatur**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="wallet-sharp"></ion-icon>
-                                    <span class="pl-2 text-base">Donatur</span>
+                                    <span class="pl-2 text-base">Sumber</span>
                                 </a>
                             </li>
                             <li class="relative text-slate-800 mb-1.5">
@@ -77,7 +77,7 @@
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/berkas**') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="documents-sharp"></ion-icon>
-                                    <span class="pl-2 text-base">Berkas</span>
+                                    <span class="pl-2 text-base">Dokumen</span>
                                 </a>
                             </li>
                             <li class="relative text-slate-800 mb-1.5">

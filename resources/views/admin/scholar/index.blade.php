@@ -20,7 +20,7 @@
                         <th class="px-2 py-2 text-center border-r">No</th>
                         <th class="px-2 py-2 text-center border-r">Nama Beasiswa</th>
                         <th class="px-2 py-2 text-center border-r">Tahun</th>
-                        <th class="px-2 py-2 text-center border-r">Nama Donatur</th>
+                        <th class="px-2 py-2 text-center border-r">Nama Sumber</th>
                         <th class="px-2 py-2 text-center border-r">Nominal (Rp)</th>
                         <th class="px-3 py-2 text-center border-r">Durasi</th>
                         <th class="px-2 py-2 text-center border-r">Mulai Pendaftaran</th>

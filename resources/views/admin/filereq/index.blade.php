@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Berkas')
+@section('navbar', 'Dokumen')
 
 @section('content')
     <div class=" p-4">
@@ -15,9 +15,9 @@
 
         <section class="bg-white p-4 mb-4">
             <div class="mb-6">
-                <h2 class="text-xl font-semibold mb-4">Berkas</h2>
+                <h2 class="text-xl font-semibold mb-4">Dokumen</h2>
                 <button class="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded mb-3">
-                    <a href="{{ route('berkas.create') }}" class="text-white font-bold">+ Tambah Berkas</a>
+                    <a href="{{ route('berkas.create') }}" class="text-white font-bold">+ Tambah Dokumen</a>
                 </button>
             </div>
             <hr>
@@ -27,7 +27,7 @@
                     <thead class="">
                         <tr class="border-b-2 bg-sky-800 text-white text-sm">
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
-                            <th class="p-2 border table-fixed border-gray-300">Nama Berkas</th>
+                            <th class="p-2 border table-fixed border-gray-300">Nama Dokumen</th>
                             <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
                         </tr>
                     </thead>

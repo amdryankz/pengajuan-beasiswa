@@ -34,7 +34,7 @@
                         <tr class="border-b-2 bg-sky-800 text-white text-sm">
                             <th class="p-2 w-[5%] text-center">No</th>
                             <th class="p-2">Nama Beasiswa</th>
-                            <th class="p-2">Nama Donatur</th>
+                            <th class="p-2">Nama Sumber</th>
                             <th class="p-2 w-1/12 text-center">Tindakan</th>
                         </tr>
                     </thead>

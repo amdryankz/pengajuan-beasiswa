@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Donatur')
+@section('navbar', 'Sumber')
 
 @section('content')
 
@@ -19,10 +19,10 @@
 
         <section class="bg-white p-4 mb-4">
             <div class="mb-6">
-                <h2 class="text-xl font-semibold mb-4">Donatur</h2>
+                <h2 class="text-xl font-semibold mb-4">Sumber</h2>
                 <button class="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded mb-3">
                     <a href="{{ route('donatur.create') }}" class="text-white font-bold">
-                        + Tambah Donatur
+                        + Tambah Sumber
                     </a>
                 </button>
             </div>
@@ -33,7 +33,7 @@
                     <thead>
                         <tr class="border-b-2 bg-sky-800 text-white text-sm">
                             <th class="p-2 w-[5%] text-center border border-gray-300">No</th>
-                            <th class="p-2 border table-fixed border-gray-300">Nama Donatur</th>
+                            <th class="p-2 border table-fixed border-gray-300">Nama Sumber</th>
                             <th class="p-2 border w-1/12 text-center border-gray-300">Tindakan</th>
                         </tr>
                     </thead>
