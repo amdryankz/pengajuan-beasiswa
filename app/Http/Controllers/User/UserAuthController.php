@@ -25,7 +25,7 @@ class UserAuthController extends Controller
             // Authentication successful
             $request->session()->regenerate();
 
-            return redirect('/mhs/dashboard');
+            return redirect('/mhs/beranda');
         } else {
             // Authentication failed
             // Handle authentication failure here
