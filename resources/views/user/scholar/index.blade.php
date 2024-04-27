@@ -2,9 +2,9 @@
 
 @section('content')
     {{-- Bagian 1: List Pendaftaran Beasiswa --}}
-    <div class="mt-4">
-        <p class="card-title">List Pendaftaran Beasiswa</p>
-        <div class="overflow-x-auto border rounded-lg mt-4">
+    <div class="mb-2">
+        <p class=" font-semibold text-base px-2 py-1 border-b-2">LIST PENDAFTARAN BEASISWA</p>
+        <div class="overflow-x-auto">
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -16,9 +16,9 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <table class="min-w-full bg-white border border-gray-300">
+            <table class="mt-3 min-w-full bg-white border border-gray-300">
                 <thead>
-                    <tr>
+                    <tr class="bg-blue-500 text-white">
                         <th class="border border-gray-300 px-4 py-2">No</th>
                         <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
                         <th class="border border-gray-300 px-4 py-2">Tahun</th>
@@ -48,30 +48,30 @@
     </div>
 
     {{-- Bagian 2: History Pendaftaran Beasiswa --}}
-    <div class="mt-8">
-        <p class="card-title">History Pendaftaran Beasiswa</p>
-        <div class="overflow-x-auto border rounded-lg mt-4">
-            <table class="min-w-full bg-white border border-gray-300">
+    <div class="pt-4">
+        <p class=" font-semibold text-base px-2 py-1 border-b-2">HISTORY PENDAFTARAN BEASISWA</p>
+        <div class="overflow-x-auto">
+            <table class="mt-3 min-w-full bg-white border-gray-300">
                 <thead>
-                    <tr>
-                        <th class="border border-gray-300 px-4 py-2">No</th>
-                        <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
-                        <th class="border border-gray-300 px-4 py-2">Status Berkas</th>
-                        <th class="border border-gray-300 px-4 py-2">Alasan Penolakan Berkas</th>
-                        <th class="border border-gray-300 px-4 py-2">Status Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                    <tr class="bg-blue-500 text-white">
+                        <th class="border-2 border-slate-200 px-4 py-2">No</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Nama Beasiswa</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Tahun</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Status Berkas</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Alasan Penolakan Berkas</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Status Beasiswa</th>
+                        <th class="border-2 border-slate-200 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     @foreach ($dataUser as $item)
                         <tr>
-                            <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->scholarship->name }}
+                            <td class="border-2 border-slate-200 px-4 py-2">{{ $i++ }}</td>
+                            <td class="border-2 border-slate-200 px-4 py-2">{{ $item->scholarshipData->scholarship->name }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarshipData->year }}</td>
-                            <td class="border border-gray-300 px-4 py-2">
+                            <td class="border-2 border-slate-200 px-4 py-2">{{ $item->scholarshipData->year }}</td>
+                            <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->status_file === null)
                                     Diproses
                                 @elseif ($item->status_file == false)
@@ -80,8 +80,8 @@
                                     Lulus Berkas
                                 @endif
                             </td>
-                            
-                            <td class="border border-gray-300 px-4 py-2">
+
+                            <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->status_file == false)
                                     {{ $item->reason_for_rejection }}
                                 @else
@@ -89,7 +89,7 @@
                                 @endif
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2">
+                            <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->status_scholar === null && $item->status_file == true)
                                     Diproses
                                 @elseif ($item->status_scholar === null)
@@ -101,7 +101,7 @@
                                 @endif
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2">
+                            <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->status_scholar != true)
                                     {{-- Tampilkan tombol hanya jika status_scholar tidak true --}}
                                     <form onsubmit="return confirm('Yakin mau hapus data ini?')"
@@ -126,28 +126,29 @@
     </div>
 
     {{-- Bagian 3: History Penerimaan Beasiswa --}}
-    <div class="mt-8">
-        <p class="card-title">History Penerimaan Beasiswa</p>
-        <div class="overflow-x-auto border rounded-lg mt-4">
-            <table class="min-w-full bg-white border border-gray-300">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-300 px-4 py-2">No</th>
-                        <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $i = 1; ?>
-                    @foreach ($alumniData as $item)
-                        <tr>
-                            <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
+    <div class="pt-4">
+        <p class=" font-semibold text-base px-2 py-1 border-b-2">HISTORY PENERIMAAN BEASISWA</p>
+        <div class="overflow-x-auto">
+            <table class="mt-3 min-w-full bg-white border-gray-300">
+                <table class="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr class="bg-blue-500 text-white">
+                            <th class="border border-gray-300 px-4 py-2">No</th>
+                            <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
+                            <th class="border border-gray-300 px-4 py-2">Tahun</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        @foreach ($alumniData as $item)
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
         </div>
     </div>
 @endsection

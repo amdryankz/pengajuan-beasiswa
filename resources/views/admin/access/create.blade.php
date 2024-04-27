@@ -5,7 +5,7 @@
 @section('content')
     <div class="bg-white p-6 rounded-md shadow-md">
         <div class="pb-3">
-            <a href="{{ route('access.index') }}"
+            <a href="{{ route('akses.index') }}"
                 class="inline-flex items-start px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -14,7 +14,7 @@
                 </svg>
             </a>
         </div>
-        <form action="{{ route('access.store') }}" method="POST">
+        <form action="{{ route('akses.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="nip" class="block text-sm font-medium text-gray-600">NIP</label>

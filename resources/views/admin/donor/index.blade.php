@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Sumber')
+@section('navbar', 'Sumber Beasiswa')
 
 @section('content')
 
@@ -19,7 +19,7 @@
 
         <section class="bg-white p-4 mb-4">
             <div class="mb-6">
-                <h2 class="text-xl font-semibold mb-4">Sumber</h2>
+                <h2 class="text-xl font-semibold mb-4">Sumber Beasiswa</h2>
                 <button class="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded mb-3">
                     <a href="{{ route('donatur.create') }}" class="text-white font-bold">
                         + Tambah Sumber

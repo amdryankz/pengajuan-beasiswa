@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboard.store', $scholarship->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('beasiswa.store', $scholarship->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-header">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <button class="btn btn-primary" name="daftar" type="submit">Daftar</button>
-            <a href="{{ route('dashboard.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('beasiswa.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 @endsection
