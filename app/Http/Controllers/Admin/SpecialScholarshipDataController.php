@@ -19,7 +19,7 @@ class SpecialScholarshipDataController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('scholarship')->whereNotNull('start_scholarship')->whereNull('start_regis_at')->get();
+        $data = ScholarshipData::with('scholarship')->whereNotNull('start_scholarship')->whereNull('start_registration_at')->get();
 
         return view('admin.specscholarship.index')->with('data', $data);
     }
@@ -46,28 +46,28 @@ class SpecialScholarshipDataController extends Controller
         $data = $request->validate([
             'scholarships_id' => 'required|exists:scholarships,id',
             'year' => 'required|integer',
-            'value' => 'required|string|max:255',
-            'status_value' => 'required|string|max:255',
+            'amount' => 'required|string|max:255',
+            'amount_period' => 'required|string|max:255',
             'duration' => 'required|integer',
             'start_scholarship' => 'required|date',
             'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
-            'list_student_file' => 'required|file|mimes:xlsx',
+            'student_list_file' => 'required|file|mimes:xlsx',
         ]);
 
         $scholarship = ScholarshipData::create($data);
 
         $import = new StudentsImport($scholarship->id);
-        Excel::import($import, $request->file('list_student_file'));
+        Excel::import($import, $request->file('student_list_file'));
 
-        if ($import->hasUnlinkedNIM()) {
+        if ($import->hasUnlinkedNPM()) {
             UserScholarship::where('scholarship_data_id', $scholarship->id)->delete();
             ScholarshipData::findOrFail($scholarship->id)->delete();
 
-            return redirect()->back()->with('error', 'Terdapat nim yang tidak terdata.');
+            return redirect()->back()->with('error', 'Terdapat npm yang tidak terdata.');
         }
 
         $scholarship->update([
-            'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
+            'student_list_file' => $request->file('student_list_file')->store('student_list_file', 'public'),
         ]);
 
         return redirect()->route('pengelolaan-khusus.index')
@@ -117,12 +117,12 @@ class SpecialScholarshipDataController extends Controller
         $data = $request->validate([
             'scholarships_id' => 'required|exists:donors,id',
             'year' => 'required|integer',
-            'value' => 'required|string|max:255',
-            'status_value' => 'required|string|max:255',
+            'amount' => 'required|string|max:255',
+            'amount_period' => 'required|string|max:255',
             'duration' => 'required|integer',
             'start_scholarship' => 'required|date',
             'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
-            'list_student_file' => 'file|mimes:xlsx',
+            'student_list_file' => 'file|mimes:xlsx',
         ]);
 
         try {
@@ -133,11 +133,11 @@ class SpecialScholarshipDataController extends Controller
 
         $scholarship->update($data);
 
-        if ($request->hasFile('list_student_file')) {
-            Excel::import(new StudentsImport($scholarship->id), $request->file('list_student_file'));
+        if ($request->hasFile('student_list_file')) {
+            Excel::import(new StudentsImport($scholarship->id), $request->file('student_list_file'));
 
             $scholarship->update([
-                'list_student_file' => $request->file('list_student_file')->store('list_student_file', 'public'),
+                'student_list_file' => $request->file('student_list_file')->store('student_list_file', 'public'),
             ]);
         }
 
@@ -159,21 +159,21 @@ class SpecialScholarshipDataController extends Controller
     public function updateSK(Request $request, string $id)
     {
         $request->validate([
-            'no_sk' => 'nullable|string|max:255',
-            'file_sk' => 'nullable|mimes:pdf|max:2048',
+            'sk_number' => 'nullable|string|max:255',
+            'sk_file' => 'nullable|mimes:pdf|max:2048',
         ]);
 
         $scholarship = ScholarshipData::findOrFail($id);
 
-        $scholarship->fill($request->only(['no_sk', 'start_scholarship', 'end_scholarship']));
+        $scholarship->fill($request->only(['sk_number', 'start_scholarship', 'end_scholarship']));
 
-        if ($request->hasFile('file_sk')) {
-            if ($scholarship->file_sk) {
-                Storage::delete($scholarship->file_sk);
+        if ($request->hasFile('sk_file')) {
+            if ($scholarship->sk_file) {
+                Storage::delete($scholarship->sk_file);
             }
 
-            $file_skPath = $request->file('file_sk')->store('file_sk', 'public');
-            $scholarship->file_sk = $file_skPath;
+            $sk_filePath = $request->file('sk_file')->store('sk_file', 'public');
+            $scholarship->sk_file = $sk_filePath;
         }
 
         $scholarship->save();

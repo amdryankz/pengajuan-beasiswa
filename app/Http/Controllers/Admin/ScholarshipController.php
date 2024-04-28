@@ -15,7 +15,7 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        $data = Scholarship::orderby('name', 'asc')->get();
+        $data = Scholarship::all();
 
         return view('admin.scholarship.index')->with('data', $data);
     }
@@ -36,19 +36,11 @@ class ScholarshipController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'donors_id' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'donors_id.required' => 'Donatur wajib diisi',
+            'name' => 'required|string|max:50',
+            'donors_id' => 'required|exists:donors,id'
         ]);
 
-        $data = [
-            'name' => $request->name,
-            'donors_id' => $request->donors_id,
-        ];
-
-        Scholarship::create($data);
+        Scholarship::create($request->all());
 
         return redirect()->route('beasiswa.index')->with('success', 'Berhasil menambahkan beasiswa');
     }
@@ -83,19 +75,11 @@ class ScholarshipController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required',
-            'donors_id' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'donors_id.required' => 'Donatur wajib diisi',
+            'name' => 'required|string|max:50',
+            'donors_id' => 'required|exists:donors,id',
         ]);
 
-        $data = [
-            'name' => $request->name,
-            'donors_id' => $request->donors_id,
-        ];
-
-        Scholarship::findOrFail($id)->update($data);
+        Scholarship::findOrFail($id)->update($request->all());
 
         return redirect()->route('beasiswa.index')->with('success', 'Berhasil mengupdate beasiswa');
     }
@@ -105,11 +89,7 @@ class ScholarshipController extends Controller
      */
     public function destroy(string $id)
     {
-        $scholarship = Scholarship::find($id);
-
-        if (! $scholarship) {
-            return redirect()->route('beasiswa.index')->with('error', 'Beasiswa tidak ditemukan.');
-        }
+        $scholarship = Scholarship::findOrFail($id);
 
         if ($scholarship->scholarshipData()->count() > 0) {
             return redirect()->route('beasiswa.index')->with('error', 'Tidak dapat menghapus beasiswa ini karena masih terdapat data yang terkait.');

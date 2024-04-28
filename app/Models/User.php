@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable, Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,25 +18,32 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'nim',
+        'npm',
         'password',
-        'prodi',
-        'fakultas',
-        'jk',
-        'ipk',
-        'total_sks',
-        'birthdate',
-        'birthplace',
-        'address',
-        'name_parent',
-        'job_parent',
-        'income_parent',
-        'no_hp',
-        'no_rek',
-        'name_rek',
-        'name_bank',
+        'parent_name',
+        'parent_job',
+        'parent_income',
+        'phone_number',
+        'bank_account_number',
+        'account_holder_name',
+        'bank_name',
+        'email'
     ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => true
+            ],
+        ];
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,8 +51,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
     /**
@@ -54,13 +60,17 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'birthdate' => 'date',
+        'birthdate' => 'date'
     ];
 
-    public function scholarships()
+    /**
+     * The scholarships that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function scholarships(): BelongsToMany
     {
-        return $this->belongsToMany(ScholarshipData::class, 'user_scholarships', 'user_id', 'scholarship_data_id')->withPivot(['status_file', 'status_scholar']);
+        return $this->belongsToMany(ScholarshipData::class, 'user_scholarships', 'user_id', 'scholarship_data_id')->withPivot(['file_status', 'scholarship_status']);
     }
 }

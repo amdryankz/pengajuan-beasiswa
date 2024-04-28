@@ -21,13 +21,13 @@ class UserProfileController extends Controller
         $user = User::find(Auth::id());
 
         // Update the user attributes
-        $user->no_hp = $request->input('no_hp');
-        $user->no_rek = $request->input('no_rek');
-        $user->name_rek = $request->input('name_rek');
-        $user->name_bank = $request->input('name_bank');
-        $user->name_parent = $request->input('name_parent');
-        $user->income_parent = $request->input('income_parent');
-        $user->job_parent = $request->input('job_parent');
+        $user->phone_number = $request->input('phone_number');
+        $user->bank_account_number = $request->input('bank_account_number');
+        $user->account_holder_name = $request->input('account_holder_name');
+        $user->bank_name = $request->input('bank_name');
+        $user->parent_name = $request->input('parent_name');
+        $user->parent_income = $request->input('parent_income');
+        $user->parent_job = $request->input('parent_job');
         $user->address = $request->input('address');
 
         // Save the changes

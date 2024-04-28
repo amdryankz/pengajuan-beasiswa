@@ -17,7 +17,7 @@ class UserAuthController extends Controller
     public function authenticating(Request $request)
     {
         $credentials = $request->validate([
-            'nim' => ['required'],
+            'npm' => ['required'],
             'password' => ['required'],
         ]);
 
@@ -34,7 +34,7 @@ class UserAuthController extends Controller
         Session::flash('status', 'failed');
         Session::flash('message', 'Login Invalid');
 
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function logout(Request $request)
@@ -43,6 +43,6 @@ class UserAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

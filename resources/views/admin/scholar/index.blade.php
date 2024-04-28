@@ -37,11 +37,13 @@
                             <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->name }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->donors->name }}</td>
-                            <td class="px-2 py-1 text-center border-r">Rp {{ $item->value }} / {{ $item->status_value }}
+                            <td class="px-2 py-1 text-center border-r">Rp {{ $item->amount }} / {{ $item->amount_period }}
                             </td>
                             <td class="text-center border-r">{{ $item->duration }} Bulan</td>
-                            <td class="px-2 py-1 text-center border-r">{{ $item->start_regis_at->format('d-m-Y') }}</td>
-                            <td class="px-2 py-1 text-center border-r">{{ $item->end_regis_at->format('d-m-Y') }}</td>
+                            <td class="px-2 py-1 text-center border-r">{{ $item->start_registration_at->format('d-m-Y') }}
+                            </td>
+                            <td class="px-2 py-1 text-center border-r">{{ $item->end_registration_at->format('d-m-Y') }}
+                            </td>
                             <td class="px-2 py-1 text-center border-r">{{ number_format($item->min_ipk, 2, '.', '') }}</td>
                             <td class="px-2 py-1 text-center border-r">
                                 <div class="relative inline-block text-left" x-data="{ opendropdown: false }">
@@ -136,14 +138,14 @@
                                                                                                         class="font-bold">Akhir
                                                                                                         Pendaftaran
                                                                                                         Beasiswa</span>
-                                                                                                    {{ $item->end_regis_at->format('d-m-Y') }}
+                                                                                                    {{ $item->end_registration_at->format('d-m-Y') }}
                                                                                                 </div>
                                                                                                 <div class="mb-3">
                                                                                                     <span
                                                                                                         class="font-bold">Nominal</span>
-                                                                                                    Rp {{ $item->value }}
+                                                                                                    Rp {{ $item->amount }}
                                                                                                     /
-                                                                                                    {{ $item->status_value }}
+                                                                                                    {{ $item->amount_period }}
                                                                                                 </div>
                                                                                                 <div class="mb-3 max-w-xs">
                                                                                                     <span
@@ -151,8 +153,8 @@
                                                                                                         Surat Keputusan
                                                                                                         Kelulusan:</span>
                                                                                                     <input type="text"
-                                                                                                        name="no_sk"
-                                                                                                        value="{{ $item->no_sk ?? '' }}"
+                                                                                                        name="sk_number"
+                                                                                                        value="{{ $item->sk_number ?? '' }}"
                                                                                                         class="block form-control rounded-lg py-2  hover:ring-1 hover:ring-sky-500"
                                                                                                         required>
                                                                                                 </div>
@@ -167,11 +169,11 @@
                                                                                                     Surat Keputusan
                                                                                                     Kelulusan:</span>
                                                                                                 <input type="file"
-                                                                                                    name="file_sk"
-                                                                                                    value="{{ $item->file_sk }}"
+                                                                                                    name="sk_file"
+                                                                                                    value="{{ $item->sk_file }}"
                                                                                                     class="form-control rounded-lg py-2 hover:ring-1 hover:ring-sky-500"
                                                                                                     required>
-                                                                                                @if ($item->file_sk)
+                                                                                                @if ($item->sk_file)
                                                                                                     <p
                                                                                                         class="text-red-500 mt-0.5">
                                                                                                         *Dokumen sudah

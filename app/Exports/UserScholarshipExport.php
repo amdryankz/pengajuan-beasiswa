@@ -30,19 +30,19 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
         $filteredData = collect($this->data)->map(function ($item) use (&$counter) {
             return [
                 'No' => $counter++,
-                'NIM' => $item['user']->nim,
+                'NPM' => $item['user']->npm,
                 'Nama' => $item['user']->name,
-                'JK' => $item['user']->jk,
-                'Prodi' => $item['user']->prodi,
+                'JK' => $item['user']->gender,
+                'Prodi' => $item['user']->major,
                 'SKS' => $item['user']->total_sks,
                 'IPK' => $item['user']->ipk,
                 'Alamat' => $item['user']->address,
-                'No.Hp' => $item['user']->no_hp,
-                'Nama Bank' => $item['user']->name_bank,
-                'No.Rek' => $item['user']->no_rek,
-                'Nama Pada Rekening' => $item['user']->name_rek,
-                'Pekerjaan Ortu' => $item['user']->job_parent,
-                'Penghasilan Ortu' => $item['user']->income_parent,
+                'No.Hp' => $item['user']->phone_number,
+                'Nama Bank' => $item['user']->bank_name,
+                'No.Rek' => $item['user']->bank_account_number,
+                'Nama Pada Rekening' => $item['user']->account_holder_name,
+                'Pekerjaan Ortu' => $item['user']->parent_job,
+                'Penghasilan Ortu' => $item['user']->parent_income,
             ];
         });
 
@@ -55,7 +55,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
             [$this->scholarshipName],
             [
                 'No',
-                'NIM',
+                'NPM',
                 'Nama Mahasiswa',
                 'Jenis Kelamin',
                 'Prodi',
@@ -78,7 +78,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
             AfterSheet::class => function (AfterSheet $event) {
                 // Menambahkan baris di atas heading
                 $event->sheet->mergeCells('A1:N1');
-                $event->sheet->setCellValue('A1', 'Daftar Kelulusan Beasiswa '.$this->scholarshipName);
+                $event->sheet->setCellValue('A1', 'Daftar Kelulusan Beasiswa ' . $this->scholarshipName);
 
                 // Mengatur style untuk baris nama beasiswa
                 $event->sheet->getStyle('A1')->applyFromArray([
@@ -104,7 +104,7 @@ class UserScholarshipExport implements FromCollection, ShouldAutoSize, WithEvent
                     ],
                 ]);
 
-                $event->sheet->getDelegate()->getStyle('A2:N'.($event->sheet->getDelegate()->getHighestRow()))
+                $event->sheet->getDelegate()->getStyle('A2:N' . ($event->sheet->getDelegate()->getHighestRow()))
                     ->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
             },
         ];

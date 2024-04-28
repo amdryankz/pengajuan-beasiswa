@@ -14,7 +14,7 @@ class DonorController extends Controller
      */
     public function index()
     {
-        $data = Donor::orderby('name', 'asc')->get();
+        $data = Donor::all();
 
         return view('admin.donor.index')->with('data', $data);
     }
@@ -33,14 +33,10 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
+            'name' => 'required|string|max:50'
         ]);
 
-        $data = ['name' => $request->name];
-
-        Donor::create($data);
+        Donor::create($request->all());
 
         return redirect()->route('donatur.index')->with('success', 'Berhasil menambahkan data');
     }
@@ -73,14 +69,10 @@ class DonorController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
+            'name' => 'required|string|max:50',
         ]);
 
-        $data = ['name' => $request->name];
-
-        Donor::findOrFail($id)->update($data);
+        Donor::findOrFail($id)->update($request->all());
 
         return redirect()->route('donatur.index')->with('success', 'Berhasil update donatur');
     }
@@ -90,11 +82,7 @@ class DonorController extends Controller
      */
     public function destroy(string $id)
     {
-        $donor = Donor::find($id);
-
-        if (! $donor) {
-            return redirect()->route('donatur.index')->with('error', 'Donatur tidak ditemukan.');
-        }
+        $donor = Donor::findOrFail($id);
 
         if ($donor->scholarships()->count() > 0) {
             return redirect()->route('donatur.index')->with('error', 'Tidak dapat menghapus donatur ini karena masih terdapat beasiswa yang terkait.');

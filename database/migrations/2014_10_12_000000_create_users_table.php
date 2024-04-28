@@ -13,25 +13,28 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nim')->unique();
+            $table->unsignedBigInteger('npm')->unique();
             $table->string('password');
-            $table->string('name');
-            $table->string('prodi');
-            $table->string('fakultas');
-            $table->string('jk');
-            $table->float('ipk')->nullable();
-            $table->integer('total_sks')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('birthplace')->nullable();
-            $table->string('address')->nullable();
-            $table->string('name_parent')->nullable();
-            $table->string('job_parent')->nullable();
-            $table->string('income_parent')->nullable();
-            $table->string('no_hp')->nullable();
-            $table->string('no_rek')->nullable();
-            $table->string('name_rek')->nullable();
-            $table->string('name_bank')->nullable();
-            $table->string('slug', 255)->nullable();
+            $table->string('name', 50);
+            $table->string('major', 50);
+            $table->string('faculty', 50);
+            $table->string('gender', 9);
+            $table->float('ipk', 3);
+            $table->unsignedTinyInteger('total_sks');
+            $table->string('active_status', 11)->default('Aktif');
+            $table->string('graduate_status', 11)->default('Belum Lulus');
+            $table->date('birthdate');
+            $table->string('birthplace', 25);
+            $table->string('address', 100);
+            $table->string('email', 50)->nullable();
+            $table->string('parent_name', 50)->nullable();
+            $table->string('parent_job', 25)->nullable();
+            $table->string('parent_income', 50)->nullable();
+            $table->unsignedBigInteger('phone_number')->nullable();
+            $table->unsignedBigInteger('bank_account_number')->nullable();
+            $table->string('account_holder_name', 50)->nullable();
+            $table->string('bank_name', 25)->nullable();
+            $table->string('slug', 50)->nullable();
             $table->timestamps();
         });
     }

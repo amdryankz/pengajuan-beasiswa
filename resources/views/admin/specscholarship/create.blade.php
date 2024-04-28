@@ -54,10 +54,10 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
+                    <label for="amount" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
                     <input type="text"
                         class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                        name="value" id="value" placeholder="Nominal" value="{{ old('value') }}" required>
+                        name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
                 </div>
 
             </div>
@@ -75,10 +75,10 @@
                         </select>
                     </div>
                     <div class="flex-1">
-                        <label for="status_value" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Per</label>
+                        <label for="amount_period" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Per</label>
                         <select
                             class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                            name="status_value" id="status_value" required>
+                            name="amount_period" id="amount_period" required>
                             <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
                             <option value="Bulan">Bulan</option>
                             <option value="Tahun">Tahun</option>
@@ -100,10 +100,10 @@
                 </div>
 
                 <div class="mb-6 relative">
-                    <label for="list_student_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
+                    <label for="student_list_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
                         Mahasiswa</label>
                     <div class="flex items-center">
-                        <input type="file" name="list_student_file" id="list_student_file" accept=".xlsx, .xls"
+                        <input type="file" name="student_list_file" id="student_list_file" accept=".xlsx, .xls"
                             class="mt-1 p-2 border rounded-md w-full bg-white cursor-pointer pr-10" required>
                     </div>
                 </div>

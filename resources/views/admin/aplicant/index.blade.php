@@ -30,14 +30,14 @@
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
                         <option value="">Semua Fakultas</option>
                         @foreach ($data as $item)
-                            @if (is_array($item['fakultasList']))
-                                @foreach ($item['fakultasList'] as $fakultas)
-                                    <option value="{{ htmlspecialchars($fakultas) }}">{{ htmlspecialchars($fakultas) }}
+                            @if (is_array($item['facultyList']))
+                                @foreach ($item['facultyList'] as $faculty)
+                                    <option value="{{ htmlspecialchars($faculty) }}">{{ htmlspecialchars($faculty) }}
                                     </option>
                                 @endforeach
                             @else
-                                <option value="{{ htmlspecialchars($item['fakultasList']) }}">
-                                    {{ htmlspecialchars($item['fakultasList']) }}</option>
+                                <option value="{{ htmlspecialchars($item['facultyList']) }}">
+                                    {{ htmlspecialchars($item['facultyList']) }}</option>
                             @endif
                         @endforeach
                     </select>
@@ -55,8 +55,8 @@
                     <tr class="border-b-2 bg-sky-800 text-white text-sm">
                         <th class="py-1 px-1 border-r text-center">No</th>
                         <th class="py-1 px-4 border-r">Nama</th>
-                        <th class="py-1 px-4 border-r">NIM</th>
-                        <th class="py-1 px-4 border-r">Fakultas</th>
+                        <th class="py-1 px-4 border-r">NPM</th>
+                        <th class="py-1 px-4 border-r">faculty</th>
                         <th class="py-1 px-4 border-r">Prodi</th>
                         <th class="py-1 px-4 border-r">Detail</th>
                         <th class="py-1 px-4">Cetak</th>
@@ -67,9 +67,9 @@
                         <tr class="text-start">
                             <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
                             <td class="py-2 px-2 border-r">{{ $item['user']->name }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->nim }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->fakultas }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->prodi }}</td>
+                            <td class="py-2 px-2 border-r">{{ $item['user']->npm }}</td>
+                            <td class="py-2 px-2 border-r">{{ $item['user']->faculty }}</td>
+                            <td class="py-2 px-2 border-r">{{ $item['user']->major }}</td>
                             <td class="py-1 px-1 border-r text-center">
                                 <a href="{{ route('aplicant.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
                                     class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">

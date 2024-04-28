@@ -34,10 +34,12 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->start_regis_at->format('d-m-Y') }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->end_regis_at->format('d-m-Y') }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->start_registration_at->format('d-m-Y') }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->end_registration_at->format('d-m-Y') }}
+                            </td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <a href="{{ route('beasiswa.show', $item->id) }}"
+                                <a href="{{ route('pendaftaran.show', $item->id) }}"
                                     class="bg-yellow-500 text-white px-2 py-1 rounded">Daftar</a>
                             </td>
                         </tr>
@@ -72,40 +74,40 @@
                             </td>
                             <td class="border-2 border-slate-200 px-4 py-2">{{ $item->scholarshipData->year }}</td>
                             <td class="border-2 border-slate-200 px-4 py-2">
-                                @if ($item->status_file === null)
+                                @if ($item->file_status === null)
                                     Diproses
-                                @elseif ($item->status_file == false)
+                                @elseif ($item->file_status == false)
                                     Ditolak
-                                @elseif ($item->status_file == true)
+                                @elseif ($item->file_status == true)
                                     Lulus Berkas
                                 @endif
                             </td>
 
                             <td class="border-2 border-slate-200 px-4 py-2">
-                                @if ($item->status_file == false)
-                                    {{ $item->reason_for_rejection }}
+                                @if ($item->file_status == false)
+                                    {{ $item->rejection_reason }}
                                 @else
                                     -
                                 @endif
                             </td>
 
                             <td class="border-2 border-slate-200 px-4 py-2">
-                                @if ($item->status_scholar === null && $item->status_file == true)
+                                @if ($item->scholarship_status === null && $item->file_status == true)
                                     Diproses
-                                @elseif ($item->status_scholar === null)
+                                @elseif ($item->scholarship_status === null)
                                     -
-                                @elseif ($item->status_scholar == false)
+                                @elseif ($item->scholarship_status == false)
                                     Tidak Lewat
-                                @elseif ($item->status_scholar == true)
+                                @elseif ($item->scholarship_status == true)
                                     Lulus
                                 @endif
                             </td>
 
                             <td class="border-2 border-slate-200 px-4 py-2">
-                                @if ($item->status_scholar != true)
-                                    {{-- Tampilkan tombol hanya jika status_scholar tidak true --}}
+                                @if ($item->scholarship_status != true)
+                                    {{-- Tampilkan tombol hanya jika scholarship_status tidak true --}}
                                     <form onsubmit="return confirm('Yakin mau hapus data ini?')"
-                                        action="{{ route('beasiswa.destroy', $item->id) }}" class="inline-block"
+                                        action="{{ route('pendaftaran.destroy', $item->id) }}" class="inline-block"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')

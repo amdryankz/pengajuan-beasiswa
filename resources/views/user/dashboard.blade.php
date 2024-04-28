@@ -51,7 +51,7 @@
 
       <!-- Sidebar -->
       <aside x-data="{ open: false }"
-          class="bg-white text-gray-800 shadow w-1/6 fixed h-full transform translate-x-0 overflow-y-auto 
+          class="bg-white text-gray-800 shadow w-1/6 fixed h-full transform translate-x-0 overflow-y-auto
               transition-transform duration-300 flex-none">
 
           <!-- Logo -->
@@ -76,15 +76,15 @@
                       </div>
                   </li>
 
-                  <li class="group relative" :class="{ 'active': isActive('mhs/beasiswa') }">
-                      <a href="{{ url('/mhs/beasiswa') }}"
+                  <li class="group relative" :class="{ 'active': isActive('mhs/pendaftaran') }">
+                      <a href="{{ url('/mhs/pendaftaran') }}"
                           class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">
                           <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">assignment</i>
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/pendaftaran')) text-blue-500 @endif">assignment</i>
                           Pendaftaran
                       </a>
                       <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/beasiswa')) border-blue-500 @endif group-hover:border-blue-500">
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/pendaftaran')) border-blue-500 @endif group-hover:border-blue-500">
                       </div>
                   </li>
 
@@ -134,7 +134,7 @@
                               {{ Auth::user()->name }}
                           </span>
                           <span class="font-bold block">
-                              {{ Auth::user()->nim }}
+                              {{ Auth::user()->npm }}
                           </span>
                       @endif
                   </div>

@@ -7,36 +7,55 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, Sluggable;
+    use HasFactory, Notifiable, Sluggable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nip',
         'name',
         'password',
         'status',
-        'role_id',
+        'role_id'
     ];
 
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
     public function sluggable(): array
     {
         return [
             'slug' => [
                 'source' => 'name',
-                'onUpdate' => true,
+                'onUpdate' => true
             ],
         ];
     }
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
-        'password',
+        'password'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
-        'password' => 'hashed',
+        'password' => 'hashed'
     ];
 
     /**

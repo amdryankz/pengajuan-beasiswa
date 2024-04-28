@@ -17,7 +17,7 @@ class ScholarshipDataController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('scholarship')->whereNotNull('start_regis_at')->get();
+        $data = ScholarshipData::with('scholarship')->whereNotNull('start_registration_at')->get();
 
         return view('admin.scholar.index')->with('data', $data);
     }
@@ -45,22 +45,22 @@ class ScholarshipDataController extends Controller
     {
         $request->validate([
             'scholarships_id' => 'required|exists:scholarships,id',
-            'year' => 'required|integer',
-            'value' => 'required|string|max:255',
-            'status_value' => 'required|string|max:255',
-            'duration' => 'required|integer',
-            'start_regis_at' => 'required|date',
-            'end_regis_at' => 'required|date|after_or_equal:start_regis_at',
-            'min_ipk' => 'required|numeric',
-            'kuota' => 'required|array',
-            'kuota.*' => 'required|integer',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
+            'amount' => 'required|integer|min:0',
+            'amount_period' => 'required|string|max:5',
+            'duration' => 'required|integer|min:1',
+            'start_registration_at' => 'required|date',
+            'end_registration_at' => 'required|date|after_or_equal:start_registration_at',
+            'min_ipk' => 'required|numeric|min:0|max:4',
+            'quota' => 'required|array',
+            'quota.*' => 'required|integer',
         ]);
 
-        $kuota = $request->input('kuota');
-        $kuotaJSON = json_encode($kuota);
+        $quota = $request->input('quota');
+        $quotaJSON = json_encode($quota);
 
-        $data = $request->except('kuota');
-        $data['kuota'] = $kuotaJSON;
+        $data = $request->except('quota');
+        $data['quota'] = $quotaJSON;
 
         $scholarshipData = ScholarshipData::create($data);
 
@@ -68,8 +68,7 @@ class ScholarshipDataController extends Controller
             $scholarshipData->requirements()->attach($request->requirements);
         }
 
-        return redirect()->route('pengelolaan.index')
-            ->with('success', 'Berhasil menambahkan data beasiswa');
+        return redirect()->route('pengelolaan.index')->with('success', 'Berhasil menambahkan data beasiswa');
     }
 
     /**
@@ -116,22 +115,22 @@ class ScholarshipDataController extends Controller
     {
         $request->validate([
             'scholarships_id' => 'required|exists:scholarships,id',
-            'year' => 'required|integer',
-            'value' => 'required|string|max:255',
-            'status_value' => 'required|string|max:255',
-            'duration' => 'required|integer',
-            'start_regis_at' => 'required|date',
-            'end_regis_at' => 'required|date|after_or_equal:start_regis_at',
-            'min_ipk' => 'required|numeric',
-            'kuota' => 'required|array',
-            'kuota.*' => 'required|integer',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
+            'amount' => 'required|integer|min:0',
+            'amount_period' => 'required|string|max:5',
+            'duration' => 'required|integer|min:1',
+            'start_registration_at' => 'required|date',
+            'end_registration_at' => 'required|date|after_or_equal:start_registration_at',
+            'min_ipk' => 'required|numeric|min:0|max:4',
+            'quota' => 'required|array',
+            'quota.*' => 'required|integer',
         ]);
 
-        $kuota = $request->input('kuota');
-        $kuotaJSON = json_encode($kuota);
+        $quota = $request->input('quota');
+        $quotaJSON = json_encode($quota);
 
-        $data = $request->except(['kuota', '_method', '_token']);
-        $data['kuota'] = $kuotaJSON;
+        $data = $request->except(['quota', '_method', '_token']);
+        $data['quota'] = $quotaJSON;
 
         $scholarship = ScholarshipData::findOrFail($id);
         $scholarship->update($data);
@@ -142,8 +141,7 @@ class ScholarshipDataController extends Controller
             $scholarship->requirements()->detach();
         }
 
-        return redirect()->route('pengelolaan.index')
-            ->with('success', 'Berhasil mengupdate data beasiswa');
+        return redirect()->route('pengelolaan.index')->with('success', 'Berhasil mengupdate data beasiswa');
     }
 
     /**
@@ -155,39 +153,33 @@ class ScholarshipDataController extends Controller
         $scholarship->requirements()->detach();
         $scholarship->delete();
 
-        return redirect()->route('pengelolaan.index');
+        return redirect()->route('pengelolaan.index')->with('success', 'Berhasil menghapus Data Beasiswa');
     }
 
     public function updateSK(Request $request, string $id)
     {
         $request->validate([
-            'no_sk' => 'nullable|string|max:255',
-            'file_sk' => 'nullable|mimes:pdf|max:2048',
-            'start_scholarship' => 'nullable|date',
-            'end_scholarship' => 'nullable|date|after_or_equal:start_scholarship',
+            'sk_number' => 'required|string|max:50',
+            'sk_file' => 'required|mimes:pdf|max:2048',
+            'start_scholarship' => 'required|date',
+            'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
         ]);
 
         $scholarship = ScholarshipData::findOrFail($id);
 
-        $scholarship->fill($request->only(['no_sk', 'start_scholarship', 'end_scholarship']));
+        $scholarship->fill($request->only(['sk_number', 'start_scholarship', 'end_scholarship']));
 
-        // Cek apakah file_sk diunggah
-        if ($request->hasFile('file_sk')) {
-            // Hapus file yang ada jika sudah ada
-            if ($scholarship->file_sk) {
-                // Hapus file yang sudah ada (optional, sesuai kebutuhan)
-                Storage::delete($scholarship->file_sk);
+        if ($request->hasFile('sk_file')) {
+            if ($scholarship->sk_file) {
+                Storage::delete($scholarship->sk_file);
             }
 
-            // Simpan file yang diunggah ke penyimpanan (storage)
-            $file_skPath = $request->file('file_sk')->store('file_sk', 'public');
-            $scholarship->file_sk = $file_skPath;
+            $sk_filePath = $request->file('sk_file')->store('sk_file', 'public');
+            $scholarship->sk_file = $sk_filePath;
         }
 
-        // Simpan perubahan ke dalam database
         $scholarship->save();
 
-        return redirect()->route('pengelolaan.index')
-            ->with('success', 'Berhasil mengupdate SK beasiswa');
+        return redirect()->route('pengelolaan.index')->with('success', 'Berhasil mengupdate SK beasiswa');
     }
 }

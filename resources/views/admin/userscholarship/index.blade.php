@@ -21,8 +21,8 @@
                     <select id="facultyFilter" name="facultyFilter"
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
                         <option value="">Semua Fakultas</option>
-                        @foreach ($data['fakultasList'] as $fakultas)
-                            <option value="{{ $fakultas }}">{{ $fakultas }}</option>
+                        @foreach ($data['facultyList'] as $faculty)
+                            <option value="{{ $faculty }}">{{ $faculty }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                     <tr class="border-b-2 bg-sky-800 text-white text-sm">
                         <th class="py-1 px-1 border-r text-center">No</th>
                         <th class="py-1 px-4 border-r">Nama</th>
-                        <th class="py-1 px-4 border-r">NIM</th>
+                        <th class="py-1 px-4 border-r">NPM</th>
                         <th class="py-1 px-4 border-r">Fakultas</th>
                         <th class="py-1 px-4 border-r">Prodi</th>
                         <th class="py-2 px-4 border-r text-center">Detail</th>
@@ -53,9 +53,9 @@
                         <tr class="text-sm text-start font-normal">
                             <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
                             <td class="py-1 px-4 border-r">{{ $item->name }}</td>
-                            <td class="py-1 px-4 border-r">{{ $item->nim }}</td>
-                            <td class="py-1 px-4 border-r">{{ $item->fakultas }}</td>
-                            <td class="py-1 px-4 border-r">{{ $item->prodi }}</td>
+                            <td class="py-1 px-4 border-r">{{ $item->npm }}</td>
+                            <td class="py-1 px-4 border-r">{{ $item->faculty }}</td>
+                            <td class="py-1 px-4 border-r">{{ $item->major }}</td>
                             <td class="py-2 px-4 border-r text-center">
                                 <a href="{{ route('admin.scholarship.detail', ['user_id' => $item->id, 'scholarship_id' => $data['scholarship']->id]) }}"
                                     class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">
@@ -64,7 +64,9 @@
                             <td class="py-1 px-1 border-r text-center">
                                 @if ($item->scholarships->contains($data['scholarship']->id))
                                     @php
-                                        $statusFile = $item->scholarships->where('id', $data['scholarship']->id)->first()->pivot->status_file;
+                                        $statusFile = $item->scholarships
+                                            ->where('id', $data['scholarship']->id)
+                                            ->first()->pivot->file_status;
                                     @endphp
 
                                     @if ($statusFile === null)

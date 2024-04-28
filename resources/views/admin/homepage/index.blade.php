@@ -59,12 +59,12 @@
                     <tbody>
                         @if ($scholarshipData)
                             @foreach ($scholarshipData as $scholarshipId => $data)
-                                @foreach ($fakultasList as $fakultas)
+                                @foreach ($facultyList as $faculty)
                                     <tr>
                                         <td class="px-4 py-2 border-b">{{ $data['name'] }}</td>
                                         <td class="px-4 py-2 border-b">{{ $data['year'] }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $fakultas }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $data['facultyTotals']->get($fakultas, 0) }}</td>
+                                        <td class="px-4 py-2 border-b">{{ $faculty }}</td>
+                                        <td class="px-4 py-2 border-b">{{ $data['facultyTotals']->get($faculty, 0) }}</td>
                                     </tr>
                                 @endforeach
 

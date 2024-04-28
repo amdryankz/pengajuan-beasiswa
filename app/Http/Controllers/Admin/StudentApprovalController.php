@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\UserScholarshipExport;
-use App\Http\Controllers\Controller;
-use App\Models\ScholarshipData;
 use App\Models\User;
+use App\Mail\ScholarValidated;
+use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserScholarshipExport;
+use App\Mail\ScholarValidationCancelled;
 
 class StudentApprovalController extends Controller
 {
@@ -30,16 +33,16 @@ class StudentApprovalController extends Controller
         $data = [];
         $users = $scholarship->users()->distinct()->get();
 
-        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
+        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-            if ($userScholarship && $userScholarship->pivot->status_file) {
+            if ($userScholarship && $userScholarship->pivot->file_status) {
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,
-                    'fakultasList' => $fakultasList,
+                    'facultyList' => $facultyList,
                 ];
             }
         }
@@ -67,9 +70,11 @@ class StudentApprovalController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_scholar = true;
+            $userScholarship->scholarship_status = true;
             $userScholarship->save();
         }
+
+        Mail::to($userScholarship->user->email)->send(new ScholarValidated());
 
         return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
     }
@@ -79,9 +84,11 @@ class StudentApprovalController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_scholar = false;
+            $userScholarship->scholarship_status = false;
             $userScholarship->save();
         }
+
+        Mail::to($userScholarship->user->email)->send(new ScholarValidationCancelled());
 
         return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
@@ -100,7 +107,7 @@ class StudentApprovalController extends Controller
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
-            if ($userScholarship && $userScholarship->pivot->status_file) {
+            if ($userScholarship && $userScholarship->pivot->file_status) {
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,

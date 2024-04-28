@@ -38,13 +38,13 @@
                     @csrf
 
                     <div class="mb-4 relative">
-                        <label for="nim" class="block mb-1">
+                        <label for="npm" class="block mb-1">
                             <span
                                 class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-red-600">
                                 Npm
                             </span>
 
-                            <input placeholder="masukkan npm" type="text" name="nim" id="nim"
+                            <input placeholder="masukkan npm" type="text" name="npm" id="npm"
                                 inputmode="numeric"
                                 class="border-slate-400 rounded-md w-full block text-sm py-2 px-3 placeholder:text-slate-400 hover:border-sky-500 focus:border-sky-500"
                                 required>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('require_files', function (Blueprint $table) {
+        Schema::create('file_scholarship_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('scholarship_data_id');
             $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('require_files');
+        Schema::dropIfExists('file_scholarship_data');
     }
 };

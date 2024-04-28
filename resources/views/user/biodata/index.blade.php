@@ -12,9 +12,9 @@
                         <ul class="list-group list-group-flush text-base">
                             <div class="flex flex-col space-y-2">
                                 <div class="flex flex-col mb-1">
-                                    <span class="font-semibold">NIM:</span>
+                                    <span class="font-semibold">NPM:</span>
                                     <div class="border-sky-500 border-solid border-1 rounded-md p-2 mt-1 bg-slate-50">
-                                        <span>{{ $user->nim }}</span>
+                                        <span>{{ $user->npm }}</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-col mb-1">
@@ -26,13 +26,13 @@
                                 <div class="flex flex-col mb-1">
                                     <span class="font-semibold">Fakultas:</span>
                                     <div class="border-sky-500 border-solid border-1 rounded-md p-2 mt-1 bg-slate-50">
-                                        <span>{{ $user->fakultas }}</span>
+                                        <span>{{ $user->faculty }}</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-col mb-1">
                                     <span class="font-semibold">Jurusan:</span>
                                     <div class="border-sky-500 border-solid border-1 rounded-md p-2 mt-1 bg-slate-50">
-                                        <span>{{ $user->prodi }}</span>
+                                        <span>{{ $user->major }}</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-col mb-1">
@@ -50,7 +50,7 @@
                                 <div class="flex flex-col mb-1">
                                     <span class="font-semibold">Jenis Kelamin:</span>
                                     <div class="border-sky-500 border-solid border-1 rounded-md p-2 mt-1 bg-slate-50">
-                                        <span>{{ $user->jk }}</span>
+                                        <span>{{ $user->gender }}</span>
                                     </div>
                                 </div>
                                 <div class="flex flex-col mb-1">
@@ -81,85 +81,89 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label for="no_hp" class="form-label font-semibold text-base">Nomor HP:</label>
-                                <input type="text" name="no_hp"
+                                <label for="phone_number" class="form-label font-semibold text-base">Nomor HP:</label>
+                                <input type="text" name="phone_number"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('no_hp', $user->no_hp) }}" required>
+                                    value="{{ old('phone_number', $user->phone_number) }}" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="no_rek" class="form-label font-semibold text-base">Nomor Rekening:</label>
-                                <input type="text" name="no_rek"
+                                <label for="bank_account_number" class="form-label font-semibold text-base">Nomor
+                                    Rekening:</label>
+                                <input type="text" name="bank_account_number"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('no_rek', $user->no_rek) }}" required>
+                                    value="{{ old('bank_account_number', $user->bank_account_number) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="name_rek" class="form-label font-semibold text-base">Nama Pada Rekening:</label>
-                                <input type="text" name="name_rek"
+                                <label for="account_holder_name" class="form-label font-semibold text-base">Nama Pada
+                                    Rekening:</label>
+                                <input type="text" name="account_holder_name"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('name_rek', $user->name_rek) }}" required>
+                                    value="{{ old('account_holder_name', $user->account_holder_name) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="name_bank" class="form-label font-semibold text-base">Nama Bank:</label>
-                                <input type="text" name="name_bank"
+                                <label for="bank_name" class="form-label font-semibold text-base">Nama Bank:</label>
+                                <input type="text" name="bank_name"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('name_bank', $user->name_bank) }}" required>
+                                    value="{{ old('bank_name', $user->bank_name) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="name_parent" class="form-label font-semibold text-base">Nama Orang Tua:</label>
-                                <input type="text" name="name_parent"
+                                <label for="parent_name" class="form-label font-semibold text-base">Nama Orang Tua:</label>
+                                <input type="text" name="parent_name"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('name_parent', $user->name_parent) }}" required>
+                                    value="{{ old('parent_name', $user->parent_name) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="income_parent" class="form-label font-semibold text-base">Penghasilan Orang Tua:</label>
-                                <select name="income_parent"
+                                <label for="parent_income" class="form-label font-semibold text-base">Penghasilan Orang
+                                    Tua:</label>
+                                <select name="parent_income"
                                     class="form-select text-slate-900 border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                     required>
                                     <option value="" selected disabled>Pilih</option>
                                     <option value="<= Rp 500.000"
-                                        {{ old('income_parent', $user->income_parent) == '<= Rp 500.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == '<= Rp 500.000' ? 'selected' : '' }}>
                                         <= Rp 500.000</option>
                                     <option value="Rp 500.000 - Rp 1.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 500.000 - Rp 1.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 500.000 - Rp 1.000.000' ? 'selected' : '' }}>
                                         Rp 500.000 - Rp 1.000.000</option>
                                     <option value="Rp 1.000.000 - Rp 1.500.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 1.000.000 - Rp 1.500.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 1.000.000 - Rp 1.500.000' ? 'selected' : '' }}>
                                         Rp 1.000.000 - Rp 1.500.000</option>
                                     <option value="Rp 1.500.000 - Rp 2.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 1.500.000 - Rp 2.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 1.500.000 - Rp 2.000.000' ? 'selected' : '' }}>
                                         Rp 1.500.000 - Rp 2.000.000</option>
                                     <option value="Rp 2.000.000 - Rp 2.500.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 2.000.000 - Rp 2.500.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 2.000.000 - Rp 2.500.000' ? 'selected' : '' }}>
                                         Rp 2.000.000 - Rp 2.500.000</option>
                                     <option value="Rp 2.500.000 - Rp 3.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 2.500.000 - Rp 3.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 2.500.000 - Rp 3.000.000' ? 'selected' : '' }}>
                                         Rp 2.500.000 - Rp 3.000.000</option>
                                     <option value="Rp 3.000.000 - Rp 4.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 3.000.000 - Rp 4.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 3.000.000 - Rp 4.000.000' ? 'selected' : '' }}>
                                         Rp 3.000.000 - Rp 4.000.000</option>
                                     <option value="Rp 4.000.000 - Rp 5.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 4.000.000 - Rp 5.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 4.000.000 - Rp 5.000.000' ? 'selected' : '' }}>
                                         Rp 4.000.000 - Rp 5.000.000</option>
                                     <option value="Rp 5.000.000 - Rp 7.500.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 5.000.000 - Rp 7.500.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 5.000.000 - Rp 7.500.000' ? 'selected' : '' }}>
                                         Rp 5.000.000 - Rp 7.500.000</option>
                                     <option value="Rp 7.500.000 - Rp 10.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 7.500.000 - Rp 10.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 7.500.000 - Rp 10.000.000' ? 'selected' : '' }}>
                                         Rp 7.500.000 - Rp 10.000.000</option>
                                     <option value="Rp 10.000.000 - Rp 15.000.000"
-                                        {{ old('income_parent', $user->income_parent) == 'Rp 10.000.000 - Rp 15.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == 'Rp 10.000.000 - Rp 15.000.000' ? 'selected' : '' }}>
                                         Rp 10.000.000 - Rp 15.000.000</option>
                                     <option value="> Rp 15.000.000"
-                                        {{ old('income_parent', $user->income_parent) == '> Rp 15.000.000' ? 'selected' : '' }}>
+                                        {{ old('parent_income', $user->parent_income) == '> Rp 15.000.000' ? 'selected' : '' }}>
                                         > Rp 15.000.000</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="job_parent" class="form-label font-semibold text-base">Pekerjaan Orang Tua:</label>
-                                <input type="text" name="job_parent"
+                                <label for="parent_job" class="form-label font-semibold text-base">Pekerjaan Orang
+                                    Tua:</label>
+                                <input type="text" name="parent_job"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
-                                    value="{{ old('job_parent', $user->job_parent) }}" required>
+                                    value="{{ old('parent_job', $user->parent_job) }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="address" class="form-label font-semibold text-base">Alamat Orang Tua:</label>

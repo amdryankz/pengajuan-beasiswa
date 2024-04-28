@@ -2,27 +2,51 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserScholarship extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'scholarship_data_id', 'file_requirement_id', 'file_path', 'status_file', 'status_scholar', 'dosen_wali_approval'];
+    protected $fillable = [
+        'user_id',
+        'scholarship_data_id',
+        'file_requirement_id',
+        'file_path',
+        'file_status',
+        'scholarship_status',
+        'supervisor_approval_file'
+    ];
 
-    public function user()
+    /**
+     * Get the user that owns the UserScholarship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function scholarshipData()
+    /**
+     * Get the scholarshipData that owns the UserScholarship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function scholarshipData(): BelongsTo
     {
-        return $this->belongsTo(ScholarshipData::class, 'scholarship_data_id');
+        return $this->belongsTo(ScholarshipData::class, 'scholarship_data_id', 'id');
     }
 
-    public function files()
+    /**
+     * Get the files that owns the UserScholarship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function files(): BelongsTo
     {
-        return $this->belongsTo(FileRequirement::class, 'file_requirement_id');
+        return $this->belongsTo(FileRequirement::class, 'file_requirement_id', 'id');
     }
 }

@@ -27,19 +27,19 @@
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Jenis Kelamin:</span><br>
-                        {{ $user->jk }}
+                        {{ $user->gender }}
                     </div>
                     <div class="mb-3">
-                        <span class="font-bold">NIM:</span><br>
-                        {{ $user->nim }}
+                        <span class="font-bold">NPM:</span><br>
+                        {{ $user->npm }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Fakultas:</span><br>
-                        {{ $user->fakultas }}
+                        {{ $user->faculty }}
                     </div>
                     <div class="mb-3">
                         <span class="font-bold">Prodi:</span><br>
-                        {{ $user->prodi }}
+                        {{ $user->major }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">IPK:</span><br>
@@ -62,31 +62,31 @@
                 <div class="text-lg">
                     <div class="mb-3">
                         <span class="font-bold">Nomor Hp:</span><br>
-                        {{ $user->no_hp }}
+                        {{ $user->phone_number }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Nama Pemilik Rekening:</span><br>
-                        {{ $user->name_rek }}
+                        {{ $user->account_holder_name }}
                     </div>
                     <div class="mb-3">
                         <span class="font-bold">Nomor Rekening:</span><br>
-                        {{ $user->no_rek }}
+                        {{ $user->bank_account_number }}
                     </div>
                     <div class="mb-3">
                         <span class="font-bold">Nama Bank:</span><br>
-                        {{ $user->name_bank }}
+                        {{ $user->bank_name }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Nama Orang Tua:</span><br>
-                        {{ $user->name_parent }}
+                        {{ $user->parent_name }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Pekerjaan Orang Tua:</span><br>
-                        {{ $user->job_parent }}
+                        {{ $user->parent_job }}
                     </div>
                     <div class="mb-3">
                         <span class="font-semibold">Penghasilan Orang tua:</span><br>
-                        {{ $user->income_parent }}
+                        {{ $user->parent_income }}
                     </div>
 
                 </div>

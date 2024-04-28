@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Barryvdh\DomPDF\PDF;
+use App\Mail\FileValidated;
 use Illuminate\Http\Request;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FileValidationCancelled;
 
 class StudentApplicationController extends Controller
 {
@@ -28,12 +31,12 @@ class StudentApplicationController extends Controller
 
         $user = $scholarship->users()->distinct()->get();
 
-        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
+        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
 
         $data = [
             'scholarship' => $scholarship,
             'user' => $user,
-            'fakultasList' => $fakultasList,
+            'facultyList' => $facultyList,
         ];
 
         return view('admin.userscholarship.index')->with('data', $data);
@@ -81,10 +84,12 @@ class StudentApplicationController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_file = true;
-            $userScholarship->reason_for_rejection = null;
+            $userScholarship->file_status = true;
+            $userScholarship->rejection_reason = null;
             $userScholarship->save();
         }
+
+        Mail::to($userScholarship->user->email)->send(new FileValidated());
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
@@ -94,11 +99,13 @@ class StudentApplicationController extends Controller
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {
-            $userScholarship->status_file = false;
-            $userScholarship->status_scholar = null;
-            $userScholarship->reason_for_rejection = $request->input('reason');
+            $userScholarship->file_status = false;
+            $userScholarship->scholarship_status = null;
+            $userScholarship->rejection_reason = $request->input('reason');
             $userScholarship->save();
         }
+
+        Mail::to($userScholarship->user->email)->send(new FileValidationCancelled($userScholarship->rejection_reason));
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
@@ -112,7 +119,7 @@ class StudentApplicationController extends Controller
         $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
 
         // Nama file PDF yang akan diunduh
-        $pdfFileName = $user->nim . '_' . $scholarship->name . '.pdf';
+        $pdfFileName = $user->npm . '_' . $scholarship->name . '.pdf';
 
         // Unduh file PDF
         return $pdf->stream($pdfFileName);

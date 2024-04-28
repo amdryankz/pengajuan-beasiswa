@@ -21,8 +21,8 @@ class UserScholarshipController extends Controller
         $userId = Auth::id();
         $now = Carbon::now();
 
-        $scholarships = ScholarshipData::where('start_regis_at', '<=', $now)
-            ->where('end_regis_at', '>=', $now)
+        $scholarships = ScholarshipData::where('start_registration_at', '<=', $now)
+            ->where('end_registration_at', '>=', $now)
             ->get();
 
         $userScholarships = UserScholarship::where('user_id', $userId)->get();
@@ -32,8 +32,8 @@ class UserScholarshipController extends Controller
         $alumniData = ScholarshipData::where('end_scholarship', '<', $now)
             ->whereIn('id', $filteredUserScholarships->pluck('scholarship_data_id'))
             ->whereHas('users', function ($query) {
-                $query->where('status_file', true)
-                    ->where('status_scholar', true);
+                $query->where('file_status', true)
+                    ->where('scholarship_status', true);
             })
             ->get();
 
@@ -55,10 +55,10 @@ class UserScholarshipController extends Controller
     {
         $request->validate([
             'file_requirements.*' => 'required|mimes:pdf|max:2048',
-            'dosen_wali_approval' => 'required|mimes:pdf|max:2048',
+            'supervisor_approval_file' => 'required|mimes:pdf|max:2048',
         ], [
             'file_requirements.*.max' => 'File tidak boleh lebih dari 2MB',
-            'dosen_wali_approval.max' => 'File tidak boleh lebih dari 2MB',
+            'supervisor_approval_file.max' => 'File tidak boleh lebih dari 2MB',
         ]);
 
         $scholarshipDataId = $request->input('scholarship_data_id');
@@ -81,7 +81,7 @@ class UserScholarshipController extends Controller
         }
 
         $activeScholarship = UserScholarship::where('user_id', $user->id)
-            ->where('status_scholar', true)
+            ->where('scholarship_status', true)
             ->join('scholarship_data', 'user_scholarships.scholarship_data_id', '=', 'scholarship_data.id')
             ->where('scholarship_data.end_scholarship', '>=', now())
             ->exists();
@@ -90,13 +90,13 @@ class UserScholarshipController extends Controller
             return redirect()->route('beasiswa.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
-        $dosenWaliLetter = $request->file('dosen_wali_approval');
-        $dosenWaliFileName = $user->nim . '_izin_dosen_wali.' . $dosenWaliLetter->getClientOriginalExtension();
+        $dosenWaliLetter = $request->file('supervisor_approval_file');
+        $dosenWaliFileName = $user->npm . '_izin_dosen_wali.' . $dosenWaliLetter->getClientOriginalExtension();
         $dosenWaliLetter->storeAs('dosen_wali_letters', $dosenWaliFileName, 'public');
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {
             $fileRequirement = FileRequirement::findOrFail($file_requirement_id);
-            $fileName = $user->nim . '_' . $fileRequirement->name . '.' . $file->getClientOriginalExtension();
+            $fileName = $user->npm . '_' . $fileRequirement->name . '.' . $file->getClientOriginalExtension();
             $file->storeAs('file_requirements', $fileName, 'public');
 
             UserScholarship::create([
@@ -104,7 +104,7 @@ class UserScholarshipController extends Controller
                 'user_id' => $user->id,
                 'file_requirement_id' => $file_requirement_id,
                 'file_path' => $fileName,
-                'dosen_wali_approval' => $dosenWaliFileName
+                'supervisor_approval_file' => $dosenWaliFileName
             ]);
         }
 
@@ -147,7 +147,7 @@ class UserScholarshipController extends Controller
     {
         $userScholarship = UserScholarship::findOrFail($id);
 
-        if ($userScholarship->status_file === null) {
+        if ($userScholarship->file_status === null) {
             $filePaths = UserScholarship::where('user_id', $userScholarship->user_id)
                 ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
                 ->pluck('file_path')
@@ -159,8 +159,8 @@ class UserScholarshipController extends Controller
                 }
             }
 
-            if ($userScholarship->dosen_wali_approval) {
-                Storage::disk('public')->delete('dosen_wali_letters/' . $userScholarship->dosen_wali_approval);
+            if ($userScholarship->supervisor_approval_file) {
+                Storage::disk('public')->delete('dosen_wali_letters/' . $userScholarship->supervisor_approval_file);
             }
 
             UserScholarship::where('user_id', $userScholarship->user_id)

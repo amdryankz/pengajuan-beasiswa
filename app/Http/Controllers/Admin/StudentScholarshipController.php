@@ -30,22 +30,22 @@ class StudentScholarshipController extends Controller
         $data = [];
         $users = $scholarship->users()->distinct()->get();
 
-        $fakultasList = User::select('fakultas')->distinct()->pluck('fakultas')->toArray();
+        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
 
             if (
                 $userScholarship &&
-                $userScholarship->pivot->status_file &&
-                $userScholarship->pivot->status_scholar &&
+                $userScholarship->pivot->file_status &&
+                $userScholarship->pivot->scholarship_status &&
                 $scholarship->start_scholarship <= now() &&
                 now() <= $scholarship->end_scholarship
             ) {
                 $data[] = [
                     'scholarship' => $scholarship,
                     'user' => $user,
-                    'fakultasList' => $fakultasList,
+                    'facultyList' => $facultyList,
                 ];
             }
         }
@@ -84,8 +84,8 @@ class StudentScholarshipController extends Controller
 
             if (
                 $userScholarship &&
-                $userScholarship->pivot->status_file &&
-                $userScholarship->pivot->status_scholar &&
+                $userScholarship->pivot->file_status &&
+                $userScholarship->pivot->scholarship_status &&
                 $scholarship->start_scholarship <= now() &&
                 now() <= $scholarship->end_scholarship
             ) {

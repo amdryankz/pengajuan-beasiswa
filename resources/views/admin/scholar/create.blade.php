@@ -50,17 +50,17 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
+                    <label for="amount" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
                     <input type="text"
                         class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                        name="value" id="value" placeholder="Nominal" value="{{ old('value') }}" required>
+                        name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="status_value" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
+                    <label for="amount_period" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
                     <select
                         class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                        name="status_value" id="status_value">
+                        name="amount_period" id="amount_period">
                         <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
                         <option value="Bulan">Bulan</option>
                         <option value="Tahun">Tahun</option>
@@ -83,21 +83,21 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="start_regis_at" class="block text-sm font-medium text-gray-600 mb-1">
+                    <label for="start_registration_at" class="block text-sm font-medium text-gray-600 mb-1">
                         Mulai Pendaftaran Beasiswa
                     </label>
-                    <input type="date" id="start_regis_at" name="start_regis_at"
+                    <input type="date" id="start_registration_at" name="start_registration_at"
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 outline-none focus:ring-sky-500 text-sm"
-                        value="{{ old('start_regis_at') }}">
+                        value="{{ old('start_registration_at') }}">
                 </div>
 
                 <div class="mb-4">
-                    <label for="end_regis_at" class="block text-sm font-medium text-gray-600 mb-1">
+                    <label for="end_registration_at" class="block text-sm font-medium text-gray-600 mb-1">
                         Akhir Pendaftaran Beasiswa
                     </label>
-                    <input type="date" id="end_regis_at" name="end_regis_at"
+                    <input type="date" id="end_registration_at" name="end_registration_at"
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
-                        value="{{ old('end_regis_at') }}">
+                        value="{{ old('end_registration_at') }}">
                 </div>
 
                 <div class="mb-4">
@@ -119,16 +119,30 @@
                 <hr class="mb-4 border-t border-gray-300 my-2">
                 <div class="grid grid-cols-4 gap-4">
                     @php
-                        $fakultasList = ['MIPA', 'Ekonomi', 'Kedokteran', 'Hukum', 'Teknik', 'Pertanian', 'Kedokteran Hewan', 'Keguruan dan Ilmu Pendidikan', 'Keperawatan', 'Kedokteran Gigi', 'Kelautan dan Perikanan', 'Ilmu Sosial dan Politik', 'Pascasarjana'];
+                        $facultyList = [
+                            'MIPA',
+                            'Ekonomi',
+                            'Kedokteran',
+                            'Hukum',
+                            'Teknik',
+                            'Pertanian',
+                            'Kedokteran Hewan',
+                            'Keguruan dan Ilmu Pendidikan',
+                            'Keperawatan',
+                            'Kedokteran Gigi',
+                            'Kelautan dan Perikanan',
+                            'Ilmu Sosial dan Politik',
+                            'Pascasarjana',
+                        ];
                     @endphp
-                    @foreach ($fakultasList as $fakultas)
+                    @foreach ($facultyList as $faculty)
                         <div class="m-2">
-                            <label for="kuota_fakultas_{{ $loop->index + 1 }}"
-                                class="mb-1 ml-1 block text-sm font-medium text-gray-600">{{ $fakultas }}</label>
-                            <input type="number" name="kuota[{{ $fakultas }}]"
-                                id="kuota_fakultas_{{ $loop->index + 1 }}"
+                            <label for="quota_faculty_{{ $loop->index + 1 }}"
+                                class="mb-1 ml-1 block text-sm font-medium text-gray-600">{{ $faculty }}</label>
+                            <input type="number" name="quota[{{ $faculty }}]"
+                                id="quota_faculty_{{ $loop->index + 1 }}"
                                 class="px-3 py-2 border-1 border-sky-500 rounded-md focus:ring-2 focus:ring-sky-700 appearance-none text-sm"
-                                required placeholder="{{ $fakultas }}" value="{{ old('kuota.' . $fakultas) }}">
+                                required placeholder="{{ $faculty }}" value="{{ old('quota.' . $faculty) }}">
                         </div>
                     @endforeach
                 </div>

@@ -10,24 +10,24 @@ class StudentsImport implements ToModel
 {
     private $scholarshipId;
 
-    public $unlinkedNIMCount = 0;
+    public $unlinkedNPMCount = 0;
 
     public function __construct($scholarshipId)
     {
         $this->scholarshipId = $scholarshipId;
     }
 
-    public function hasUnlinkedNIM()
+    public function hasUnlinkedNPM()
     {
-        return $this->unlinkedNIMCount > 0;
+        return $this->unlinkedNPMCount > 0;
     }
 
     public function model(array $row)
     {
-        $user = User::where('nim', $row[0])->first();
+        $user = User::where('npm', $row[0])->first();
 
-        if (! $user) {
-            $this->unlinkedNIMCount++;
+        if (!$user) {
+            $this->unlinkedNPMCount++;
 
             return null;
         }
@@ -35,8 +35,8 @@ class StudentsImport implements ToModel
         return new UserScholarship([
             'scholarship_data_id' => $this->scholarshipId,
             'user_id' => $user->id,
-            'status_file' => true,
-            'status_scholar' => true,
+            'file_status' => true,
+            'scholarship_status' => true,
         ]);
     }
 }

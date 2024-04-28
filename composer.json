@@ -16,6 +16,8 @@
         "maatwebsite/excel": "3.*"
     },
     "require-dev": {
+        "andyabih/laravel-to-uml": "^1.0",
+        "barryvdh/laravel-debugbar": "^3.13",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",

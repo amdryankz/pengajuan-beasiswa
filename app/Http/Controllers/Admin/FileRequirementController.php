@@ -15,7 +15,7 @@ class FileRequirementController extends Controller
      */
     public function index()
     {
-        $data = FileRequirement::orderby('name', 'asc')->get();
+        $data = FileRequirement::all();
 
         return view('admin.filereq.index')->with('data', $data);
     }
@@ -33,17 +33,11 @@ class FileRequirementController extends Controller
      */
     public function store(Request $request)
     {
-        Session::flash('name', $request->name);
-
         $request->validate([
-            'name' => 'required',
-        ], [
-            'name.required' => 'Berkas wajib diisi',
+            'name' => 'required|string|max:50',
         ]);
 
-        $data = ['name' => $request->name];
-
-        FileRequirement::create($data);
+        FileRequirement::create($request->all());
 
         return redirect()->route('berkas.index')->with('success', 'Berhasil menambahkan data');
     }
@@ -75,11 +69,11 @@ class FileRequirementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate(['name' => 'required'], ['name.required' => 'Nama berkas wajib diisi']);
+        $request->validate([
+            'name' => 'required|string|max:50',
+        ]);
 
-        $data = ['name' => $request->name];
-
-        FileRequirement::findOrFail($id)->update($data);
+        FileRequirement::findOrFail($id)->update($request->all());
 
         return redirect()->route('berkas.index')->with('success', 'Berhasil update berkas');
     }
@@ -91,7 +85,7 @@ class FileRequirementController extends Controller
     {
         $fileRequirement = FileRequirement::findOrFail($id);
 
-        if ($fileRequirement->requireFiles()->count() > 0) {
+        if ($fileRequirement->fileScholarships()->count() > 0) {
             return redirect()->back()->withErrors(['error' => 'Tidak dapat menghapus berkas ini karena masih terdapat beasiswa yang terkait.']);
         }
 

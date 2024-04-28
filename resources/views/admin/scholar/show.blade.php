@@ -31,7 +31,7 @@
                 <!-- Tampilkan informasi Kuota -->
                 <h3 class="mt-4 text-xl font-semibold">Kuota :</h3>
                 @php
-                    $kuotaFakultas = json_decode($beasiswa->kuota, true);
+                    $quotafaculty = json_decode($beasiswa->quota, true);
                 @endphp
 
                 <table class="table-auto mt-2 w-full">
@@ -42,10 +42,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kuotaFakultas as $fakultas => $kuota)
+                        @foreach ($quotafaculty as $faculty => $quota)
                             <tr>
-                                <td class="border px-4 py-2">{{ $fakultas }}</td>
-                                <td class="border px-4 py-2">{{ $kuota }}</td>
+                                <td class="border px-4 py-2">{{ $faculty }}</td>
+                                <td class="border px-4 py-2">{{ $quota }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -60,9 +60,9 @@
                 </ul>
                 <h3 class="mt-4 text-xl font-semibold">Surat Keputusan Kelulusan (SK) :</h3>
                 <ul class="list-disc pl-6 text-base">
-                    @if ($beasiswa->file_sk)
+                    @if ($beasiswa->sk_file)
                         <li>
-                            <a href="{{ asset('storage/' . $beasiswa->file_sk) }}" target="_blank"
+                            <a href="{{ asset('storage/' . $beasiswa->sk_file) }}" target="_blank"
                                 class="text-blue-500 hover:underline">Lihat File
                                 SK</a>
                         </li>

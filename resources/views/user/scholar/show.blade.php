@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('beasiswa.store', $scholarship->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('pendaftaran.store', $scholarship->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-header">
@@ -23,14 +23,14 @@
                 <div class="card-body">
                     <h5 class="card-title">Nama Beasiswa: {{ $scholarship->scholarship->name }}</h5>
                     <p class="card-text">Durasi Beasiswa: {{ $scholarship->duration }} Bulan</p>
-                    <p class="card-text">Mulai Pendaftaran: {{ $scholarship->start_regis_at }}</p>
-                    <p class="card-text">Akhir Pendaftaran: {{ $scholarship->end_regis_at }}</p>
+                    <p class="card-text">Mulai Pendaftaran: {{ $scholarship->start_registration_at }}</p>
+                    <p class="card-text">Akhir Pendaftaran: {{ $scholarship->end_registration_at }}</p>
                     <p class="card-text">Minimal IPK: {{ $scholarship->min_ipk }}</p>
                     <div class="form-group">
-                        <label for="dosen_wali_approval">Surat Izin Dosen Wali</label>
-                        <input type="file" class="form-control" id="dosen_wali_approval" name="dosen_wali_approval"
-                            required>
-                        @error('dosen_wali_approval')
+                        <label for="supervisor_approval_file">Surat Izin Dosen Wali</label>
+                        <input type="file" class="form-control" id="supervisor_approval_file"
+                            name="supervisor_approval_file" required>
+                        @error('supervisor_approval_file')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <button class="btn btn-primary" name="daftar" type="submit">Daftar</button>
-            <a href="{{ route('beasiswa.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('pendaftaran.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 @endsection

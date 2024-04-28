@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomepageController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\Admin\AdminAccessController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ScholarshipController;
 use App\Http\Controllers\User\UserHomepageController;
 use App\Http\Controllers\User\UserScholarshipController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Admin\StudentApprovalController;
 use App\Http\Controllers\Admin\StudentApplicationController;
 use App\Http\Controllers\Admin\StudentScholarshipController;
 use App\Http\Controllers\Admin\SpecialScholarshipDataController;
+use App\Http\Controllers\Main\LandingPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +81,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/adm/alumni/{user_id}/{scholarship_id}/detail', [AlumniController::class, 'showDetail'])->name('alumni.detail');
     Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
 
+    // Pengumuman
+    Route::resource('/adm/pengumuman', AnnouncementController::class);
+
     // Beranda
     Route::get('/adm/beranda', [HomepageController::class, 'index']);
 
@@ -94,15 +99,18 @@ Route::middleware('guest:admin')->group(function () {
 
 // Rute User Authentication
 Route::middleware('guest_user')->group(function () {
-    Route::get('/', [UserAuthController::class, 'login'])->name('loginUser');
-    Route::post('/', [UserAuthController::class, 'authenticating']);
+    Route::get('/login', [UserAuthController::class, 'login'])->name('loginUser');
+    Route::post('/login', [UserAuthController::class, 'authenticating']);
 });
 
 Route::middleware('auth_user')->group(function () {
     // Daftar beasiswa
-    Route::resource('/mhs/beasiswa', UserScholarshipController::class);
+    Route::resource('/mhs/pendaftaran', UserScholarshipController::class);
     Route::get('/mhs/beranda', [UserHomepageController::class, 'index']);
     Route::get('/mhs/biodata', [UserProfileController::class, 'index'])->name('biodata.index');
     Route::put('/mhs/biodata/update', [UserProfileController::class, 'update'])->name('biodata.update');
     Route::get('/mhs/logout', [UserAuthController::class, 'logout']);
 });
+
+Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/{id}', [LandingPageController::class, 'show']);

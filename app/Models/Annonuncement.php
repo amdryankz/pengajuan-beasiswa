@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Donor extends Model
+class Annonuncement extends Model
 {
     use HasFactory, Sluggable;
 
@@ -16,7 +15,12 @@ class Donor extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'title',
+        'image',
+        'letter_number',
+        'content'
+    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -31,15 +35,5 @@ class Donor extends Model
                 'onUpdate' => true
             ],
         ];
-    }
-
-    /**
-     * Get all of the scholarships for the Donor
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function scholarships(): HasMany
-    {
-        return $this->hasMany(Scholarship::class, 'donors_id', 'id');
     }
 }
