@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\UserScholarshipExport;
-use App\Http\Controllers\Controller;
-use App\Models\ScholarshipData;
 use App\Models\User;
+use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UserScholarshipExport;
+use Illuminate\Support\Facades\Storage;
 
 class AlumniController extends Controller
 {
@@ -42,6 +43,14 @@ class AlumniController extends Controller
                     'user' => $user,
                     'facultyList' => $facultyList,
                 ];
+
+                foreach ($user->userScholarships as $userScholarship) {
+                    Storage::delete('public/' . $userScholarship->file_path);
+                    $userScholarship->file_path = null;
+                    Storage::delete('public/' . $userScholarship->supervisor_approval_file);
+                    $userScholarship->supervisor_approval_file = null;
+                    $userScholarship->save();
+                }
             }
         }
 
