@@ -56,8 +56,8 @@ Route::middleware('auth:admin')->prefix('adm')->group(function () {
         Route::get('{user_id}/{scholarship_id}/detail', [StudentApplicationController::class, 'showDetail'])->name('admin.scholarship.detail');
         Route::get('{user_id}/{scholarship_id}/pdf', [StudentApplicationController::class, 'generatePDF'])->name('admin.scholarship.pdf');
         Route::get('download/{file_path}', [StudentApplicationController::class, 'checkFile'])->name('admin.scholarship.checkFile');
-        Route::post('validate/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'validateFile'])->name('admin.scholarship.validate');
-        Route::post('cancel-validation/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
+        Route::post('validate/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'validateFile'])->name('admin.scholarship.validate')->middleware('check.observer.role');
+        Route::post('cancel-validation/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation')->middleware('check.observer.role');
     });
 
     // Akses login admin
@@ -68,8 +68,8 @@ Route::middleware('auth:admin')->prefix('adm')->group(function () {
         Route::get('', [StudentApprovalController::class, 'index'])->name('passfile.list');
         Route::get('{scholarship_id}', [StudentApprovalController::class, 'showPassFileByScholarship'])->name('passfile.index');
         Route::get('{user_id}/{scholarship_id}/detail', [StudentApprovalController::class, 'showDetail'])->name('passfile.detail');
-        Route::post('pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'validateScholar'])->name('passfile.validate');
-        Route::post('cancel-pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'cancelValidation'])->name('passfile.cancelValidate');
+        Route::post('pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'validateScholar'])->name('passfile.validate')->middleware('check.observer.role');
+        Route::post('cancel-pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'cancelValidation'])->name('passfile.cancelValidate')->middleware('check.observer.role');
         Route::get('{scholarship_id}/downloadExcel', [StudentApprovalController::class, 'export'])->name('passfile.downloadExcel');
     });
 
