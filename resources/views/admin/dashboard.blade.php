@@ -46,7 +46,9 @@
     <body class="bg-gray-200">
 
         {{-- sidebar --}}
-        <aside id="sidebar" class="fixed left-0 top-16 z-50 w-60 h-full overflow-y-auto bg-slate-50 shadow-lg"
+        <aside id="sidebar"
+            class="fixed left-0 top-16 z-50 w-60 md:w-1/6 h-full overflow-y-auto bg-slate-50 shadow-lg"
+            data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute""
             data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute">
             <ul class="list-none pt-3 px-2" data-te-sidenav-menu-ref>
                 @if (Auth::user() && Auth::user()->role)
@@ -139,7 +141,7 @@
                             </li>
 
                             <p class="pt-1 pb-1 pl-1 text-slate-500 opacity-50">Akun</p>
-                            
+
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="pengguna" href="{{ url('/adm/akses') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/akses*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
@@ -148,14 +150,14 @@
                                     <span class="pl-2 text-base">Pengguna</span>
                                 </a>
                             </li>
-                            <li class="relative text-slate-800 mb-1.5">
+                            {{-- <li class="relative text-slate-800 mb-1.5">
                                 <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
                                     <span class="pl-2 text-base">Logout</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @break
 
                         @case('Operator Fakultas Hukum')
@@ -203,7 +205,7 @@
                                     <span class="pl-2 text-base">Alumni</span>
                                 </a>
                             </li>
-                            <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
+                            {{-- <p class="pt-2 pb-2 pl-1 text-slate-500 opacity-50">Akun</p>
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
                                     class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
@@ -211,7 +213,7 @@
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
                                     <span class="pl-2 text-base">Logout</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @break
                     @endswitch
                 @endif
@@ -247,6 +249,24 @@
                                     {{ Auth::user()->name }}
                                 @endif
                             </h2>
+
+                            <!-- Dropdown for Logout -->
+                            <div class="relative ml-2 pt-2" x-data="{ open: false }">
+                                <button @click="open = !open" class="align-middle">
+                                    <ion-icon class="text-white text-xl" name="chevron-down-outline"></ion-icon>
+                                </button>
+
+                                <!-- Dropdown Menu -->
+                                <div x-show="open" @click.away="open = false"
+                                    class="origin-top-right absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <div class="py-1" role="none">
+                                        <a href="{{ url('/adm/logout') }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            role="menuitem">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -283,7 +303,7 @@
                 $('#facultyFilter').on('change', function() {
                     var faculty = $(this).val();
                     table.columns(3).search(faculty)
-                .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
+                        .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
                 });
             });
         </script>

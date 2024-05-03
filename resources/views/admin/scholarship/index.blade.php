@@ -44,7 +44,7 @@
                             <tr class="border-b border-gray-300 @if ($loop->even) bg-slate-50 @endif">
                                 <td class="p-2 text-center">{{ $i++ }}</td>
                                 <td class="p-2">{{ $item->name }}</td>
-                                <td class="p-2">{{ $item->donors->name }}</td>
+                                <td class="p-2">{{ $item->donor->name }}</td>
                                 <td class="p-2">
                                     <div class="flex items-center justify-center ml-2">
                                         <a href="{{ $item->slug ? route('beasiswa.edit', $item->slug) : route('beasiswa.edit', $item->id) }}"

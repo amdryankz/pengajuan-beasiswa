@@ -124,8 +124,8 @@
             @foreach ($data as $item)
                 if ({{ $item->id }} == scholarshipId) {
                     var option = document.createElement('option');
-                    option.value = '{{ $item->donors->id }}';
-                    option.text = '{{ $item->donors->name }}';
+                    option.value = '{{ $item->donor->id }}';
+                    option.text = '{{ $item->donor->name }}';
                     donorSelect.add(option);
                 }
             @endforeach
