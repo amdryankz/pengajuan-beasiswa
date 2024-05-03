@@ -19,7 +19,7 @@ class SpecialScholarshipDataController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('scholarship')->whereNotNull('start_scholarship')->whereNull('start_registration_at')->get();
+        $data = ScholarshipData::with('scholarship.donor')->whereNotNull('start_scholarship')->whereNull('start_registration_at')->get();
 
         return view('admin.specscholarship.index')->with('data', $data);
     }
@@ -29,13 +29,12 @@ class SpecialScholarshipDataController extends Controller
      */
     public function create()
     {
-        $data = Scholarship::all();
+        $data = Scholarship::with('donor')->get();
 
         $tahunSekarang = date('Y');
-        $tahunArray = range($tahunSekarang, $tahunSekarang - 10);
+        $tahunArray = range($tahunSekarang, $tahunSekarang - 15);
 
-        return view('admin.specscholarship.create')->with('data', $data)
-            ->with('tahunArray', $tahunArray);
+        return view('admin.specscholarship.create')->with('data', $data)->with('tahunArray', $tahunArray);
     }
 
     /**
@@ -45,10 +44,10 @@ class SpecialScholarshipDataController extends Controller
     {
         $data = $request->validate([
             'scholarships_id' => 'required|exists:scholarships,id',
-            'year' => 'required|integer',
-            'amount' => 'required|string|max:255',
-            'amount_period' => 'required|string|max:255',
-            'duration' => 'required|integer',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
+            'amount' => 'required|integer|min:0',
+            'amount_period' => 'required|string|max:5',
+            'duration' => 'required|integer|min:1',
             'start_scholarship' => 'required|date',
             'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
             'student_list_file' => 'required|file|mimes:xlsx',
@@ -60,18 +59,14 @@ class SpecialScholarshipDataController extends Controller
         Excel::import($import, $request->file('student_list_file'));
 
         if ($import->hasUnlinkedNPM()) {
+            $unlinkedNPMs = $import->unlinkedNPMs;
             UserScholarship::where('scholarship_data_id', $scholarship->id)->delete();
             ScholarshipData::findOrFail($scholarship->id)->delete();
 
-            return redirect()->back()->with('error', 'Terdapat npm yang tidak terdata.');
+            return redirect()->back()->with('error', 'Terdapat npm yang tidak terdata: ' . implode(', ', $unlinkedNPMs));
         }
 
-        $scholarship->update([
-            'student_list_file' => $request->file('student_list_file')->store('student_list_file', 'public'),
-        ]);
-
-        return redirect()->route('pengelolaan-khusus.index')
-            ->with('success', 'Berhasil menambahkan data beasiswa');
+        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil menambahkan data beasiswa');
     }
 
     /**
@@ -85,7 +80,7 @@ class SpecialScholarshipDataController extends Controller
             $scholarship = ScholarshipData::findOrFail($id);
         }
 
-        return view('admin.specscholarship.show', ['beasiswa' => $scholarship]);
+        return view('admin.specscholarship.show')->with('beasiswa', $scholarship);
     }
 
     /**
@@ -99,10 +94,10 @@ class SpecialScholarshipDataController extends Controller
             $scholarship = ScholarshipData::findOrFail($id);
         }
 
-        $data = Scholarship::all();
+        $data = Scholarship::with('donor')->get();
 
         $tahunSekarang = date('Y');
-        $tahunArray = range($tahunSekarang, $tahunSekarang - 10);
+        $tahunArray = range($tahunSekarang, $tahunSekarang - 15);
 
         return view('admin.specscholarship.edit')->with('data', $data)
             ->with('tahunArray', $tahunArray)
@@ -115,34 +110,35 @@ class SpecialScholarshipDataController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'scholarships_id' => 'required|exists:donors,id',
-            'year' => 'required|integer',
-            'amount' => 'required|string|max:255',
-            'amount_period' => 'required|string|max:255',
-            'duration' => 'required|integer',
+            'scholarships_id' => 'required|exists:scholarships,id',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
+            'amount' => 'required|integer|min:0',
+            'amount_period' => 'required|string|max:5',
+            'duration' => 'required|integer|min:1',
             'start_scholarship' => 'required|date',
             'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
-            'student_list_file' => 'file|mimes:xlsx',
+            'student_list_file' => 'nullable|file|mimes:xlsx',
         ]);
 
-        try {
-            $scholarship = ScholarshipData::where('slug', $id)->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            $scholarship = ScholarshipData::findOrFail($id);
-        }
-
+        $scholarship = ScholarshipData::findOrFail($id);
         $scholarship->update($data);
 
         if ($request->hasFile('student_list_file')) {
-            Excel::import(new StudentsImport($scholarship->id), $request->file('student_list_file'));
+            $scholarshipId = $scholarship->id;
+            UserScholarship::where('scholarship_data_id', $scholarshipId)->delete();
 
-            $scholarship->update([
-                'student_list_file' => $request->file('student_list_file')->store('student_list_file', 'public'),
-            ]);
+            $import = new StudentsImport($scholarshipId);
+            Excel::import($import, $request->file('student_list_file'));
+
+            if ($import->hasUnlinkedNPM()) {
+                $unlinkedNPMs = $import->unlinkedNPMs;
+                UserScholarship::where('scholarship_data_id', $scholarshipId)->delete();
+
+                return redirect()->back()->with('error', 'Gagal mengupdate data beasiswa. Terdapat npm yang tidak terdata: ' . implode(', ', $unlinkedNPMs));
+            }
         }
 
-        return redirect()->route('pengelolaan-khusus.index')
-            ->with('success', 'Berhasil mengupdate data beasiswa');
+        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil mengupdate data beasiswa');
     }
 
     /**
@@ -153,32 +149,34 @@ class SpecialScholarshipDataController extends Controller
         $scholarship = ScholarshipData::findOrFail($id);
         $scholarship->delete();
 
-        return redirect()->route('pengelolaan-khusus.index');
+        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil menghapus Data Beasiswa');
     }
 
     public function updateSK(Request $request, string $id)
     {
         $request->validate([
-            'sk_number' => 'nullable|string|max:255',
-            'sk_file' => 'nullable|mimes:pdf|max:2048',
+            'sk_number' => 'required|string|max:50',
+            'sk_file' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         $scholarship = ScholarshipData::findOrFail($id);
 
-        $scholarship->fill($request->only(['sk_number', 'start_scholarship', 'end_scholarship']));
+        $scholarship->fill($request->only(['sk_number']));
 
         if ($request->hasFile('sk_file')) {
             if ($scholarship->sk_file) {
                 Storage::delete($scholarship->sk_file);
             }
 
-            $sk_filePath = $request->file('sk_file')->store('sk_file', 'public');
+            $scholarshipName = $scholarship->scholarship->name;
+            $sk_fileName = 'SK_' . $scholarshipName . '_' . $scholarship->year . '.pdf';
+
+            $sk_filePath = $request->file('sk_file')->storeAs('sk_file', $sk_fileName, 'public');
             $scholarship->sk_file = $sk_filePath;
         }
 
         $scholarship->save();
 
-        return redirect()->route('pengelolaan-khusus.index')
-            ->with('success', 'Berhasil mengupdate SK beasiswa');
+        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil mengupdate SK beasiswa');
     }
 }

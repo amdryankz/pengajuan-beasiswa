@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_scholarships', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('scholarship_data_id');
-            $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data');
+            $table->foreign('scholarship_data_id')->references('id')->on('scholarship_data')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('file_requirement_id')->nullable();

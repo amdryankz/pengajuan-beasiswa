@@ -31,85 +31,94 @@ use App\Http\Controllers\Main\LandingPageController;
 |
 */
 
-Route::middleware('auth:admin')->group(function () {
+Route::middleware('auth:admin')->prefix('adm')->group(function () {
     // Donatur
-    Route::resource('/adm/donatur', DonorController::class);
+    Route::resource('donatur', DonorController::class)->middleware('check.admin.role');
 
     // Berkas
-    Route::resource('/adm/berkas', FileRequirementController::class);
+    Route::resource('berkas', FileRequirementController::class)->middleware('check.admin.role');
 
     // Beasiswa
-    Route::resource('/adm/beasiswa', ScholarshipController::class);
+    Route::resource('beasiswa', ScholarshipController::class)->middleware('check.admin.role');
 
     // Pengelolaan
-    Route::resource('/adm/pengelolaan', ScholarshipDataController::class);
-    Route::put('/adm/pengelolaan/sk/{id}', [ScholarshipDataController::class, 'updateSK'])->name('beasiswa.updateSK');
+    Route::resource('pengelolaan', ScholarshipDataController::class)->middleware('check.admin.role');
+    Route::put('pengelolaan/sk/{id}', [ScholarshipDataController::class, 'updateSK'])->name('beasiswa.updateSK')->middleware('check.admin.role');
 
     // Beasiswa khusus
-    Route::resource('adm/pengelolaan-khusus', SpecialScholarshipDataController::class);
-    Route::put('/adm/pengelolaan-khusus/sk/{id}', [SpecialScholarshipDataController::class, 'updateSK'])->name('khusus.updateSK');
+    Route::resource('pengelolaan-khusus', SpecialScholarshipDataController::class)->middleware('check.admin.role');
+    Route::put('pengelolaan-khusus/sk/{id}', [SpecialScholarshipDataController::class, 'updateSK'])->name('khusus.updateSK')->middleware('check.admin.role');
 
     // Pendaftar Beasiswa
-    Route::get('/adm/pengusul', [StudentApplicationController::class, 'showScholarships'])->name('registrations.list');
-    Route::get('/adm/pengusul/{scholarship_id}', [StudentApplicationController::class, 'showRegistrationsByScholarship'])->name('registrations.index');
-    Route::get('/adm/pengusul/{user_id}/{scholarship_id}/detail', [StudentApplicationController::class, 'showDetail'])->name('admin.scholarship.detail');
-    Route::get('/adm/pengusul/download/{file_path}', [StudentApplicationController::class, 'downloadFile'])->name('admin.scholarship.download');
-    Route::post('/adm/pengusul/validate/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'validateFile'])->name('admin.scholarship.validate');
-    Route::post('/adm/pengusul/cancel-validation/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
-    Route::get('/adm/pengusul/{user_id}/{scholarship_id}/pdf', [StudentApplicationController::class, 'generatePDF'])->name('admin.scholarship.pdf');
+    Route::prefix('pengusul')->group(function () {
+        Route::get('', [StudentApplicationController::class, 'showScholarships'])->name('registrations.list');
+        Route::get('{scholarship_id}', [StudentApplicationController::class, 'showRegistrationsByScholarship'])->name('registrations.index');
+        Route::get('{user_id}/{scholarship_id}/detail', [StudentApplicationController::class, 'showDetail'])->name('admin.scholarship.detail');
+        Route::get('{user_id}/{scholarship_id}/pdf', [StudentApplicationController::class, 'generatePDF'])->name('admin.scholarship.pdf');
+        Route::get('download/{file_path}', [StudentApplicationController::class, 'checkFile'])->name('admin.scholarship.checkFile');
+        Route::post('validate/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'validateFile'])->name('admin.scholarship.validate');
+        Route::post('cancel-validation/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation');
+    });
 
-    // Access login admin
-    Route::resource('/adm/akses', AdminAccessController::class);
+    // Akses login admin
+    Route::resource('akses', AdminAccessController::class)->middleware('check.admin.role');
 
     // Kelulusan beasiswa
-    Route::get('/adm/kelulusan', [StudentApprovalController::class, 'index'])->name('passfile.list');
-    Route::get('/adm/kelulusan/{scholarship_id}', [StudentApprovalController::class, 'showPassFileByScholarship'])->name('passfile.index');
-    Route::get('/adm/kelulusan/{user_id}/{scholarship_id}/detail', [StudentApprovalController::class, 'showDetail'])->name('passfile.detail');
-    Route::post('/adm/kelulusan/pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'validateScholar'])->name('passfile.validate');
-    Route::post('/adm/kelulusan/cancel-pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'cancelValidation'])->name('passfile.cancelValidate');
-    Route::get('/adm/kelulusan/{scholarship_id}/downloadExcel', [StudentApprovalController::class, 'export'])->name('passfile.downloadExcel');
+    Route::prefix('kelulusan')->group(function () {
+        Route::get('', [StudentApprovalController::class, 'index'])->name('passfile.list');
+        Route::get('{scholarship_id}', [StudentApprovalController::class, 'showPassFileByScholarship'])->name('passfile.index');
+        Route::get('{user_id}/{scholarship_id}/detail', [StudentApprovalController::class, 'showDetail'])->name('passfile.detail');
+        Route::post('pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'validateScholar'])->name('passfile.validate');
+        Route::post('cancel-pass/{scholarship_id}/{user_id}', [StudentApprovalController::class, 'cancelValidation'])->name('passfile.cancelValidate');
+        Route::get('{scholarship_id}/downloadExcel', [StudentApprovalController::class, 'export'])->name('passfile.downloadExcel');
+    });
 
     // Beasiswa berlangsung
-    Route::get('/adm/berlangsung', [StudentScholarshipController::class, 'index'])->name('aplicant.list');
-    Route::get('/adm/berlangsung/{scholarship_id}', [StudentScholarshipController::class, 'showAplicantByScholarship'])->name('aplicant.index');
-    Route::get('/adm/berlangsung/{user_id}/{scholarship_id}/detail', [StudentScholarshipController::class, 'showDetail'])->name('aplicant.detail');
-    Route::get('/adm/berlangsung/{scholarship_id}/downloadExcel', [StudentScholarshipController::class, 'export'])->name('aplicant.downloadExcel');
+    Route::prefix('berlangsung')->group(function () {
+        Route::get('', [StudentScholarshipController::class, 'index'])->name('aplicant.list');
+        Route::get('{scholarship_id}', [StudentScholarshipController::class, 'showAplicantByScholarship'])->name('aplicant.index');
+        Route::get('{user_id}/{scholarship_id}/detail', [StudentScholarshipController::class, 'showDetail'])->name('aplicant.detail');
+        Route::get('{scholarship_id}/downloadExcel', [StudentScholarshipController::class, 'export'])->name('aplicant.downloadExcel');
+    });
 
     // Alumni beasiswa
-    Route::get('/adm/alumni', [AlumniController::class, 'index'])->name('alumni.list');
-    Route::get('/adm/alumni/{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
-    Route::get('/adm/alumni/{user_id}/{scholarship_id}/detail', [AlumniController::class, 'showDetail'])->name('alumni.detail');
-    Route::get('/adm/alumni/{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
+    Route::prefix('alumni')->group(function () {
+        Route::get('', [AlumniController::class, 'index'])->name('alumni.list');
+        Route::get('{scholarship_id}', [AlumniController::class, 'showAlumniByScholarship'])->name('alumni.index');
+        Route::get('{user_id}/{scholarship_id}/detail', [AlumniController::class, 'showDetail'])->name('alumni.detail');
+        Route::get('{scholarship_id}/downloadExcel', [AlumniController::class, 'export'])->name('alumni.downloadExcel');
+    });
 
     // Pengumuman
-    Route::resource('/adm/pengumuman', AnnouncementController::class);
+    Route::resource('pengumuman', AnnouncementController::class)->middleware('check.admin.role');
 
     // Beranda
-    Route::get('/adm/beranda', [HomepageController::class, 'index']);
+    Route::get('beranda', [HomepageController::class, 'index']);
 
     // Logout admin
-    Route::get('/adm/logout', [AdminAuthController::class, 'logout']);
+    Route::get('logout', [AdminAuthController::class, 'logout']);
 });
 
+
 // Rute Admin Authentication
-Route::middleware('guest:admin')->group(function () {
-    Route::get('/adm', [AdminAuthController::class, 'login'])->name('login');
-    Route::post('/adm', [AdminAuthController::class, 'authenticating']);
+Route::middleware('guest:admin')->prefix('adm')->group(function () {
+    Route::get('/', [AdminAuthController::class, 'login'])->name('login');
+    Route::post('/', [AdminAuthController::class, 'authenticating']);
 });
 
 // Rute User Authentication
-Route::middleware('guest_user')->group(function () {
-    Route::get('/login', [UserAuthController::class, 'login'])->name('loginUser');
-    Route::post('/login', [UserAuthController::class, 'authenticating']);
+Route::middleware('guest_user')->prefix('login')->group(function () {
+    Route::get('/', [UserAuthController::class, 'login'])->name('loginUser');
+    Route::post('/', [UserAuthController::class, 'authenticating']);
 });
 
-Route::middleware('auth_user')->group(function () {
+Route::middleware('auth_user')->prefix('mhs')->group(function () {
     // Daftar beasiswa
-    Route::resource('/mhs/pendaftaran', UserScholarshipController::class);
-    Route::get('/mhs/beranda', [UserHomepageController::class, 'index']);
-    Route::get('/mhs/biodata', [UserProfileController::class, 'index'])->name('biodata.index');
-    Route::put('/mhs/biodata/update', [UserProfileController::class, 'update'])->name('biodata.update');
-    Route::get('/mhs/logout', [UserAuthController::class, 'logout']);
+    Route::resource('pendaftaran', UserScholarshipController::class);
+    Route::get('beranda', [UserHomepageController::class, 'index']);
+    Route::get('biodata', [UserProfileController::class, 'index'])->name('biodata.index');
+    Route::put('biodata/update', [UserProfileController::class, 'update'])->name('biodata.update');
+    Route::get('logout', [UserAuthController::class, 'logout']);
 });
 
 Route::get('/', [LandingPageController::class, 'index']);

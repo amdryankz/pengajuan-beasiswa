@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('graduate_status', 11)->default('Belum Lulus');
             $table->date('birthdate');
             $table->string('birthplace', 25);
-            $table->string('address', 100);
+            $table->string('address', 100)->nullable();
             $table->string('email', 50)->nullable();
             $table->string('parent_name', 50)->nullable();
             $table->string('parent_job', 25)->nullable();

@@ -17,22 +17,17 @@ class UserAuthController extends Controller
     public function authenticating(Request $request)
     {
         $credentials = $request->validate([
-            'npm' => ['required'],
-            'password' => ['required'],
+            'npm' => ['required', 'numeric'],
+            'password' => ['required']
         ]);
 
         if (Auth::attempt($credentials)) {
-            // Authentication successful
             $request->session()->regenerate();
-
             return redirect('/mhs/beranda');
-        } else {
-            // Authentication failed
-            // Handle authentication failure here
         }
 
         Session::flash('status', 'failed');
-        Session::flash('message', 'Login Invalid');
+        Session::flash('message', 'Invalid credentials');
 
         return redirect('/login');
     }

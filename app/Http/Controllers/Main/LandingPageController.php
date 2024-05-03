@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use Illuminate\Http\Request;
-use App\Models\Annonuncement;
+use App\Models\Announcement;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -17,9 +17,9 @@ class LandingPageController extends Controller
     public function show(string $id)
     {
         try {
-            $announcement = Annonuncement::where('slug', $id)->firstOrFail();
+            $announcement = Announcement::where('slug', $id)->firstOrFail();
         } catch (ModelNotFoundException $e) {
-            $announcement = Annonuncement::findOrFail($id);
+            $announcement = Announcement::findOrFail($id);
         }
 
         return view('main.landingpage.show', ['pengumuman' => $announcement]);

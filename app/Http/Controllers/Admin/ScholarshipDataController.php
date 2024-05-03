@@ -17,7 +17,7 @@ class ScholarshipDataController extends Controller
      */
     public function index()
     {
-        $data = ScholarshipData::with('scholarship')->whereNotNull('start_registration_at')->get();
+        $data = ScholarshipData::with('scholarship.donor')->whereNotNull('start_registration_at')->get();
 
         return view('admin.scholar.index')->with('data', $data);
     }
@@ -27,7 +27,7 @@ class ScholarshipDataController extends Controller
      */
     public function create()
     {
-        $data = Scholarship::all();
+        $data = Scholarship::with('donor')->get();
         $filerequirements = FileRequirement::get();
 
         $tahunSekarang = date('Y');
@@ -82,7 +82,7 @@ class ScholarshipDataController extends Controller
             $scholarship = ScholarshipData::findOrFail($id);
         }
 
-        return view('admin.scholar.show', ['beasiswa' => $scholarship]);
+        return view('admin.scholar.show')->with('beasiswa', $scholarship);
     }
 
     /**
@@ -96,7 +96,7 @@ class ScholarshipDataController extends Controller
             $scholarship = ScholarshipData::findOrFail($id);
         }
 
-        $data = Scholarship::all();
+        $data = Scholarship::with('donor')->get();
         $filerequirements = FileRequirement::all();
 
         $tahunSekarang = date('Y');
@@ -160,7 +160,7 @@ class ScholarshipDataController extends Controller
     {
         $request->validate([
             'sk_number' => 'required|string|max:50',
-            'sk_file' => 'required|mimes:pdf|max:2048',
+            'sk_file' => 'required|file|mimes:pdf|max:2048',
             'start_scholarship' => 'required|date',
             'end_scholarship' => 'required|date|after_or_equal:start_scholarship',
         ]);
@@ -174,7 +174,10 @@ class ScholarshipDataController extends Controller
                 Storage::delete($scholarship->sk_file);
             }
 
-            $sk_filePath = $request->file('sk_file')->store('sk_file', 'public');
+            $scholarshipName = $scholarship->scholarship->name;
+            $sk_fileName = 'SK_' . $scholarshipName . '_' . $scholarship->year . '.pdf';
+
+            $sk_filePath = $request->file('sk_file')->storeAs('sk_file', $sk_fileName, 'public');
             $scholarship->sk_file = $sk_filePath;
         }
 

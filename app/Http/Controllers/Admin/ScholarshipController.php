@@ -15,7 +15,7 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        $data = Scholarship::all();
+        $data = Scholarship::with('donor')->get();
 
         return view('admin.scholarship.index')->with('data', $data);
     }

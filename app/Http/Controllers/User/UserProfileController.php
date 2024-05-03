@@ -18,20 +18,19 @@ class UserProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find(Auth::id());
+        $request->validate([
+            'address' => 'required|string|max:100',
+            'email' => 'required|string|email|max:50',
+            'parent_name' => 'required|string|max:50',
+            'parent_job' => 'required|string|max:25',
+            'parent_income' => 'required|string|max:50',
+            'phone_number' => 'required|numeric',
+            'bank_account_number' => 'required|numeric',
+            'account_holder_name' => 'required|string|max:50',
+            'bank_name' => 'required|string|max:25',
+        ]);
 
-        // Update the user attributes
-        $user->phone_number = $request->input('phone_number');
-        $user->bank_account_number = $request->input('bank_account_number');
-        $user->account_holder_name = $request->input('account_holder_name');
-        $user->bank_name = $request->input('bank_name');
-        $user->parent_name = $request->input('parent_name');
-        $user->parent_income = $request->input('parent_income');
-        $user->parent_job = $request->input('parent_job');
-        $user->address = $request->input('address');
-
-        // Save the changes
-        $user->save();
+        User::findOrFail(Auth::id())->update($request->all());
 
         return redirect()->route('biodata.index')->with('success', 'Profil berhasil diperbarui.');
     }

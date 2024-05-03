@@ -10,7 +10,7 @@ class StudentsImport implements ToModel
 {
     private $scholarshipId;
 
-    public $unlinkedNPMCount = 0;
+    public $unlinkedNPMs = [];
 
     public function __construct($scholarshipId)
     {
@@ -19,7 +19,7 @@ class StudentsImport implements ToModel
 
     public function hasUnlinkedNPM()
     {
-        return $this->unlinkedNPMCount > 0;
+        return count($this->unlinkedNPMs) > 0;
     }
 
     public function model(array $row)
@@ -27,7 +27,7 @@ class StudentsImport implements ToModel
         $user = User::where('npm', $row[0])->first();
 
         if (!$user) {
-            $this->unlinkedNPMCount++;
+            $this->unlinkedNPMs[] = $row[0];
 
             return null;
         }

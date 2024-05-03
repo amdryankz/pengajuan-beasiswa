@@ -98,7 +98,7 @@
                     <li class="mb-2">
                         @if ($file->files)
                             <label for="{{ $file->file_requirement_id }}">{{ $file->files->name }}</label><br>
-                            <a href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}"
+                            <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->file_path]) }}"
                                 class="text-blue-500 hover:underline text-base" target="_blank">
                                 {{ $file->file_path }}
                             </a>

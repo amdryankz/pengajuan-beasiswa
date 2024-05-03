@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('sk_file')->nullable();
             $table->date('start_scholarship')->nullable();
             $table->date('end_scholarship')->nullable();
-            $table->string('student_list_file')->nullable();
             $table->string('slug', 50)->nullable();
             $table->timestamps();
         });

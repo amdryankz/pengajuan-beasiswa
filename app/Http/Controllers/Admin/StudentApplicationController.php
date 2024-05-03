@@ -16,26 +16,22 @@ class StudentApplicationController extends Controller
 {
     public function showScholarships()
     {
-        $scholarships = ScholarshipData::all();
+        $scholarships = ScholarshipData::with('scholarship')->get();
 
         return view('admin.userscholarship.list')->with('scholarships', $scholarships);
     }
 
     public function showRegistrationsByScholarship($scholarship_id)
     {
-        $scholarship = ScholarshipData::find($scholarship_id);
+        $scholarship = ScholarshipData::with('users')->findOrFail($scholarship_id);
 
-        if (!$scholarship) {
-            abort(404);
-        }
+        $users = $scholarship->users->unique('id');
 
-        $user = $scholarship->users()->distinct()->get();
-
-        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
+        $facultyList = $users->pluck('faculty')->unique();
 
         $data = [
             'scholarship' => $scholarship,
-            'user' => $user,
+            'user' => $users,
             'facultyList' => $facultyList,
         ];
 
@@ -47,17 +43,16 @@ class StudentApplicationController extends Controller
         $user = User::findOrFail($user_id);
         $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
-        $files = UserScholarship::where('user_id', $user_id)
+        $files = UserScholarship::with('files')->where('user_id', $user_id)
             ->where('scholarship_data_id', $scholarship_id)
             ->get();
 
-        return view('admin.userscholarship.detail')
-            ->with('user', $user)
+        return view('admin.userscholarship.detail')->with('user', $user)
             ->with('scholarship', $scholarship)
             ->with('files', $files);
     }
 
-    public function downloadFile($file_path)
+    public function checkFile($file_path)
     {
         $path = storage_path('app/file_requirements/' . $file_path);
 
@@ -118,10 +113,8 @@ class StudentApplicationController extends Controller
 
         $pdf = PDF::loadView('admin.pdf.biodata', compact('user', 'scholarship'));
 
-        // Nama file PDF yang akan diunduh
         $pdfFileName = $user->npm . '_' . $scholarship->name . '.pdf';
 
-        // Unduh file PDF
         return $pdf->stream($pdfFileName);
     }
 }

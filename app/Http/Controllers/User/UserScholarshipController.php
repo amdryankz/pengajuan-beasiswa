@@ -21,11 +21,11 @@ class UserScholarshipController extends Controller
         $userId = Auth::id();
         $now = Carbon::now();
 
-        $scholarships = ScholarshipData::where('start_registration_at', '<=', $now)
+        $scholarships = ScholarshipData::with('scholarship')->where('start_registration_at', '<=', $now)
             ->where('end_registration_at', '>=', $now)
             ->get();
 
-        $userScholarships = UserScholarship::where('user_id', $userId)->get();
+        $userScholarships = UserScholarship::with('scholarshipData')->where('user_id', $userId)->get();
 
         $filteredUserScholarships = $userScholarships->unique('scholarship_data_id');
 
@@ -41,14 +41,6 @@ class UserScholarshipController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(string $id)
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -56,43 +48,46 @@ class UserScholarshipController extends Controller
         $request->validate([
             'file_requirements.*' => 'required|mimes:pdf|max:2048',
             'supervisor_approval_file' => 'required|mimes:pdf|max:2048',
-        ], [
-            'file_requirements.*.max' => 'File tidak boleh lebih dari 2MB',
-            'supervisor_approval_file.max' => 'File tidak boleh lebih dari 2MB',
         ]);
 
-        $scholarshipDataId = $request->input('scholarship_data_id');
         $user = $request->user();
-        $userIpk = $user->ipk;
-
+        $scholarshipDataId = $request->input('scholarship_data_id');
         $scholarship = ScholarshipData::findOrFail($scholarshipDataId);
-        $minIpkRequired = $scholarship->min_ipk;
 
-        if ($userIpk < $minIpkRequired) {
-            return redirect()->route('beasiswa.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
+        if ($user->ipk < $scholarship->min_ipk) {
+            return redirect()->route('pendaftaran.index')->with('error', 'IPK Anda tidak memenuhi syarat untuk mendaftar beasiswa ini.');
         }
 
-        $existingRegistration = UserScholarship::where('user_id', $user->id)
+        $requiredFields = [
+            'phone_number', 'bank_account_number', 'account_holder_name',
+            'bank_name', 'parent_name', 'parent_income', 'parent_job', 'address', 'email'
+        ];
+
+        foreach ($requiredFields as $field) {
+            if (empty($user->$field)) {
+                return redirect()->route('pendaftaran.index')->with('error', 'Lengkapi biodata Anda terlebih dahulu.');
+            }
+        }
+
+        if (UserScholarship::where('user_id', $user->id)
             ->where('scholarship_data_id', $scholarshipDataId)
-            ->exists();
-
-        if ($existingRegistration) {
-            return redirect()->route('beasiswa.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
+            ->exists()
+        ) {
+            return redirect()->route('pendaftaran.index')->with('error', 'Anda sudah mendaftar untuk beasiswa ini.');
         }
 
-        $activeScholarship = UserScholarship::where('user_id', $user->id)
+        if (UserScholarship::where('user_id', $user->id)
             ->where('scholarship_status', true)
             ->join('scholarship_data', 'user_scholarships.scholarship_data_id', '=', 'scholarship_data.id')
             ->where('scholarship_data.end_scholarship', '>=', now())
-            ->exists();
-
-        if ($activeScholarship) {
-            return redirect()->route('beasiswa.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
+            ->exists()
+        ) {
+            return redirect()->route('pendaftaran.index')->with('error', 'Anda sudah memiliki beasiswa aktif.');
         }
 
         $dosenWaliLetter = $request->file('supervisor_approval_file');
-        $dosenWaliFileName = $user->npm . '_izin_dosen_wali.' . $dosenWaliLetter->getClientOriginalExtension();
-        $dosenWaliLetter->storeAs('dosen_wali_letters', $dosenWaliFileName, 'public');
+        $dosenWaliFileName = $user->npm . '_Izin Dosen Wali.' . $dosenWaliLetter->getClientOriginalExtension();
+        $dosenWaliLetter->storeAs('file_requirements', $dosenWaliFileName, 'public');
 
         foreach ($request->file_requirements as $file_requirement_id => $file) {
             $fileRequirement = FileRequirement::findOrFail($file_requirement_id);
@@ -108,7 +103,7 @@ class UserScholarshipController extends Controller
             ]);
         }
 
-        return redirect()->route('beasiswa.index')->with('success', 'Pendaftaran berhasil.');
+        return redirect()->route('pendaftaran.index')->with('success', 'Pendaftaran berhasil.');
     }
 
     /**
@@ -119,26 +114,9 @@ class UserScholarshipController extends Controller
         $scholarship = ScholarshipData::findOrFail($id);
         $filerequirements = $scholarship->requirements;
 
-        return view('user.scholar.show')
-            ->with('fileRequirements', $filerequirements)
-            ->with('scholarship', $scholarship);
+        return view('user.scholar.show')->with('fileRequirements', $filerequirements)->with('scholarship', $scholarship);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -160,16 +138,16 @@ class UserScholarshipController extends Controller
             }
 
             if ($userScholarship->supervisor_approval_file) {
-                Storage::disk('public')->delete('dosen_wali_letters/' . $userScholarship->supervisor_approval_file);
+                Storage::disk('public')->delete('file_requirements/' . $userScholarship->supervisor_approval_file);
             }
 
             UserScholarship::where('user_id', $userScholarship->user_id)
                 ->where('scholarship_data_id', $userScholarship->scholarship_data_id)
                 ->delete();
 
-            return redirect()->route('beasiswa.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
+            return redirect()->route('pendaftaran.index')->with('success', 'Pendaftaran berhasil dibatalkan.');
         } else {
-            return redirect()->route('beasiswa.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
+            return redirect()->route('pendaftaran.index')->with('error', 'Anda tidak dapat membatalkan pendaftaran karena status berkas sudah diatur.');
         }
     }
 }

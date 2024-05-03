@@ -39,7 +39,7 @@ class FileValidationCancelled extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.file_validated',
+            view: 'emails.file_validation_cancelled',
         );
     }
 

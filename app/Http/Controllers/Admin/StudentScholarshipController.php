@@ -13,7 +13,7 @@ class StudentScholarshipController extends Controller
 {
     public function index()
     {
-        $scholarships = ScholarshipData::where('start_scholarship', '<=', now())
+        $scholarships = ScholarshipData::with('scholarship')->where('start_scholarship', '<=', now())
             ->where('end_scholarship', '>=', now())->get();
 
         return view('admin.aplicant.list')->with('scholarships', $scholarships);
@@ -23,14 +23,10 @@ class StudentScholarshipController extends Controller
     {
         $scholarship = ScholarshipData::find($scholarship_id);
 
-        if (!$scholarship) {
-            abort(404);
-        }
-
         $data = [];
-        $users = $scholarship->users()->distinct()->get();
+        $users = $scholarship->users->unique('id');
 
-        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
+        $facultyList = $users->pluck('faculty')->unique();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -58,26 +54,21 @@ class StudentScholarshipController extends Controller
         $user = User::findOrFail($user_id);
         $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
-        $files = UserScholarship::where('user_id', $user_id)
+        $files = UserScholarship::with('files')->where('user_id', $user_id)
             ->where('scholarship_data_id', $scholarship_id)
             ->get();
 
-        return view('admin.aplicant.detail')
-            ->with('user', $user)
+        return view('admin.aplicant.detail')->with('user', $user)
             ->with('scholarship', $scholarship)
             ->with('files', $files);
     }
 
     public function export($scholarship_id)
     {
-        $scholarship = ScholarshipData::find($scholarship_id);
-
-        if (!$scholarship) {
-            abort(404);
-        }
+        $scholarship = ScholarshipData::with('users')->findOrFail($scholarship_id);
 
         $data = [];
-        $users = $scholarship->users()->distinct()->get();
+        $users = $scholarship->users->unique('id');
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -98,6 +89,8 @@ class StudentScholarshipController extends Controller
 
         $export = new UserScholarshipExport($data, $scholarship->scholarship->name);
 
-        return Excel::download($export, 'userScholarhips.xlsx');
+        $fileName = 'Mahasiswa ' . $scholarship->scholarship->name . ' ' . $scholarship->year . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
 }

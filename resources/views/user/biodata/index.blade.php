@@ -166,7 +166,8 @@
                                     value="{{ old('parent_job', $user->parent_job) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="address" class="form-label font-semibold text-base">Alamat Orang Tua:</label>
+                                <label for="address" class="form-label font-semibold text-base">Alamat Orang
+                                    Tua:</label>
                                 <input type="text" name="address"
                                     class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                     value="{{ old('address', $user->address) }}" required>

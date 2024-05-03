@@ -30,8 +30,7 @@ class ScholarshipData extends Model
         'sk_number',
         'sk_file',
         'start_scholarship',
-        'end_scholarship',
-        'student_list_file'
+        'end_scholarship'
     ];
 
     /**

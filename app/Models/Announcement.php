@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Annonuncement extends Model
+class Announcement extends Model
 {
     use HasFactory, Sluggable;
 

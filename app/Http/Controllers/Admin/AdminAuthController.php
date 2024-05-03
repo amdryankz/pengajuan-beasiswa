@@ -18,7 +18,7 @@ class AdminAuthController extends Controller
     {
         $credentials = $request->validate([
             'nip' => ['required', 'numeric'],
-            'password' => ['required'],
+            'password' => ['required']
         ]);
 
         if (Auth::guard('admin')->attempt($credentials)) {

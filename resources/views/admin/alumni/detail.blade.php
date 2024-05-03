@@ -98,7 +98,7 @@
                     <li class="mb-2">
                         @if ($file->files)
                             <span class="text-lg font-bold">{{ $file->files->name }}</span><br>
-                            <a href="{{ route('admin.scholarship.download', ['file_path' => $file->file_path]) }}"
+                            <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->file_path]) }}"
                                 class="text-blue-500 hover:underline text-base" target="_blank">
                                 {{ $file->file_path }}
                             </a>

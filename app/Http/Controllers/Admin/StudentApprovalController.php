@@ -3,37 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Mail\ScholarValidated;
+use App\Mail\ScholarshipValidated;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UserScholarshipExport;
-use App\Mail\ScholarValidationCancelled;
+use App\Mail\ScholarshipValidationCancelled;
 
 class StudentApprovalController extends Controller
 {
     public function index()
     {
-        $scholarships = ScholarshipData::all();
+        $scholarships = ScholarshipData::with('scholarship')->get();
 
         return view('admin.passfile.list')->with('scholarships', $scholarships);
     }
 
     public function showPassFileByScholarship($scholarship_id)
     {
-        $scholarship = ScholarshipData::find($scholarship_id);
-
-        if (!$scholarship) {
-            // Handle jika beasiswa tidak ditemukan
-            abort(404);
-        }
+        $scholarship = ScholarshipData::with('users')->findOrFail($scholarship_id);
 
         $data = [];
-        $users = $scholarship->users()->distinct()->get();
+        $users = $scholarship->users->unique('id');
 
-        $facultyList = User::select('faculty')->distinct()->pluck('faculty')->toArray();
+        $facultyList = $users->pluck('faculty')->unique();
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -55,12 +50,11 @@ class StudentApprovalController extends Controller
         $user = User::findOrFail($user_id);
         $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
-        $files = UserScholarship::where('user_id', $user_id)
+        $files = UserScholarship::with('files')->where('user_id', $user_id)
             ->where('scholarship_data_id', $scholarship_id)
             ->get();
 
-        return view('admin.passfile.detail')
-            ->with('user', $user)
+        return view('admin.passfile.detail')->with('user', $user)
             ->with('scholarship', $scholarship)
             ->with('files', $files);
     }
@@ -74,7 +68,7 @@ class StudentApprovalController extends Controller
             $userScholarship->save();
         }
 
-        Mail::to($userScholarship->user->email)->send(new ScholarValidated());
+        Mail::to($userScholarship->user->email)->send(new ScholarshipValidated());
 
         return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
     }
@@ -88,21 +82,17 @@ class StudentApprovalController extends Controller
             $userScholarship->save();
         }
 
-        Mail::to($userScholarship->user->email)->send(new ScholarValidationCancelled());
+        Mail::to($userScholarship->user->email)->send(new ScholarshipValidationCancelled());
 
         return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
     }
 
     public function export($scholarship_id)
     {
-        $scholarship = ScholarshipData::find($scholarship_id);
-
-        if (!$scholarship) {
-            abort(404);
-        }
+        $scholarship = ScholarshipData::with('users')->findOrFail($scholarship_id);
 
         $data = [];
-        $users = $scholarship->users()->distinct()->get();
+        $users = $scholarship->users->unique('id');
 
         foreach ($users as $user) {
             $userScholarship = $user->scholarships->where('id', $scholarship->id)->first();
@@ -117,6 +107,8 @@ class StudentApprovalController extends Controller
 
         $export = new UserScholarshipExport($data, $scholarship->scholarship->name);
 
-        return Excel::download($export, 'userScholarhips.xlsx');
+        $fileName = 'Mahasiswa lulus berkas ' . $scholarship->scholarship->name . ' ' . $scholarship->year . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
 }

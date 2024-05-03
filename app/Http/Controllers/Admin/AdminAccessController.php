@@ -15,7 +15,7 @@ class AdminAccessController extends Controller
      */
     public function index()
     {
-        $data = Admin::all();
+        $data = Admin::with('role')->get();
 
         return view('admin.access.index')->with('data', $data);
     }
@@ -25,11 +25,12 @@ class AdminAccessController extends Controller
      */
     public function create()
     {
+        $data = Admin::with('role')->get();
         $roles = Role::all();
         $disabledOptions = [];
 
         foreach ($roles as $role) {
-            $adminCount = Admin::where('role_id', $role->id)->count();
+            $adminCount = $data->where('role_id', $role->id)->count();
             $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin';
         }
 
@@ -42,16 +43,16 @@ class AdminAccessController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nip' => ['required'],
-            'name' => ['required'],
-            'password' => ['required'],
-            'role_id' => ['required', 'exists:roles,id'],
+            'nip' => 'required|numeric',
+            'name' => 'required|string|max:50',
+            'password' => 'required',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
         $data['password'] = bcrypt($data['password']);
         Admin::create($data);
 
-        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User created successfully');
+        return redirect('/adm/akses')->with('success', 'Berhasil menambahkan user');
     }
 
     /**
@@ -72,16 +73,19 @@ class AdminAccessController extends Controller
         } catch (ModelNotFoundException $e) {
             $user = Admin::findOrFail($id);
         }
-        $roles = Role::all();
 
+        $data = Admin::with('role')->get();
+        $roles = Role::all();
         $disabledOptions = [];
 
         foreach ($roles as $role) {
-            $adminCount = Admin::where('role_id', $role->id)->count();
+            $adminCount = $data->where('role_id', $role->id)->count();
             $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->id !== $user->role_id;
         }
 
-        return view('admin.access.edit')->with('user', $user)->with('roles', $roles)->with('disabledOptions', $disabledOptions);
+        return view('admin.access.edit')->with('user', $user)
+            ->with('roles', $roles)
+            ->with('disabledOptions', $disabledOptions);
     }
 
     /**
@@ -90,19 +94,19 @@ class AdminAccessController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'nip' => ['required'],
-            'name' => ['required'],
-            'status' => ['required'],
-            'role_id' => ['required', 'exists:roles,id'],
+            'nip' => 'required|numeric',
+            'name' => 'required|string|max:50',
+            'role_id' => 'required|exists:roles,id',
+            'status' => 'required|string|max:11'
         ]);
 
         if ($data['status'] !== 'Aktif') {
             $data['role_id'] = null;
         }
 
-        Admin::where('id', $id)->update($data);
+        Admin::findOrFail($id)->update($data);
 
-        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User updated successfully');
+        return redirect('/adm/akses')->with('success', 'Berhasil update user');
     }
 
     /**
@@ -113,6 +117,6 @@ class AdminAccessController extends Controller
         $user = Admin::findOrFail($id);
         $user->delete();
 
-        return redirect('/adm/akses')->with('status', 'success')->with('message', 'User deleted successfully');
+        return redirect('/adm/akses')->with('success', 'Berhasil menghapus user');
     }
 }
