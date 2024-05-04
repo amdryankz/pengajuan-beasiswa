@@ -1,51 +1,70 @@
 <?php
 
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use function Pest\Laravel\post;
-use function Pest\Laravel\assertAuthenticated;
-use function Pest\Laravel\assertGuest;
 
 uses(DatabaseTransactions::class);
 
-it('can authenticate with valid credentials and user active', function () {
+it('can authenticate admin with valid credentials', function () {
     $admin = Admin::factory()->create([
-        'status' => 'active',
-        'role' => 'admin',
+        'nip' => '12345',
+        'password' => bcrypt('password'),
+        'status' => 'Aktif',
     ]);
 
-    post('/adm/login', [
-        'nip' => $admin->nip,
+    $response = $this->post('/adm', [
+        'nip' => '12345',
         'password' => 'password',
     ]);
 
-    assertAuthenticated('admin');
+    $response->assertRedirect('/adm/beranda');
+    $this->assertAuthenticatedAs($admin, 'admin');
 });
 
-it('cannot authenticate if user is not active', function () {
-    $admin = Admin::factory()->create([
-        'status' => 'inactive',
-        'role' => 'admin',
+it('cannot authenticate admin with invalid credentials', function () {
+    Admin::factory()->create([
+        'nip' => '12345',
+        'password' => bcrypt('password'),
+        'status' => 'Aktif',
     ]);
 
-    post('/adm/login', [
-        'nip' => $admin->nip,
+    $response = $this->post('/adm', [
+        'nip' => '12345',
+        'password' => 'wrong_password',
+    ]);
+
+    $response->assertRedirect('/adm');
+    $this->assertGuest('admin');
+});
+
+it('cannot authenticate inactive admin', function () {
+    Admin::factory()->create([
+        'nip' => '12345',
+        'password' => bcrypt('password'),
+        'status' => 'Non-Aktif',
+    ]);
+
+    $response = $this->post('/adm', [
+        'nip' => '12345',
         'password' => 'password',
     ]);
 
-    assertGuest('admin');
+    $response->assertRedirect('/adm');
+    $this->assertGuest('admin');
 });
 
-it('cannot authenticate with invalid credentials', function () {
+it('can logout admin', function () {
     $admin = Admin::factory()->create([
-        'status' => 'active',
-        'role' => 'admin',
+        'nip' => '12345',
+        'password' => bcrypt('password'),
+        'status' => 'Aktif',
     ]);
 
-    post('/adm/login', [
-        'nip' => $admin->nip,
-        'password' => 'password123',
-    ]);
+    Auth::guard('admin')->login($admin);
 
-    assertGuest('admin');
+    $response = $this->get('/adm/logout');
+
+    $response->assertRedirect('/adm');
+    $this->assertGuest('admin');
 });

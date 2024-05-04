@@ -13,63 +13,74 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 uses(DatabaseTransactions::class);
 
-it('can create a scholarship', function () {
-    $admin = Admin::factory()->create();
-    actingAs($admin, 'admin');
-
-    $donor = Donor::factory()->create();
-
-    $response = post('/adm/beasiswa', [
-        'name' => 'Djarum',
-        'donors_id' => $donor->id
+beforeEach(function () {
+    $this->admin = Admin::factory()->create([
+        'nip' => '12345',
+        'password' => bcrypt('password'),
+        'status' => 'Aktif'
     ]);
-
-    $response->assertStatus(200)
-        ->assertJson(['message' => 'created data successful']);
-
-    $this->assertDatabaseHas('scholarships', ['name' => 'Djarum']);
 });
 
-it('can list all scholarships', function () {
-    $admin = Admin::factory()->create();
-    actingAs($admin, 'admin');
+it('can access scholarships index with data', function () {
+    $this->actingAs($this->admin, 'admin');
+    Scholarship::factory(5)->create();
 
-    Scholarship::factory()->count(3)->create();
+    $response = $this->get('/adm/beasiswa');
+    $response->assertOk();
+    $response->assertViewHas('data');
+    $scholarships = $response->viewData('data');
+    $this->assertCount(10, $scholarships);
+});
 
-    $response = get('/adm/beasiswa');
+it('can create a scholarship', function () {
+    $this->actingAs($this->admin, 'admin');
+    $donor = Donor::factory()->create();
 
-    $response->assertStatus(200)
-        ->assertJsonCount(5, 'scholarships');
+    $response = $this->post('/adm/beasiswa', [
+        'name' => 'Bank Indonesia',
+        'donors_id' => $donor->id
+    ]);
+    $response->assertRedirect('/adm/beasiswa');
+    $this->assertDatabaseHas('scholarships', [
+        'name' => 'Bank Indonesia',
+    ]);
 });
 
 it('can update a scholarship', function () {
-    $admin = Admin::factory()->create();
-    actingAs($admin, 'admin');
-
+    $this->actingAs($this->admin, 'admin');
     $scholarship = Scholarship::factory()->create();
     $donor = Donor::factory()->create();
 
-    $response = put("/adm/beasiswa/{$scholarship->id}", [
+    $response = $this->put("/adm/beasiswa/{$scholarship->id}", [
         'name' => 'Djarum',
         'donors_id' => $donor->id
     ]);
-
-    $response->assertStatus(200)
-        ->assertJson(['message' => 'updated data successful']);
-
-    $this->assertDatabaseHas('scholarships', ['id' => $scholarship->id, 'name' => 'Djarum']);
+    $response->assertRedirect('/adm/beasiswa');
+    $this->assertDatabaseHas('scholarships', [
+        'id' => $scholarship->id,
+        'name' => 'Djarum'
+    ]);
 });
 
 it('can delete a scholarship', function () {
-    $admin = Admin::factory()->create();
-    actingAs($admin, 'admin');
-
+    $this->actingAs($this->admin, 'admin');
     $scholarship = Scholarship::factory()->create();
 
-    $response = delete("/adm/beasiswa/{$scholarship->id}");
-
-    $response->assertStatus(200)
-        ->assertJson(['message' => 'deleted data successful']);
-
-    $this->assertDatabaseMissing('scholarships', ['id' => $scholarship->id]);
+    $response = $this->delete("/adm/beasiswa/{$scholarship->id}");
+    $response->assertRedirect('/adm/beasiswa');
+    $this->assertDatabaseMissing('scholarships', [
+        'id' => $scholarship->id
+    ]);
 });
+
+// it('cannot delete a scholarship with associated data', function () {
+//     $this->actingAs($this->admin, 'admin');
+//     $scholarship = Donor::factory()->create();
+//     $scholarship->scholarshipData()->create(['name' => 'Scholarship 1']);
+
+//     $response = $this->delete("/adm/donatur/{$scholarship->id}");
+//     $response->assertRedirect('/adm/donatur');
+//     $this->assertDatabaseHas('donors', [
+//         'id' => $scholarship->id
+//     ]);
+// });
