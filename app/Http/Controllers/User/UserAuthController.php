@@ -29,8 +29,10 @@ class UserAuthController extends Controller
             return redirect('/mhs/beranda');
         } else {
             // Cek apakah user ada di web service
+            $url = env('WEBSERVICE_URL');
+            $key = env('WEBSERVICE_KEY');
             $client = new Client();
-            $response = $client->request('GET', 'http://ws.usk.ac.id/webservice/ws_siba/cSiba/mhs/npm/' . $credentials['npm'] . '/key/021infsiba/');
+            $response = $client->request('GET', $url . $credentials['npm'] . $key);
             $body = $response->getBody()->getContents();
             $xml = simplexml_load_string($body);
 
@@ -53,11 +55,6 @@ class UserAuthController extends Controller
                 $user->email = (string)$xml->email;
                 $user->parent_name = (string)$xml->nama_ortu;
                 $user->phone_number = (string)$xml->no_tlp_mhs;
-                // $user->parent_job = null;
-                // $user->parent_income = null;
-                // $user->bank_account_number = null;
-                // $user->account_holder_name = null;
-                // $user->bank_name = null;
                 $user->save();
 
                 // Autentikasi user yang baru ditambahkan
