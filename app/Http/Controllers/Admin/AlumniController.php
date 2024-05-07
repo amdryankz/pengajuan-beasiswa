@@ -44,12 +44,19 @@ class AlumniController extends Controller
                     'facultyList' => $facultyList,
                 ];
 
-                foreach ($user->userScholarships as $userScholarship) {
-                    Storage::delete('public/' . $userScholarship->file_path);
-                    $userScholarship->file_path = null;
-                    Storage::delete('public/' . $userScholarship->supervisor_approval_file);
-                    $userScholarship->supervisor_approval_file = null;
-                    $userScholarship->save();
+                $userScholarships = $user->userScholarships;
+                if ($userScholarships) {
+                    foreach ($userScholarships as $userScholarship) {
+                        if ($userScholarship->file_path) {
+                            Storage::delete('public/' . $userScholarship->file_path);
+                            $userScholarship->file_path = null;
+                        }
+                        if ($userScholarship->supervisor_approval_file) {
+                            Storage::delete('public/' . $userScholarship->supervisor_approval_file);
+                            $userScholarship->supervisor_approval_file = null;
+                        }
+                        $userScholarship->save();
+                    }
                 }
             }
         }

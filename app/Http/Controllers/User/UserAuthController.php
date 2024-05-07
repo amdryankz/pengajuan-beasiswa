@@ -28,7 +28,6 @@ class UserAuthController extends Controller
             $request->session()->regenerate();
             return redirect('/mhs/beranda');
         } else {
-            // Cek apakah user ada di web service
             $url = env('WEBSERVICE_URL');
             $key = env('WEBSERVICE_KEY');
             $client = new Client();
@@ -36,11 +35,10 @@ class UserAuthController extends Controller
             $body = $response->getBody()->getContents();
             $xml = simplexml_load_string($body);
 
-            // Jika user ditemukan di web service, tambahkan ke dalam tabel users
             if ($xml->npm == $credentials['npm']) {
                 $user = new User();
                 $user->npm = (string)$xml->npm;
-                $user->password = Hash::make($credentials['password']); // Jangan lupa hash password
+                $user->password = Hash::make($credentials['password']);
                 $user->name = (string)$xml->nama;
                 $user->major = (string)$xml->prodi;
                 $user->faculty = (string)$xml->fakultas;
@@ -57,13 +55,11 @@ class UserAuthController extends Controller
                 $user->phone_number = (string)$xml->no_tlp_mhs;
                 $user->save();
 
-                // Autentikasi user yang baru ditambahkan
                 Auth::login($user);
 
                 $request->session()->regenerate();
                 return redirect('/mhs/beranda');
             } else {
-                // Jika user tidak ditemukan di web service, tampilkan pesan user not found
                 Session::flash('status', 'failed');
                 Session::flash('message', 'User not found');
                 return redirect('/login');
