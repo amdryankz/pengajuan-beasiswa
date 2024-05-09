@@ -5,104 +5,61 @@
 @section('content')
     <div class="flex justify-center items-start h-screen">
         <div class="flex flex-wrap justify-center gap-6">
-
-            <!-- Card 1 -->
-            <div
-                class="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 p-8 m-6 rounded-3xl w-64 flex flex-col items-center">
-                <i class="bi bi-mortarboard-fill text-white text-4xl mb-4"></i>
-                <h2 class="text-white text-xl mb-2 text-center">Mahasiswa Aktif Beasiswa USK Keseluruhan</h2>
-                <p class="text-white text-lg text-center">
-                    <span class="font-bold text-xl">{{ $totalActive }}</span>
-                </p>
-            </div>
-
-            <!-- Card 2 -->
-            <div
-                class="bg-gradient-to-r from-teal-500 via-green-500 to-lime-500 p-8 m-6 rounded-3xl w-64 flex flex-col items-center">
-                <i class="bi bi-wallet-fill text-white text-4xl mb-4"></i>
-                <h2 class="text-white text-xl mb-2 text-center">Jumlah Beasiswa Keseluruhan</h2>
-                <p class="text-white text-lg text-center">
-                    <span class="font-bold text-xl">{{ $totalScholarship }}</span>
-                </p>
-            </div>
-
-            <!-- Card 3 -->
-            <div
-                class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-8 m-6 rounded-3xl w-64 flex flex-col items-center">
-                <i class="bi bi-bar-chart-fill text-white text-4xl mb-4"></i>
-                <h2 class="text-white text-xl mb-2 text-center"> Total Alumni Beasiswa USK</h2>
-                <p class="text-white text-lg text-center">
-                    <span class="font-bold text-xl">{{ $totalAlumni }}</span>
-                </p>
-            </div>
-
-            <!-- Table -->
-            <div class="w-full m-6 overflow-x-auto">
-                <h2 class="text-xl mb-4">Jumlah Mahasiswa per Beasiswa</h2>
-
-                <!-- Pencarian -->
-                <div class="mb-4">
-                    <label for="search" class="block text-sm font-medium text-gray-700">Cari Beasiswa:</label>
-                    <input type="text" id="search" name="search" class="mt-1 p-2 border rounded-md w-full"
-                        placeholder="Nama Beasiswa">
-                </div>
-
-                <table id="{{-- myTable --}}" class="w-full bg-white border border-gray-300 text-sm">
-                    <thead>
-                        <tr class="bg-blue-500 text-white">
-                            <th class="px-4 py-2 border-b">Nama Beasiswa</th>
-                            <th class="px-4 py-2 border-b">Tahun Beasiswa</th>
-                            <th class="px-4 py-2 border-b">Fakultas</th>
-                            <th class="px-4 py-2 border-b">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($scholarshipData)
-                            @foreach ($scholarshipData as $scholarshipId => $data)
-                                @foreach ($facultyList as $faculty)
-                                    <tr>
-                                        <td class="px-4 py-2 border-b">{{ $data['name'] }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $data['year'] }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $faculty }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $data['facultyTotals']->get($faculty, 0) }}</td>
-                                    </tr>
-                                @endforeach
-
-                                <tr>
-                                    <td colspan="2" class="px-4 py-2 border-b font-bold">Total</td>
-                                    <td class="px-4 py-2 border-b"></td>
-                                    <td class="px-4 py-2 border-b font-bold">{{ $data['total'] }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" class="bg-blue-400 h-4"></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="4" class="px-4 py-2 border-b text-center">Data Beasiswa tidak tersedia.</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
+            <!-- Chart: Mahasiswa Aktif, Alumni, dan Beasiswa -->
+            <div class="bg-white p-10 shadow-md m-6 rounded-3xl w-auto">
+                <h2 class="text-xl mb-4 text-center border-b pb-2">Data Mahasiswa Aktif, Alumni, dan Beasiswa</h2>
+                <canvas id="combinedChart" width="800" height="300"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Script Pencarian -->
+    <!-- Script Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const searchInput = document.getElementById('search');
-        const rows = document.querySelectorAll('tbody tr');
+        // Data Mahasiswa Aktif, Alumni, dan Beasiswa
+        let combinedData = {
+            'Mahasiswa Aktif': {{ intval($totalActive) }},
+            'Alumni': {{ intval($totalAlumni) }},
+            'Jumlah Beasiswa': {{ intval($totalScholarship) }}
+        };
 
-        searchInput.addEventListener('input', function() {
-            const term = searchInput.value.toLowerCase();
-            rows.forEach(row => {
-                const name = row.querySelector('td:first-child').textContent.toLowerCase();
-                if (name.includes(term)) {
-                    row.style.display = 'table-row';
-                } else {
-                    row.style.display = 'none';
+        // elemen canvas untuk Chart
+        let combinedCtx = document.getElementById('combinedChart').getContext('2d');
+
+        // Gambar Chart
+        let combinedChart = new Chart(combinedCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(combinedData),
+                datasets: [{
+                    label: 'Jumlah',
+                    data: Object.values(combinedData),
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 1)', // Blue for Active Students
+                        'rgba(255, 99, 132, 1)', // Red for Alumni
+                        'rgba(255, 206, 86, 1)' // Yellow for Scholarships
+                    ],
+
+                    borderWidth: 1,
+                    barThickness: 50
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0,
+                        grid: {
+                            display: true
+                        },
+                        callback: function(value) {
+                            if (value % 1 === 0) {
+                                return value;
+                            }
+                        }
+                    }
                 }
-            });
+            }
         });
     </script>
 @endsection

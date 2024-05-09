@@ -88,7 +88,10 @@
                         <span class="font-semibold">Penghasilan Orang tua:</span><br>
                         {{ $user->parent_income }}
                     </div>
-
+                    <div class="mb-3">
+                        <span class="font-semibold">Email Mahasiswa:</span><br>
+                        {{ $user->email }}
+                    </div>
                 </div>
             </div>
 

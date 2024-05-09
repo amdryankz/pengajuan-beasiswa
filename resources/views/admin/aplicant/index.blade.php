@@ -14,7 +14,7 @@
         </a>
 
         <div class="table-responsive">
-            <h2 class="text-lg font-semibold mb-4">List Beasiswa yang Sedang Berlangsung - {{ $scholarship->name }}</h2>
+            <h2 class="text-lg font-semibold mb-4">List Beasiswa yang Sedang Berlangsung - {{ $scholarship->scholarship->name }}</h2>
 
             <div class="mb-10">
                 <a href="{{ route('passfile.downloadExcel', ['scholarship_id' => $scholarship->id]) }}"
