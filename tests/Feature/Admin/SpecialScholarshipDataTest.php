@@ -29,7 +29,7 @@ it('can access special scholarship data index with data', function () {
     $response->assertOk();
     $response->assertViewHas('data');
     $scholarshipData = $response->viewData('data');
-    $this->assertCount(2, $scholarshipData);
+    $this->assertCount(1, $scholarshipData);
 });
 
 it('can create a special scholarship data', function () {

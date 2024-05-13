@@ -37,7 +37,7 @@ class ScholarshipValidationCancelled extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.scholarship_validated',
+            view: 'emails.scholarship_validation_cancelled',
         );
     }
 

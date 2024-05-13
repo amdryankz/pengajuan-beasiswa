@@ -19,7 +19,6 @@ class UserProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'address' => 'required|string|max:100',
             'email' => 'required|string|email|max:50',
             'parent_name' => 'required|string|max:50',
             'parent_job' => 'required|string|max:25',

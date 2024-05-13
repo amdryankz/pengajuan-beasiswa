@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'gender' => 'Laki-Laki',
             'birthplace' => 'Sigli',
             'total_sks' => 120,
+            'address' => 'Jl. Medan - Banda Aceh',
             'birthdate' => Carbon::createFromDate(2000, 1, 1),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -41,6 +42,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -55,6 +57,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -70,6 +73,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -84,6 +88,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -99,6 +104,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -113,6 +119,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -128,6 +135,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -142,6 +150,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -157,6 +166,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -171,6 +181,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -186,6 +197,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -200,6 +212,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -215,6 +228,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -229,6 +243,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -244,6 +259,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -258,6 +274,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -273,6 +290,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -287,6 +305,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -302,6 +321,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -316,6 +336,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -331,6 +352,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -345,6 +367,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
@@ -360,6 +383,7 @@ class UserSeeder extends Seeder
             $ipk = number_format($faker->randomFloat(2, 2, 4), 2);
             $gender = $faker->randomElement(['Laki-Laki', 'Perempuan']);
             $birthplace = $faker->city;
+            $address = $faker->address;
             $total_sks = $faker->numberBetween(40, 130); // Adjust the range based on your requirements
             $birthdate = $faker->dateTimeBetween('-20 years', '-18 years')->format('Y-m-d');
             $created_at = Carbon::now();
@@ -374,6 +398,7 @@ class UserSeeder extends Seeder
                 'ipk' => $ipk,
                 'gender' => $gender,
                 'birthplace' => $birthplace,
+                'address' => $address,
                 'total_sks' => $total_sks,
                 'birthdate' => $birthdate,
                 'created_at' => $created_at,
