@@ -1,3 +1,4 @@
+
   <!DOCTYPE html>
   <html lang="id">
 
@@ -48,78 +49,7 @@
   </head>
 
   <body class="bg-gray-200 flex">
-
-      <!-- Sidebar -->
-      <aside x-data="{ open: false }"
-          class="bg-white text-gray-800 shadow w-1/6 fixed h-full transform translate-x-0 overflow-y-auto
-              transition-transform duration-300 flex-none">
-
-          <!-- Logo -->
-          <div class="p-2 relative bg-blue-600 ">
-              <img src="https://beasiswa.usk.ac.id/adm/public/images/logo_beasiswa_admin.png" alt="Logo"
-                  class="w-48 h-auto pl-2">
-          </div>
-
-          <!-- Daftar Menu -->
-          <div class="p-4">
-              <ul class="mt-2 space-y-4">
-
-                  <li class="group relative" :class="{ 'active': isActive('mhs/beranda') }">
-                      <a href="{{ url('/mhs/beranda') }}"
-                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beranda')) text-blue-500 @endif">
-                          <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/beranda')) text-blue-500 @endif">home</i>
-                          Beranda
-                      </a>
-                      <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/beranda')) border-blue-500 @endif group-hover:border-blue-500">
-                      </div>
-                  </li>
-
-                  <li class="group relative" :class="{ 'active': isActive('mhs/pendaftaran') }">
-                      <a href="{{ url('/mhs/pendaftaran') }}"
-                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">
-                          <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/pendaftaran')) text-blue-500 @endif">assignment</i>
-                          Pendaftaran
-                      </a>
-                      <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/pendaftaran')) border-blue-500 @endif group-hover:border-blue-500">
-                      </div>
-                  </li>
-
-
-                  <li class="group relative" :class="{ 'active': isActive('mhs/biodata') }">
-                      <a href="{{ url('/mhs/biodata') }}"
-                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/biodata')) text-blue-500 @endif">
-                          <i
-                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/biodata0')) text-blue-500 @endif">person</i>
-                          Biodata
-                      </a>
-                      <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/biodata')) border-blue-500 @endif group-hover:border-blue-500">
-                      </div>
-                  </li>
-
-
-
-
-                  <li class="group relative">
-                      <a href="{{ url('/mhs/logout') }}"
-                          class="flex items-center rounded-md px-4 py-2  text-gray-700 transition duration-300 group-hover:text-red-600 group-hover:bg-transparent group-hover:border-pink-300 focus:outline-none focus:border-red-500 focus:ring focus:ring-red-200">
-                          <i class="material-icons mr-2 text-gray-700 group-hover:text-red-500">exit_to_app</i> Keluar
-                      </a>
-                      <div
-                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/logout')) border-blue-500 @endif group-hover:border-red-500">
-                      </div>
-                  </li>
-
-              </ul>
-          </div>
-      </aside>
-
-      <!-- Content -->
-      <div class="flex-1 ml-60">
+     <div class="flex-1 ml-60">
           <!-- Navbar -->
           <nav class="bg-white p-2 py-2 shadow flex items-center justify-between">
               <div class="flex items-center">
@@ -142,7 +72,7 @@
 
           </nav>
 
-          <div class="p-10 pt-24">
+          <div class="p-10 pt-14">
               <div class="grid grid-cols-12 gap-4">
                   <div class="col-span-12">
                       <div class="card p-6 w-full">
@@ -155,10 +85,66 @@
           </div>
       </div>
 
+      <!-- Sidebar -->
+      <aside class="bg-white text-gray-800 shadow w-1/6 fixed h-full transform translate-x-0 overflow-y-auto
+            transition-transform duration-300 flex-none hidden sm:block">
 
+          <!-- Logo -->
+          <div class="p-2 relative bg-blue-600 ">
+              <img src="https://beasiswa.usk.ac.id/adm/public/images/logo_beasiswa_admin.png" alt="Logo"
+                  class="w-48 h-auto pl-2">
+          </div>
 
+          <!-- Menu -->
+          <div class="p-4">
+              <ul class="mt-2 space-y-4">
 
-      <!-- container-scroller -->
+                  <li class="group relative" :class="{ 'active': isActive('mhs/beranda') }">
+                      <a href="{{ url('/mhs/beranda') }}"
+                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beranda')) text-blue-500 @endif">
+                          <i
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/beranda')) text-blue-500 @endif">home</i>
+                          Beranda
+                      </a>
+                      <div
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/beranda')) border-blue-500 @endif group-hover:border-blue-500">
+                      </div>
+                  </li>
+                  <li class="group relative" :class="{ 'active': isActive('mhs/pendaftaran') }">
+                      <a href="{{ url('/mhs/pendaftaran') }}"
+                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/beasiswa')) text-blue-500 @endif">
+                          <i
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/pendaftaran')) text-blue-500 @endif">assignment</i>
+                          Pendaftaran
+                      </a>
+                      <div
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/pendaftaran')) border-blue-500 @endif group-hover:border-blue-500">
+                      </div>
+                  </li>
+                  <li class="group relative" :class="{ 'active': isActive('mhs/biodata') }">
+                      <a href="{{ url('/mhs/biodata') }}"
+                          class="flex items-center rounded-md px-4 py-2 transition duration-300 group-hover:text-blue-600 group-hover:bg-transparent group-hover:border-sky-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 @if (request()->is('mhs/biodata')) text-blue-500 @endif">
+                          <i
+                              class="material-icons mr-2 group-hover:text-blue-500 @if (request()->is('mhs/biodata0')) text-blue-500 @endif">person</i>
+                          Biodata
+                      </a>
+                      <div
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/biodata')) border-blue-500 @endif group-hover:border-blue-500">
+                      </div>
+                  </li>
+                  <li class="group relative">
+                      <a href="{{ url('/mhs/logout') }}"
+                          class="flex items-center rounded-md px-4 py-2  text-gray-700 transition duration-300 group-hover:text-red-600 group-hover:bg-transparent group-hover:border-pink-300 focus:outline-none focus:border-red-500 focus:ring focus:ring-red-200">
+                          <i class="material-icons mr-2 text-gray-700 group-hover:text-red-500">exit_to_app</i> Keluar
+                      </a>
+                      <div
+                          class="absolute top-0 left-0 h-full border-l-2 border-b-2 transition duration-300 ease-in-out @if (request()->is('mhs/logout')) border-blue-500 @endif group-hover:border-red-500">
+                      </div>
+                  </li>
+
+              </ul>
+          </div>
+      </aside>
 
       <!-- plugins:js -->
       <script src="{{ asset('admin') }}/vendors/base/vendor.bundle.base.js"></script>
@@ -182,6 +168,5 @@
 
       <script src="{{ asset('admin') }}/js/jquery.cookie.js" type="text/javascript"></script>
   </body>
-
 
   </html>

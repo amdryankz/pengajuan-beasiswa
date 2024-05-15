@@ -33,9 +33,6 @@
                             placeholder="Nama Berkas" value="{{ Session::get('name') }}" required>
                     </label>
                 </div>
-
-
-
         </div>
         <div class="mt-4">
             <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" name="simpan"

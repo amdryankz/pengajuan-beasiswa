@@ -216,13 +216,13 @@
     <script>
         // Inisialisasi pilihan donatur sesuai dengan data beasiswa yang sudah ada
         var scholarshipId = document.getElementById('scholarships_id').value;
-        var donorSelect = document.getElementById('donors_id');
+        var donorSelect = document.getElementById('donor_id');
         donorSelect.innerHTML = '';
         @foreach ($data as $item)
             if ({{ $item->id }} == scholarshipId) {
                 var option = document.createElement('option');
-                option.value = '{{ $item->donors->id }}';
-                option.text = '{{ $item->donors->name }}';
+                option.value = '{{ $item->donor->id }}';
+                option.text = '{{ $item->donor->name }}';
                 donorSelect.add(option);
             }
         @endforeach
@@ -230,13 +230,13 @@
         // Menangani perubahan pada dropdown beasiswa
         document.getElementById('scholarships_id').addEventListener('change', function() {
             var scholarshipId = this.value;
-            var donorSelect = document.getElementById('donors_id');
+            var donorSelect = document.getElementById('donor_id');
             donorSelect.innerHTML = '';
             @foreach ($data as $item)
                 if ({{ $item->id }} == scholarshipId) {
                     var option = document.createElement('option');
-                    option.value = '{{ $item->donors->id }}';
-                    option.text = '{{ $item->donors->name }}';
+                    option.value = '{{ $item->donor->id }}';
+                    option.text = '{{ $item->donor->name }}';
                     donorSelect.add(option);
                 }
             @endforeach

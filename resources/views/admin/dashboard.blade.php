@@ -47,8 +47,7 @@
 
         {{-- sidebar --}}
         <aside id="sidebar"
-            class="fixed left-0 top-16 z-50 w-60 md:w-1/6 h-full overflow-y-auto bg-slate-50 shadow-lg"
-            data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute""
+            class="fixed left-0 top-16 z-50 w-60 md:w-1/6 h-full overflow-hidden bg-slate-50 shadow-lg"
             data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute">
             <ul class="list-none pt-3 px-2" data-te-sidenav-menu-ref>
                 @if (Auth::user() && Auth::user()->role)
@@ -150,14 +149,14 @@
                                     <span class="pl-2 text-base">Pengguna</span>
                                 </a>
                             </li>
-                            {{-- <li class="relative text-slate-800 mb-1.5">
-                                <a id="Upload Khusus" href="{{ url('/adm/logout') }}"
-                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/logout') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                            <li class="relative text-slate-800 mb-1.5">
+                                <a id="Upload Khusus" href="{{ url('/adm/pengumuman') }}"
+                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengumuman') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
-                                    <span class="pl-2 text-base">Logout</span>
+                                    <span class="pl-2 text-base">Pengumuman</span>
                                 </a>
-                            </li> --}}
+                            </li>
                         @break
 
                         @case('Operator Fakultas Hukum')
@@ -272,41 +271,43 @@
                 </div>
             </nav>
 
-            <div class="ml-56 p-12">
-                <div class="grid grid-cols-12 gap-4">
-                    <div class="col-span-12">
-                        <div class="card w-full bg-gray-200 p-6">
-                            <div class="card-body text-base">
-                                @yield('content')
+            <div class="ml-56 p-12 flex justify-center items-center">
+                <div class="max-w-full-lg w-full">
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12">
+                            <div class="card w-full bg-gray-200 p-6">
+                                <div class="card-body text-base">
+                                    @yield('content')
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#facultyFilter').select2();
-            });
-        </script>
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-        <script defer>
-            $(document).ready(function() {
-                var table = $('#myTable').DataTable(); // Inisialisasi objek DataTable
-
-                $('#facultyFilter').on('change', function() {
-                    var faculty = $(this).val();
-                    table.columns(3).search(faculty)
-                        .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
+            <script>
+                $(document).ready(function() {
+                    $('#facultyFilter').select2();
                 });
-            });
-        </script>
+            </script>
+
+            <script defer>
+                $(document).ready(function() {
+                    var table = $('#myTable').DataTable(); // Inisialisasi objek DataTable
+
+                    $('#facultyFilter').on('change', function() {
+                        var faculty = $(this).val();
+                        table.columns(3).search(faculty)
+                            .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
+                    });
+                });
+            </script>
 
     </body>
 

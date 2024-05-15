@@ -47,13 +47,13 @@
                                                 <span>{{ $user->major }}</span>
                                             </div>
                                         </div>
-                                        {{-- <div class="flex flex-col mb-1">
+                                        <div class="flex flex-col mb-1">
                                             <span class="font-semibold">Alamat:</span>
                                             <div
                                                 class="border-sky-500 border-solid border-1 rounded-md p-2 mt-1 bg-slate-50">
                                                 <span>{{ $user->address }}</span>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="flex flex-col mb-1">
                                             <span class="font-semibold">IPK Terakhir:</span>
                                             <div
@@ -132,12 +132,12 @@
                                             class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                             value="{{ old('bank_name', $user->bank_name) }}" required>
                                     </div>
-                                     <div class="mb-3">
+                                     {{-- <div class="mb-3">
                                         <label for="address" class="form-label font-semibold text-base">Alamat:</label>
                                         <input type="text" name="address"
                                             class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                             value="{{ old('address', $user->address) }}" required>
-                                    </div>
+                                    </div> --}}
                                     <div class="mb-3">
                                         <label for="parent_name" class="form-label font-semibold text-base">Nama Orang
                                             Tua:</label>

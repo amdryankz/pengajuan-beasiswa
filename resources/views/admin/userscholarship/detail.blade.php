@@ -95,16 +95,17 @@
                 @foreach ($files as $file)
                     <li class="mb-2">
                         @if ($file->files)
-                            <label for="{{ $file->file_requirement_id }}">{{ $file->files->name }}</label><br>
+                            <span class="text-lg font-bold">{{ $file->files->name }}</span><br>
                             <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->file_path]) }}"
                                 class="text-blue-500 hover:underline text-base" target="_blank">
                                 {{ $file->file_path }}
                             </a>
                         @else
-                            <span class="text-red-500">File not available</span>
+                            <span class="text-lg text-red-500">File not available</span>
                         @endif
                     </li>
                 @endforeach
+            </ul>
             </ul>
 
             <div class="mx-auto mt-6 mb-6 p-4 flex justify-center items-center">

@@ -40,7 +40,7 @@
                                 <td class="p-2 border border-gray-300">{{ $item->name }}</td>
                                 <td class="p-2 border border-gray-300">
                                     <div class="flex justify-center space-x-2">
-                                        <a href="{{ route('berkas.edit', $item->id) }}"
+                                        <a href="{{ $item->slug ? route('berkas.edit', $item->slug) : route('berkas.edit', $item->id) }}"
                                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded flex items-center">
                                         <ion-icon name="create-sharp" class="mr-1"></ion-icon>
                                         </a>

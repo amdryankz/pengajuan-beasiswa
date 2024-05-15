@@ -66,9 +66,9 @@
         style="background-image: url('https://source.unsplash.com/random/1920x1080/?blue');">
         <div class="container mx-auto px-4">
             <div class="text-center">
-                <h1 class="text-4xl font-bold leading-tight text-white">Get work done <span
-                        class="text-blue-600">faster</span>
-                    <br>and <span class="text-blue-600">better</span> with us
+                <h1 class="text-4xl font-bold leading-tight text-white">The future <span
+                        class="text-blue-600">will</span>
+                    <br>always <span class="text-blue-600">be beautiful</span> with education
                 </h1>
                 {{-- <a href="{{ route('loginUser') }}"
                     class="bg-blue-100 hover:bg-blue-600 hover:text-white text-blue-700 font-semibold text-lg py-3 px-8 rounded-full mt-8 inline-block">Login

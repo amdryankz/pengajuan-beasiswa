@@ -3,7 +3,7 @@
 @section('content')
     {{-- Bagian 1: List Pendaftaran Beasiswa --}}
     <div class="mb-2">
-        <p class=" font-semibold text-base px-2 py-1 border-b-2">LIST PENDAFTARAN BEASISWA</p>
+        <p class=" font-semibold text-base px-2 py-1 {{-- border-b-2 --}}">LIST PENDAFTARAN BEASISWA</p>
         <div class="overflow-x-auto">
             @if (session('success'))
                 <div class="alert alert-success">
@@ -40,7 +40,7 @@
                             </td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <a href="{{ route('pendaftaran.show', $item->id) }}"
-                                    class="bg-yellow-500 text-white px-2 py-1 rounded">Daftar</a>
+                                    class="bg-green-500 text-white px-2 py-1 rounded">Daftar</a>
                             </td>
                         </tr>
                     @endforeach
@@ -51,7 +51,7 @@
 
     {{-- Bagian 2: History Pendaftaran Beasiswa --}}
     <div class="pt-4">
-        <p class=" font-semibold text-base px-2 py-1 border-b-2">HISTORY PENDAFTARAN BEASISWA</p>
+        <p class=" font-semibold text-base px-2 py-1 {{-- border-b-2 --}}">HISTORY PENDAFTARAN BEASISWA</p>
         <div class="overflow-x-auto">
             <table class="mt-3 min-w-full bg-white border-gray-300">
                 <thead>
@@ -129,7 +129,7 @@
 
     {{-- Bagian 3: History Penerimaan Beasiswa --}}
     <div class="pt-4">
-        <p class=" font-semibold text-base px-2 py-1 border-b-2">HISTORY PENERIMAAN BEASISWA</p>
+        <p class=" font-semibold text-base px-2 py-1 {{-- border-b-2 --}}">HISTORY PENERIMAAN BEASISWA</p>
         <div class="overflow-x-auto">
             <table class="mt-3 min-w-full bg-white border-gray-300">
                 <table class="min-w-full bg-white border border-gray-300">
