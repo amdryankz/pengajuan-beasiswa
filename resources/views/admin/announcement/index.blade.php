@@ -38,19 +38,23 @@
                     <tbody class="text-gray-700">
                         @foreach ($data as $announcement)
                             <tr class="border-t">
-                                <td class="px-4 py-2">{{ $announcement->title }}</td>
-                                <td class="px-4 py-2">
+                                <td class="px-4 py-2 font-semibold font-sans">{{ $announcement->title }}</td>
+                                <td class="px-4 py-2 font-semibold font-sans">
                                     {{ \Carbon\Carbon::parse($announcement->created_at)->format('d M Y') }}</td>
                                 <td class="px-4 py-2">
-                                    <a href="{{ route('pengumuman.edit', $announcement->id) }}"
-                                        class="text-blue-500 hover:underline">Edit</a>
-                                    <form action="{{ route('pengumuman.destroy', $announcement->id) }}" method="POST"
-                                        class="inline delete-form">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                            class="text-red-500 hover:underline ml-4 delete-btn">Hapus</button>
-                                    </form>
+                                    <div class="flex items-center">
+                                        <a href="{{ route('pengumuman.edit', $announcement->id) }}"
+                                            class="text-blue-500 hover:underline font-semibold font-sans mr-4">Edit</a>
+                                        <a href="{{ route('pengumuman.show', $announcement->id) }}"
+                                            class="text-green-500 hover:underline font-semibold font-sans mr-4">Lihat</a>
+                                        <form action="{{ route('pengumuman.destroy', $announcement->id) }}" method="POST"
+                                            class="inline delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button"
+                                                class="text-red-500 hover:underline delete-btn font-semibold font-sans">Hapus</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

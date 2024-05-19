@@ -151,7 +151,7 @@
                             </li>
                             <li class="relative text-slate-800 mb-1.5">
                                 <a id="Upload Khusus" href="{{ url('/adm/pengumuman') }}"
-                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengumuman') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
+                                    class="flex h-10 items-center text-center  px-auto truncate rounded-xl px-[15px] py-[10px] {{ request()->is('adm/pengumuman*') ? 'bg-blue-600 text-white' : 'hover:text-white hover:bg-blue-500' }}"
                                     data-te-sidenav-link-ref>
                                     <ion-icon class="px-auto text-xl hidden sm:block" name="log-out-sharp"></ion-icon>
                                     <span class="pl-2 text-base">Pengumuman</span>

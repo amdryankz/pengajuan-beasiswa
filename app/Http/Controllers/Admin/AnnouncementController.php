@@ -100,7 +100,7 @@ class AnnouncementController extends Controller
 
         $announcement->update($data);
 
-        return redirect()->route('announcements.index')->with('success', 'Berhasil mengupdate data pengumuman');
+        return redirect()->route('pengumuman.index')->with('success', 'Berhasil mengupdate data pengumuman');
     }
 
     /**
