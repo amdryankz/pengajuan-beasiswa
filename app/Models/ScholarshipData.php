@@ -54,7 +54,7 @@ class ScholarshipData extends Model
     {
         return [
             'slug' => [
-                'source' => 'name',
+                'source' => 'slugSource',
                 'onUpdate' => true
             ],
         ];
@@ -88,5 +88,15 @@ class ScholarshipData extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_scholarships', 'scholarship_data_id', 'user_id');
+    }
+
+    /**
+     * Accessor to get the source for the slug.
+     *
+     * @return string
+     */
+    public function getSlugSourceAttribute(): string
+    {
+        return $this->scholarship->name . ' ' . $this->year;
     }
 }
