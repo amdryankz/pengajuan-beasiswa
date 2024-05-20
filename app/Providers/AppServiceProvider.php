@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\ScholarshipData;
 use Illuminate\Support\ServiceProvider;
-use App\Observers\ScholarshipDataObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        ScholarshipData::observe(ScholarshipDataObserver::class);
+        //
     }
 }
