@@ -54,7 +54,7 @@ class StudentApplicationController extends Controller
 
     public function checkFile($file_path)
     {
-        $path = storage_path('app/file_requirements/' . $file_path);
+        $path = public_path('storage/file_requirements/' . $file_path);
 
         if (file_exists($path)) {
             $filename = pathinfo($path, PATHINFO_FILENAME);

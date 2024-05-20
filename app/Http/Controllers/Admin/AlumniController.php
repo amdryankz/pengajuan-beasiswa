@@ -8,7 +8,6 @@ use App\Models\UserScholarship;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UserScholarshipExport;
-use Illuminate\Support\Facades\Storage;
 
 class AlumniController extends Controller
 {
@@ -43,21 +42,6 @@ class AlumniController extends Controller
                     'user' => $user,
                     'facultyList' => $facultyList,
                 ];
-
-                $userScholarships = $user->userScholarships;
-                if ($userScholarships) {
-                    foreach ($userScholarships as $userScholarship) {
-                        if ($userScholarship->file_path) {
-                            Storage::delete('public/' . $userScholarship->file_path);
-                            $userScholarship->file_path = null;
-                        }
-                        if ($userScholarship->supervisor_approval_file) {
-                            Storage::delete('public/' . $userScholarship->supervisor_approval_file);
-                            $userScholarship->supervisor_approval_file = null;
-                        }
-                        $userScholarship->save();
-                    }
-                }
             }
         }
 

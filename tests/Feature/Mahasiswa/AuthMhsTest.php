@@ -1,31 +1,41 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use function Pest\Laravel\post;
-use function Pest\Laravel\assertAuthenticated;
-use function Pest\Laravel\assertGuest;
+// use App\Models\User;
+// use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 // uses(DatabaseTransactions::class);
 
-// it('can authenticate with valid credentials', function () {
+// it('can authenticate student with valid credentials', function () {
 //     $user = User::factory()->create();
 
-//     post('/login', [
+//     $response = $this->post('/login', [
 //         'npm' => $user->npm,
-//         'password' => 'password',
+//         'password' => $user->password,
 //     ]);
 
-//     assertAuthenticated();
+//     $response->assertRedirect('/mhs/beranda');
+//     $this->assertAuthenticatedAs($user, 'user');
 // });
 
-// it('cannot authenticate with invalid credentials', function () {
+// it('cannot authenticate student with invalid credentials', function () {
 //     $user = User::factory()->create();
 
-//     post('/login', [
+//     $response = $this->post('/login', [
 //         'npm' => $user->npm,
-//         'password' => 'password123',
+//         'password' => 'wrong_password',
 //     ]);
 
-//     assertGuest();
+//     $response->assertRedirect('/login');
+//     $this->assertAuthenticatedAs('user');
+// });
+
+// it('can logout student', function () {
+//     $user = User::factory()->create();
+
+//     Auth()->login($user);
+
+//     $response = $this->get('/mhs/logout');
+
+//     $response->assertRedirect('/login');
+//     $this->assertGuest('user');
 // });

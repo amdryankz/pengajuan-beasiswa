@@ -61,6 +61,23 @@ class StudentApprovalController extends Controller
 
     public function validateScholar($scholarship_id, $user_id)
     {
+        $scholarshipData = ScholarshipData::findOrFail($scholarship_id);
+        $quota = json_decode($scholarshipData->quota, true);
+
+        $user = User::findOrFail($user_id);
+        $faculty = $user->faculty;
+
+        $validatedCount = UserScholarship::where('scholarship_data_id', $scholarship_id)
+            ->whereHas('user', function ($query) use ($faculty) {
+                $query->where('faculty', $faculty);
+            })
+            ->where('scholarship_status', true)
+            ->count();
+
+        if ($validatedCount >= $quota[$faculty]) {
+            return redirect()->back()->with('error', 'Kuota untuk fakultas ' . $faculty . ' sudah terpenuhi.');
+        }
+
         $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
 
         foreach ($userScholarships as $userScholarship) {

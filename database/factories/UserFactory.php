@@ -18,21 +18,27 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'npm' => '2008107010041',
+            'password' => bcrypt('password'),
+            'name' => $this->faker->name,
+            'major' => $this->faker->word,
+            'faculty' => $this->faker->word,
+            'gender' => $this->faker->randomElement(['Laki-Laki', 'Perempuan']),
+            'ipk' => $this->faker->randomFloat(2, 2.00, 4.00),
+            'total_sks' => $this->faker->numberBetween(1, 150),
+            'active_status' => 'Aktif',
+            'graduate_status' => 'Belum Lulus',
+            'birthdate' => $this->faker->date,
+            'birthplace' => $this->faker->city,
+            'address' => $this->faker->address,
+            'email' => $this->faker->unique()->safeEmail,
+            'parent_name' => $this->faker->name,
+            'parent_job' => 'PNS',
+            'parent_income' => $this->faker->randomElement(['< 1 Juta', '1-3 Juta', '3-5 Juta', '> 5 Juta']),
+            'phone_number' => $this->faker->unique()->randomNumber(8),
+            'bank_account_number' => $this->faker->unique()->randomNumber(8),
+            'account_holder_name' => $this->faker->name,
+            'bank_name' => 'BSI',
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

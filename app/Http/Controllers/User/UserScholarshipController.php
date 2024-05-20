@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
 use App\Models\UserScholarship;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -67,6 +68,20 @@ class UserScholarshipController extends Controller
             if (empty($user->$field)) {
                 return redirect()->route('pendaftaran.index')->with('error', 'Lengkapi biodata Anda terlebih dahulu.');
             }
+        }
+
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.hunter.io/v2/email-verifier', [
+            'query' => [
+                'email' => $user->email,
+                'api_key' => env('HUNTER_API_KEY'),
+            ]
+        ]);
+
+        $emailVerification = json_decode($response->getBody(), true);
+
+        if ($emailVerification['data']['result'] !== 'deliverable') {
+            return redirect()->route('pendaftaran.index')->with('error', 'Alamat email Anda tidak valid atau tidak dapat ditemukan.');
         }
 
         if (UserScholarship::where('user_id', $user->id)

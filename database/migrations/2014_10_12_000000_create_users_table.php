@@ -28,12 +28,12 @@ return new class extends Migration
             $table->string('address', 100)->nullable();
             $table->string('email', 50)->nullable();
             $table->string('parent_name', 50)->nullable();
-            $table->string('parent_job', 25)->nullable();
+            $table->string('parent_job', 35)->nullable();
             $table->string('parent_income', 50)->nullable();
             $table->unsignedBigInteger('phone_number')->nullable();
             $table->unsignedBigInteger('bank_account_number')->nullable();
             $table->string('account_holder_name', 50)->nullable();
-            $table->string('bank_name', 25)->nullable();
+            $table->string('bank_name', 35)->nullable();
             $table->string('slug', 50)->nullable();
             $table->timestamps();
         });

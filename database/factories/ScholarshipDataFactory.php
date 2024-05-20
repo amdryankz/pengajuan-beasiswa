@@ -34,11 +34,11 @@ class ScholarshipDataFactory extends Factory
         ];
     }
 
-    public function configure()
-    {
-        return $this->afterCreating(function (ScholarshipData $scholarshipData) {
-            $fileRequirement = FileRequirement::factory()->create();
-            $scholarshipData->requirements()->attach($fileRequirement->id);
-        });
-    }
+    // public function configure()
+    // {
+    //     return $this->afterCreating(function (ScholarshipData $scholarshipData) {
+    //         $fileRequirement = FileRequirement::factory()->create();
+    //         $scholarshipData->requirements()->attach($fileRequirement->id);
+    //     });
+    // }
 }

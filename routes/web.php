@@ -55,7 +55,7 @@ Route::middleware('auth:admin')->prefix('adm')->group(function () {
         Route::get('{scholarship_id}', [StudentApplicationController::class, 'showRegistrationsByScholarship'])->name('registrations.index');
         Route::get('{user_id}/{scholarship_id}/detail', [StudentApplicationController::class, 'showDetail'])->name('admin.scholarship.detail');
         Route::get('{user_id}/{scholarship_id}/pdf', [StudentApplicationController::class, 'generatePDF'])->name('admin.scholarship.pdf');
-        Route::get('download/{file_path}', [StudentApplicationController::class, 'checkFile'])->name('admin.scholarship.checkFile');
+        Route::get('berkas/{file_path}', [StudentApplicationController::class, 'checkFile'])->name('admin.scholarship.checkFile');
         Route::post('validate/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'validateFile'])->name('admin.scholarship.validate')->middleware('check.observer.role');
         Route::post('cancel-validation/{scholarship_id}/{user_id}', [StudentApplicationController::class, 'cancelValidation'])->name('admin.scholarship.cancelValidation')->middleware('check.observer.role');
     });
