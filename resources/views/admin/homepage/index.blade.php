@@ -16,7 +16,7 @@
                 </div>
                 <div class="bg-green-200 p-1 rounded-sm mb-4 md:mb-0 md:w-1/4 mr-4">
                     <h1 class="text-base font-semibold ml-2">Jumlah Fakultas</h1>
-                    <p class="text-gray-600 text-base ml-2">{{ 12 }}</p>
+                    <p class="text-gray-600 text-base ml-2">{{ count($facultyList) }}</p>
                 </div>
                 <div class="bg-yellow-200 p-1 rounded-sm mb-4 md:mb-0 md:w-1/4 mr-4">
                     <h1 class="text-base font-semibold ml-2">Jumlah Beasiswa</h1>
@@ -27,13 +27,14 @@
             <div class="pt-6">
                 <h2 class="text-xl mb-4 text-center font-medium border-b-4 pb-2">Rekapitulasi Mahasiswa Penerima Beasiswa
                 </h2>
-                <!-- Filter by faculty -->
+                <!-- Filter by scholarship -->
                 <div class="flex justify-center mb-4">
-                    <label for="facultySelect" class="mr-2">Filter Fakultas:</label>
-                    <select id="facultySelect" onchange="filterByFaculty()">
-                        <option value="">Semua Fakultas</option>
-                        @foreach ($facultyList as $faculty)
-                            <option value="{{ $faculty }}">{{ $faculty }}</option>
+                    <label for="scholarshipSelect" class="mr-2">Filter Beasiswa:</label>
+                    <select id="scholarshipSelect" onchange="filterByScholarship()">
+                        <option value="">Semua Beasiswa</option>
+                        @foreach ($scholarshipList as $id => $name)
+                            <option value="{{ $id }}" {{ $selectedScholarshipId == $id ? 'selected' : '' }}>
+                                {{ $name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -50,8 +51,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Original data and labels
-        const originalLabels = {!! json_encode(array_keys($totalsByFaculty->toArray())) !!};
-        const originalData = {!! json_encode(array_values($totalsByFaculty->toArray())) !!};
+        const originalLabels = {!! json_encode(array_keys($totalsByFaculty)) !!};
+        const originalData = {!! json_encode(array_values($totalsByFaculty)) !!};
 
         let facultyCtx = document.getElementById('facultyChart').getContext('2d');
         let facultyChart;
@@ -98,19 +99,11 @@
         // Initialize chart with original data
         drawChart(originalLabels, originalData);
 
-        function filterByFaculty() {
-            let selectedFaculty = document.getElementById('facultySelect').value;
-            if (selectedFaculty === '') {
-                // Show data for all faculties
-                facultyChart.destroy();
-                drawChart(originalLabels, originalData);
-            } else {
-                // Show data for selected faculty
-                let filteredLabels = [selectedFaculty];
-                let filteredData = [originalData[originalLabels.indexOf(selectedFaculty)] || 0];
-                facultyChart.destroy();
-                drawChart(filteredLabels, filteredData);
-            }
+        function filterByScholarship() {
+            let selectedScholarship = document.getElementById('scholarshipSelect').value;
+            let url = new URL(window.location.href);
+            url.searchParams.set('scholarship_id', selectedScholarship);
+            window.location.href = url.toString();
         }
     </script>
 @endsection
