@@ -63,9 +63,8 @@
 
                     <div class="mb-4">
                         <label for="content" class="block text-gray-700 font-semibold mb-2">Isi Pengumuman</label>
-                        <textarea name="content" id="content" rows="5"
-                            class="border-gray-300 focus:ring-blue-500 px-2 py-2 focus:border-blue-500 rounded-md shadow-sm w-full resize-none @error('content') @enderror"
-                            required>{{ $data->content }}</textarea>
+                        <div id="editor" style="height: 300px;">{!! $data->content !!}</div>
+                        <input type="hidden" id="content" name="content">
                         @error('content')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -81,6 +80,19 @@
         </div>
     </div>
 
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+        // Set value of hidden input to Quill's HTML content
+        var form = document.querySelector('form');
+        form.onsubmit = function() {
+            var contentInput = document.querySelector('#content');
+            contentInput.value = quill.root.innerHTML;
+        };
+    </script>
 
     <script>
         function previewImage() {

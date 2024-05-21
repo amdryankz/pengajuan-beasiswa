@@ -39,6 +39,13 @@
         <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.tailwindcss.min.css">
+
+        {{-- QUill --}}
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    </head>
+
     </head>
 
     @section('navbar', 'Beranda')
@@ -234,8 +241,8 @@
                             <button class="pt-4 pb-1 text-slate-100 text-2xl">
                                 <ion-icon name="chevron-back-circle"></ion-icon>
                             </button>
-                            <div class="pt-2 text-white text-center text-xl">
-                                <h2 class="whitespace-nowrap overflow-ellipsis overflow-hidden">
+                            <div class="px-2 py-2 mt-2 text-white text-center text-xl">
+                                <h2 class="whitespace-nowrap overflow-ellipsis">
                                     @yield('navbar')
                                 </h2>
                             </div>
@@ -285,7 +292,7 @@
                 </div>
             </div>
 
-
+            {{-- DataTable --}}
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
             <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
@@ -308,7 +315,6 @@
                     });
                 });
             </script>
-
     </body>
 
     </html>

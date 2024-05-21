@@ -30,10 +30,10 @@
                         </div>
                     </div>
                     <div class="text-gray-700 leading-relaxed">
-                        {!! nl2br(e($data->content)) !!}
+                        {!! $data->content !!}
                     </div>
                 </div>
-                <div class="p-6 border-t border-gray-200 text-center">
+                <div class="p-6 border-t border-gray-200 text-start">
                     <a href="{{ route('pengumuman.edit', $data->id) }}"
                         class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2">Edit</a>
                     <a href="{{ route('pengumuman.index') }}"
