@@ -32,9 +32,10 @@
                     <label for="scholarshipSelect" class="mr-2">Filter Beasiswa:</label>
                     <select id="scholarshipSelect" onchange="filterByScholarship()">
                         <option value="">Semua Beasiswa</option>
-                        @foreach ($scholarshipList as $id => $name)
+                        @foreach ($scholarshipList as $id => $details)
                             <option value="{{ $id }}" {{ $selectedScholarshipId == $id ? 'selected' : '' }}>
-                                {{ $name }}</option>
+                                {{ $details['name'] }} - {{ $details['year'] }}
+                            </option>
                         @endforeach
                     </select>
                 </div>

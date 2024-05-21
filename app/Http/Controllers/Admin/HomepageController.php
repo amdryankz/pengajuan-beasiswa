@@ -32,7 +32,10 @@ class HomepageController extends Controller
 
         $scholarshipList = ScholarshipData::join('scholarships', 'scholarships.id', '=', 'scholarship_data.scholarships_id')
             ->distinct()
-            ->pluck('scholarships.name', 'scholarships.id')
+            ->get(['scholarships.id', 'scholarships.name', 'scholarship_data.year'])
+            ->mapWithKeys(function ($item) {
+                return [$item->id => ['name' => $item->name, 'year' => $item->year]];
+            })
             ->toArray();
 
         $selectedScholarshipId = $request->input('scholarship_id');
