@@ -16,7 +16,7 @@
                 </div>
                 <div class="bg-green-200 p-1 rounded-sm mb-4 md:mb-0 md:w-1/4 mr-4">
                     <h1 class="text-base font-semibold ml-2">Jumlah Fakultas</h1>
-                    <p class="text-gray-600 text-base ml-2">{{12}}</p>
+                    <p class="text-gray-600 text-base ml-2">{{ 12 }}</p>
                 </div>
                 <div class="bg-yellow-200 p-1 rounded-sm mb-4 md:mb-0 md:w-1/4 mr-4">
                     <h1 class="text-base font-semibold ml-2">Jumlah Beasiswa</h1>
@@ -25,13 +25,14 @@
             </div>
 
             <div class="pt-6">
-                <h2 class="text-xl mb-4 text-center font-medium border-b-4 pb-2">Rekapitulasi Mahasiswa Penerima Beasiswa</h2>
+                <h2 class="text-xl mb-4 text-center font-medium border-b-4 pb-2">Rekapitulasi Mahasiswa Penerima Beasiswa
+                </h2>
                 <!-- Filter by faculty -->
                 <div class="flex justify-center mb-4">
                     <label for="facultySelect" class="mr-2">Filter Fakultas:</label>
                     <select id="facultySelect" onchange="filterByFaculty()">
                         <option value="">Semua Fakultas</option>
-                        @foreach($facultyList as $faculty)
+                        @foreach ($facultyList as $faculty)
                             <option value="{{ $faculty }}">{{ $faculty }}</option>
                         @endforeach
                     </select>
