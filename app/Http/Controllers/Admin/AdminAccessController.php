@@ -31,7 +31,7 @@ class AdminAccessController extends Controller
 
         foreach ($roles as $role) {
             $adminCount = $data->where('role_id', $role->id)->count();
-            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin';
+            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->name !== 'Observer';
         }
 
         return view('admin.access.create')->with('roles', $roles)->with('disabledOptions', $disabledOptions);
@@ -80,7 +80,7 @@ class AdminAccessController extends Controller
 
         foreach ($roles as $role) {
             $adminCount = $data->where('role_id', $role->id)->count();
-            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->id !== $user->role_id;
+            $disabledOptions[$role->id] = $adminCount > 0 && $role->name !== 'Admin' && $role->name !== 'Observer' && $role->id !== $user->role_id;
         }
 
         return view('admin.access.edit')->with('user', $user)
