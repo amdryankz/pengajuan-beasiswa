@@ -149,7 +149,7 @@ class SpecialScholarshipDataController extends Controller
         $scholarship = ScholarshipData::findOrFail($id);
         $scholarship->delete();
 
-        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil menghapus Data Beasiswa');
+        return redirect()->route('pengelolaan-khusus.index')->with('success', 'Berhasil menghapus data beasiswa');
     }
 
     public function updateSK(Request $request, string $id)

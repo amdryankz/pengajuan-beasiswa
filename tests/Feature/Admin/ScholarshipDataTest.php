@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\Admin;
 use App\Models\Scholarship;
 use App\Models\FileRequirement;
@@ -11,7 +12,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create();
+    $this->adminRole = Role::factory()->admin()->create();
+    $this->operatorRole = Role::factory()->operator()->create();
+
+    $this->admin = Admin::factory()->create(['role_id' => $this->adminRole->id]);
+    $this->operator = Admin::factory()->create(['role_id' => $this->operatorRole->id]);
 });
 
 
@@ -146,4 +151,11 @@ it('can update SK file for a scholarship data', function () {
     ]);
 
     $this->assertTrue(Storage::disk('public')->exists($scholarship->fresh()->sk_file));
+});
+
+it('non-admin user cannot access scholarship data', function () {
+    $this->actingAs($this->operator, 'admin');
+
+    $response = $this->get('/adm/pengelolaan');
+    $response->assertStatus(403);
 });

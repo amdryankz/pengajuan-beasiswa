@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Scholarship;
@@ -11,7 +12,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create();
+    $this->adminRole = Role::factory()->admin()->create();
+    $this->operatorRole = Role::factory()->operator()->create();
+
+    $this->admin = Admin::factory()->create(['role_id' => $this->adminRole->id]);
+    $this->operator = Admin::factory()->create(['role_id' => $this->operatorRole->id]);
 });
 
 it('can access special scholarship data index with data', function () {
@@ -50,6 +55,7 @@ it('can create a special scholarship data', function () {
         ]);
 
     $response->assertRedirect('/adm/pengelolaan-khusus');
+    $response->assertSessionHas('success', 'Berhasil menambahkan data beasiswa');
     $this->assertDatabaseHas('scholarship_data', [
         'scholarships_id' => $scholarship->id,
         'year' => 2024,
@@ -60,6 +66,40 @@ it('can create a special scholarship data', function () {
         'end_scholarship' => '2025-01-01',
     ]);
 });
+
+it('cannot create a special scholarship data with npm data not found', function () {
+    $scholarship = Scholarship::factory()->create();
+    User::factory()->create(['npm' => '0000000000000']);
+
+    $filePath = storage_path('app/tests/files/nama-mhs.xlsx');
+
+    $file = new UploadedFile($filePath, 'nama-mhs.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, true);
+
+    $response = $this->actingAs($this->admin, 'admin')
+        ->post('/adm/pengelolaan-khusus', [
+            'scholarships_id' => $scholarship->id,
+            'year' => 2024,
+            'amount' => 10000000,
+            'amount_period' => 'year',
+            'duration' => 1,
+            'start_scholarship' => '2024-01-01',
+            'end_scholarship' => '2025-01-01',
+            'student_list_file' => $file,
+        ]);
+
+    $response->assertRedirect();
+    $response->assertSessionHas('error');
+    $this->assertDatabaseMissing('scholarship_data', [
+        'scholarships_id' => $scholarship->id,
+        'year' => 2024,
+        'amount' => 10000000,
+        'amount_period' => 'year',
+        'duration' => 1,
+        'start_scholarship' => '2024-01-01',
+        'end_scholarship' => '2025-01-01',
+    ]);
+});
+
 
 it('can update a special scholarship data', function () {
     $this->actingAs($this->admin, 'admin');
@@ -78,6 +118,7 @@ it('can update a special scholarship data', function () {
     ]);
 
     $response->assertRedirect('/adm/pengelolaan-khusus');
+    $response->assertSessionHas('success', 'Berhasil mengupdate data beasiswa');
     $this->assertDatabaseHas('scholarship_data', [
         'year' => '2025',
         'amount' => 10000000,
@@ -100,6 +141,7 @@ it('can delete a special scholarship data', function () {
 
     $response = $this->delete("/adm/pengelolaan-khusus/{$scholarshipData->id}");
     $response->assertRedirect('/adm/pengelolaan-khusus');
+    $response->assertSessionHas('success', 'Berhasil menghapus data beasiswa');
     $this->assertDatabaseMissing('scholarship_data', [
         'id' => $scholarshipData->id
     ]);
@@ -122,10 +164,18 @@ it('can update SK file for a special scholarship data', function () {
     ]);
 
     $response->assertRedirect('/adm/pengelolaan-khusus');
+    $response->assertSessionHas('success', 'Berhasil mengupdate SK beasiswa');
     $this->assertDatabaseHas('scholarship_data', [
         'id' => $scholarship->id,
         'sk_number' => 'SK123',
     ]);
 
     $this->assertTrue(Storage::disk('public')->exists($scholarship->fresh()->sk_file));
+});
+
+it('non-admin user cannot access special scholarship data', function () {
+    $this->actingAs($this->operator, 'admin');
+
+    $response = $this->get('/adm/pengelolaan-khusus');
+    $response->assertStatus(403);
 });

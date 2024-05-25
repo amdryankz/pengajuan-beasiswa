@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\Admin;
 use App\Models\Donor;
 use App\Models\Scholarship;
@@ -9,7 +10,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create();
+    $this->adminRole = Role::factory()->admin()->create();
+    $this->operatorRole = Role::factory()->operator()->create();
+
+    $this->admin = Admin::factory()->create(['role_id' => $this->adminRole->id]);
+    $this->operator = Admin::factory()->create(['role_id' => $this->operatorRole->id]);
 });
 
 it('can access scholarships index with data', function () {
@@ -32,6 +37,7 @@ it('can create a scholarship', function () {
         'donors_id' => $donor->id
     ]);
     $response->assertRedirect('/adm/beasiswa');
+    $response->assertSessionHas('success', 'Berhasil menambahkan beasiswa');
     $this->assertDatabaseHas('scholarships', [
         'name' => 'Bank Indonesia',
     ]);
@@ -47,6 +53,7 @@ it('can update a scholarship', function () {
         'donors_id' => $donor->id
     ]);
     $response->assertRedirect('/adm/beasiswa');
+    $response->assertSessionHas('success', 'Berhasil mengupdate beasiswa');
     $this->assertDatabaseHas('scholarships', [
         'id' => $scholarship->id,
         'name' => 'Djarum'
@@ -59,6 +66,7 @@ it('can delete a scholarship', function () {
 
     $response = $this->delete("/adm/beasiswa/{$scholarship->id}");
     $response->assertRedirect('/adm/beasiswa');
+    $response->assertSessionHas('success', 'Berhasil menghapus beasiswa');
     $this->assertDatabaseMissing('scholarships', [
         'id' => $scholarship->id
     ]);
@@ -73,7 +81,15 @@ it('cannot delete a scholarship with associated data', function () {
 
     $response = $this->delete("/adm/beasiswa/{$scholarship->id}");
     $response->assertRedirect();
+    $response->assertSessionHas('error', 'Tidak dapat menghapus beasiswa ini karena masih terdapat data yang terkait.');
     $this->assertDatabaseHas('scholarships', [
         'id' => $scholarship->id
     ]);
+});
+
+it('non-admin user cannot access scholarship', function () {
+    $this->actingAs($this->operator, 'admin');
+
+    $response = $this->get('/adm/beasiswa');
+    $response->assertStatus(403);
 });

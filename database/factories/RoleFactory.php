@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,37 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => '1',
-            'name' => 'Admin'
+            'name' => Str::limit($this->faker->unique()->jobTitle, 40),
         ];
+    }
+
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'id' => 1,
+                'name' => 'Admin',
+            ];
+        });
+    }
+
+    public function operator()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'id' => 2,
+                'name' => 'Operator',
+            ];
+        });
+    }
+
+    public function viewer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'id' => 3,
+                'name' => 'Viewer',
+            ];
+        });
     }
 }

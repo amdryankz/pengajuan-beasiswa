@@ -97,6 +97,6 @@ class ScholarshipController extends Controller
 
         $scholarship->delete();
 
-        return redirect()->route('beasiswa.index')->with('success', 'Berhasil menghapus Beasiswa');
+        return redirect()->route('beasiswa.index')->with('success', 'Berhasil menghapus beasiswa');
     }
 }

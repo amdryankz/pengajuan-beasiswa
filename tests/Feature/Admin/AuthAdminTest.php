@@ -37,6 +37,9 @@ it('cannot authenticate admin with invalid credentials', function () {
 
     $response->assertRedirect('/adm');
     $this->assertGuest('admin');
+
+    $response->assertSessionHas('status', 'failed');
+    $response->assertSessionHas('message', 'Invalid credentials');
 });
 
 it('cannot authenticate inactive admin', function () {
@@ -53,6 +56,9 @@ it('cannot authenticate inactive admin', function () {
 
     $response->assertRedirect('/adm');
     $this->assertGuest('admin');
+
+    $response->assertSessionHas('status', 'failed');
+    $response->assertSessionHas('message', 'Account is not active');
 });
 
 it('can logout admin', function () {

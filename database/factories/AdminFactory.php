@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Role;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class AdminFactory extends Factory
         $role = Role::factory()->create();
 
         return [
-            'name' => $this->faker->name,
+            'name' => Str::limit($this->faker->name, 40),
             'nip' => $this->faker->unique()->numerify('#####'),
             'password' => bcrypt('password'),
             'status' => 'Aktif',
