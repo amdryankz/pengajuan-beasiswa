@@ -2,16 +2,12 @@
 
 use App\Models\Admin;
 use App\Models\Donor;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create([
-        'nip' => '12345',
-        'password' => bcrypt('password'),
-        'status' => 'Aktif'
-    ]);
+    $this->admin = Admin::factory()->create();
 });
 
 it('can access donors index with data', function () {
@@ -22,7 +18,7 @@ it('can access donors index with data', function () {
     $response->assertOk();
     $response->assertViewHas('data');
     $donors = $response->viewData('data');
-    $this->assertCount(10, $donors);
+    $this->assertCount(5, $donors);
 });
 
 it('can create a donor', function () {
@@ -58,7 +54,7 @@ it('can delete a donor', function () {
     $response = $this->delete("/adm/donatur/{$donor->id}");
     $response->assertRedirect('/adm/donatur');
     $this->assertDatabaseMissing('donors', [
-        'id' => $donor->id
+        'id' => $donor->id,
     ]);
 });
 
@@ -70,6 +66,6 @@ it('cannot delete a donor with associated scholarships', function () {
     $response = $this->delete("/adm/donatur/{$donor->id}");
     $response->assertRedirect('/adm/donatur');
     $this->assertDatabaseHas('donors', [
-        'id' => $donor->id
+        'id' => $donor->id,
     ]);
 });

@@ -6,17 +6,14 @@ use App\Models\FileRequirement;
 use App\Models\ScholarshipData;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create([
-        'nip' => '12345',
-        'password' => bcrypt('password'),
-        'status' => 'Aktif'
-    ]);
+    $this->admin = Admin::factory()->create();
 });
+
 
 it('can access scholarship data index with data', function () {
     $this->actingAs($this->admin, 'admin');
@@ -26,7 +23,7 @@ it('can access scholarship data index with data', function () {
     $response->assertOk();
     $response->assertViewHas('data');
     $scholarshipData = $response->viewData('data');
-    $this->assertCount(6, $scholarshipData);
+    $this->assertCount(5, $scholarshipData);
 });
 
 it('can create a scholarship data', function () {
@@ -34,64 +31,83 @@ it('can create a scholarship data', function () {
     $scholarship = Scholarship::factory()->create();
     $fileRequirement = FileRequirement::factory()->create();
 
-    $response = $this->post('/adm/pengelolaan', [
+    $data = [
         'scholarships_id' => $scholarship->id,
-        'year' => '2025',
-        'amount' => 10000000,
-        'amount_period' => 'year',
-        'duration' => 1,
+        'year' => 2023,
+        'amount' => 1000,
+        'amount_period' => 'month',
+        'duration' => 12,
         'start_registration_at' => '2024-01-01',
         'end_registration_at' => '2024-01-31',
-        'min_ipk' => 3.0,
-        'quota' => [10, 20, 30],
+        'min_ipk' => 3.5,
+        'quota' => [
+            'fmipa' => 10,
+            'feb' => 5,
+            'fkep' => 3,
+        ],
         'requirements' => [$fileRequirement->id],
-    ]);
+    ];
+
+    $response = $this->post('/adm/pengelolaan', $data);
+
     $response->assertRedirect('/adm/pengelolaan');
+    $response->assertSessionHas('success', 'Berhasil menambahkan data beasiswa');
+
     $this->assertDatabaseHas('scholarship_data', [
-        'year' => '2025',
-        'amount' => 10000000,
-        'amount_period' => 'year',
-        'duration' => 1,
+        'scholarships_id' => $scholarship->id,
+        'year' => '2023',
+        'amount' => 1000,
+        'amount_period' => 'month',
+        'duration' => 12,
         'start_registration_at' => '2024-01-01',
         'end_registration_at' => '2024-01-31',
-        'min_ipk' => 3.0,
-        'quota' => json_encode([10, 20, 30]),
+        'min_ipk' => 3.5,
     ]);
-    $scholarshipData = ScholarshipData::where('year', '2025')->first();
+
+    $scholarshipData = ScholarshipData::first();
+    $this->assertEquals($data['quota'], json_decode($scholarshipData->quota, true));
+
     $this->assertTrue($scholarshipData->requirements->contains($fileRequirement->id));
 });
 
 it('can update a scholarship data', function () {
     $this->actingAs($this->admin, 'admin');
     $scholarshipData = ScholarshipData::factory()->create();
-    $newScholarship = Scholarship::factory()->create();
-    $newFileRequirement = FileRequirement::factory()->create();
+    $fileRequirement = FileRequirement::factory()->create();
 
-    $response = $this->put("/adm/pengelolaan/{$scholarshipData->id}", [
-        'scholarships_id' => $newScholarship->id,
-        'year' => '2025',
-        'amount' => 10000000,
+    $data = [
+        'scholarships_id' => $scholarshipData->scholarships_id,
+        'year' => 2023,
+        'amount' => 1500,
         'amount_period' => 'year',
-        'duration' => 1,
-        'start_registration_at' => '2024-01-01',
-        'end_registration_at' => '2024-01-31',
+        'duration' => 24,
+        'start_registration_at' => '2024-02-01',
+        'end_registration_at' => '2024-02-28',
         'min_ipk' => 3.0,
-        'quota' => [10, 20, 30],
-        'requirements' => [$newFileRequirement->id],
-    ]);
+        'quota' => [
+            'fmipa' => 15,
+            'feb' => 7,
+            'fkep' => 4,
+        ],
+        'requirements' => [$fileRequirement->id],
+    ];
+
+    $response = $this->put("/adm/pengelolaan/{$scholarshipData->id}", $data);
+
     $response->assertRedirect('/adm/pengelolaan');
+    $response->assertSessionHas('success', 'Berhasil mengupdate data beasiswa');
+
     $this->assertDatabaseHas('scholarship_data', [
-        'year' => '2025',
-        'amount' => 10000000,
+        'id' => $scholarshipData->id,
+        'amount' => 1500,
         'amount_period' => 'year',
-        'duration' => 1,
-        'start_registration_at' => '2024-01-01',
-        'end_registration_at' => '2024-01-31',
-        'min_ipk' => 3.0,
-        'quota' => json_encode([10, 20, 30]),
+        'duration' => 24,
     ]);
-    $scholarshipData = ScholarshipData::where('year', '2025')->first();
-    $this->assertTrue($scholarshipData->requirements->contains($newFileRequirement->id));
+
+    $scholarshipData = ScholarshipData::first();
+    $this->assertEquals($data['quota'], json_decode($scholarshipData->quota, true));
+
+    $this->assertTrue($scholarshipData->requirements->contains($fileRequirement->id));
 });
 
 it('can delete a scholarship data', function () {
@@ -100,6 +116,8 @@ it('can delete a scholarship data', function () {
 
     $response = $this->delete("/adm/pengelolaan/{$scholarshipData->id}");
     $response->assertRedirect('/adm/pengelolaan');
+    $response->assertSessionHas('success', 'Berhasil menghapus Data Beasiswa');
+
     $this->assertDatabaseMissing('scholarship_data', [
         'id' => $scholarshipData->id
     ]);
@@ -120,6 +138,8 @@ it('can update SK file for a scholarship data', function () {
     ]);
 
     $response->assertRedirect('/adm/pengelolaan');
+    $response->assertSessionHas('success', 'Berhasil mengupdate SK beasiswa');
+
     $this->assertDatabaseHas('scholarship_data', [
         'id' => $scholarship->id,
         'sk_number' => 'SK123',

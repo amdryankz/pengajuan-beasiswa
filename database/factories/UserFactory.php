@@ -18,20 +18,20 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'npm' => '2008107010041',
+            'npm' => $this->faker->unique()->numerify('#############'),
             'password' => bcrypt('password'),
             'name' => $this->faker->name,
             'major' => $this->faker->word,
             'faculty' => $this->faker->word,
             'gender' => $this->faker->randomElement(['Laki-Laki', 'Perempuan']),
-            'ipk' => $this->faker->randomFloat(2, 2.00, 4.00),
+            'ipk' => $this->faker->randomFloat(2, 3.00, 4.00),
             'total_sks' => $this->faker->numberBetween(1, 150),
             'active_status' => 'Aktif',
             'graduate_status' => 'Belum Lulus',
             'birthdate' => $this->faker->date,
             'birthplace' => $this->faker->city,
             'address' => $this->faker->address,
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => 'kassumanette@gmail.com',
             'parent_name' => $this->faker->name,
             'parent_job' => 'PNS',
             'parent_income' => $this->faker->randomElement(['< 1 Juta', '1-3 Juta', '3-5 Juta', '> 5 Juta']),

@@ -2,20 +2,21 @@
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 it('can authenticate admin with valid credentials', function () {
+    $password = 'password';
     $admin = Admin::factory()->create([
         'nip' => '12345',
-        'password' => bcrypt('password'),
+        'password' => bcrypt($password),
         'status' => 'Aktif',
     ]);
 
     $response = $this->post('/adm', [
-        'nip' => '12345',
-        'password' => 'password',
+        'nip' => $admin->nip,
+        'password' => $password,
     ]);
 
     $response->assertRedirect('/adm/beranda');
@@ -23,14 +24,14 @@ it('can authenticate admin with valid credentials', function () {
 });
 
 it('cannot authenticate admin with invalid credentials', function () {
-    Admin::factory()->create([
+    $admin = Admin::factory()->create([
         'nip' => '12345',
         'password' => bcrypt('password'),
         'status' => 'Aktif',
     ]);
 
     $response = $this->post('/adm', [
-        'nip' => '12345',
+        'nip' => $admin->nip,
         'password' => 'wrong_password',
     ]);
 
@@ -39,14 +40,14 @@ it('cannot authenticate admin with invalid credentials', function () {
 });
 
 it('cannot authenticate inactive admin', function () {
-    Admin::factory()->create([
+    $admin = Admin::factory()->create([
         'nip' => '12345',
         'password' => bcrypt('password'),
         'status' => 'Non-Aktif',
     ]);
 
     $response = $this->post('/adm', [
-        'nip' => '12345',
+        'nip' => $admin->nip,
         'password' => 'password',
     ]);
 

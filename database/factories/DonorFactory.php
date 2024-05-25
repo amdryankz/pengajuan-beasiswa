@@ -17,7 +17,7 @@ class DonorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Suhail',
+            'name' => $this->faker->company,
         ];
     }
 }

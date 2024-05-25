@@ -3,16 +3,12 @@
 use App\Models\Admin;
 use App\Models\FileRequirement;
 use App\Models\FileScholarshipData;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create([
-        'nip' => '12345',
-        'password' => bcrypt('password'),
-        'status' => 'Aktif'
-    ]);
+    $this->admin = Admin::factory()->create();
 });
 
 it('can access file requirements index with data', function () {
@@ -23,7 +19,7 @@ it('can access file requirements index with data', function () {
     $response->assertOk();
     $response->assertViewHas('data');
     $file = $response->viewData('data');
-    $this->assertCount(10, $file);
+    $this->assertCount(5, $file);
 });
 
 it('can create a file requirement', function () {
@@ -64,15 +60,17 @@ it('can delete a file requirement', function () {
     ]);
 });
 
-// it('cannot delete a file requirement if scholarships are associated', function () {
-//     $this->actingAs($this->admin, 'admin');
-//     $file = FileRequirement::factory()->create();
-//     FileScholarshipData::factory()->create(['file_requirement_id' => $file->id]);
+it('cannot delete a file requirement with associated scholarships', function () {
+    $this->actingAs($this->admin, 'admin');
+    $file = FileRequirement::factory()->create();
+    FileScholarshipData::factory()->create([
+        'file_requirement_id' => $file->id,
+    ]);
 
-//     $response = $this->delete("/adm/berkas/{$file->id}");
-//     $response->assertRedirect();
-//     $response->assertSessionHasErrors('error');
-//     $this->assertDatabaseHas('file_requirements', [
-//         'id' => $file->id
-//     ]);
-// });
+    $response = $this->delete("/adm/berkas/{$file->id}");
+
+    $response->assertRedirect();
+    $this->assertDatabaseHas('file_requirements', [
+        'id' => $file->id,
+    ]);
+});

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,12 +17,21 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
+        $role = Role::factory()->create();
+
         return [
-            'name' => '',
-            'nip' => '',
-            'password' => '',
-            'status' => '',
-            'role_id' => 1,
+            'name' => $this->faker->name,
+            'nip' => $this->faker->unique()->numerify('#####'),
+            'password' => bcrypt('password'),
+            'status' => 'Aktif',
+            'role_id' => $role->id,
         ];
+    }
+
+    public function inactive(): self
+    {
+        return $this->state([
+            'status' => 'Non-Aktif',
+        ]);
     }
 }

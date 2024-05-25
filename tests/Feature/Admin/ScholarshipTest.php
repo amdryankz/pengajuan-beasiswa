@@ -2,23 +2,14 @@
 
 use App\Models\Admin;
 use App\Models\Donor;
-
 use App\Models\Scholarship;
-use function Pest\Laravel\get;
-use function Pest\Laravel\put;
-use function Pest\Laravel\post;
-use function Pest\Laravel\delete;
-use function Pest\Laravel\actingAs;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\ScholarshipData;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create([
-        'nip' => '12345',
-        'password' => bcrypt('password'),
-        'status' => 'Aktif'
-    ]);
+    $this->admin = Admin::factory()->create();
 });
 
 it('can access scholarships index with data', function () {
@@ -29,7 +20,7 @@ it('can access scholarships index with data', function () {
     $response->assertOk();
     $response->assertViewHas('data');
     $scholarships = $response->viewData('data');
-    $this->assertCount(10, $scholarships);
+    $this->assertCount(5, $scholarships);
 });
 
 it('can create a scholarship', function () {
@@ -73,14 +64,16 @@ it('can delete a scholarship', function () {
     ]);
 });
 
-// it('cannot delete a scholarship with associated data', function () {
-//     $this->actingAs($this->admin, 'admin');
-//     $scholarship = Donor::factory()->create();
-//     $scholarship->scholarshipData()->create(['name' => 'Scholarship 1']);
+it('cannot delete a scholarship with associated data', function () {
+    $this->actingAs($this->admin, 'admin');
+    $scholarship = Scholarship::factory()->create();
+    ScholarshipData::factory()->create([
+        'scholarships_id' => $scholarship->id,
+    ]);
 
-//     $response = $this->delete("/adm/donatur/{$scholarship->id}");
-//     $response->assertRedirect('/adm/donatur');
-//     $this->assertDatabaseHas('donors', [
-//         'id' => $scholarship->id
-//     ]);
-// });
+    $response = $this->delete("/adm/beasiswa/{$scholarship->id}");
+    $response->assertRedirect();
+    $this->assertDatabaseHas('scholarships', [
+        'id' => $scholarship->id
+    ]);
+});

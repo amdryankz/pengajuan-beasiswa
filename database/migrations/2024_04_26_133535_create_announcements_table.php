@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 100);
+            $table->string('title', 150);
             $table->string('image');
             $table->string('letter_number', 50);
             $table->text('content');

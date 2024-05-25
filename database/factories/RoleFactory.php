@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FileRequirement>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
  */
-class FileRequirementFactory extends Factory
+class RoleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class FileRequirementFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
+            'id' => '1',
+            'name' => 'Admin'
         ];
     }
 }

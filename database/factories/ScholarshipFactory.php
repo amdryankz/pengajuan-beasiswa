@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Donor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class ScholarshipFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => '',
-            'donors_id' => 1
+            'name' => $this->faker->word,
+            'donors_id' => Donor::factory()->create()->id,
         ];
     }
 }

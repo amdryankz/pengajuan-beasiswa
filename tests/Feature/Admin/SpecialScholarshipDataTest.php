@@ -1,20 +1,17 @@
 <?php
 
+use App\Models\User;
 use App\Models\Admin;
 use App\Models\Scholarship;
 use App\Models\ScholarshipData;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->admin = Admin::factory()->create([
-        'nip' => '12345',
-        'password' => bcrypt('password'),
-        'status' => 'Aktif'
-    ]);
+    $this->admin = Admin::factory()->create();
 });
 
 it('can access special scholarship data index with data', function () {
@@ -34,6 +31,7 @@ it('can access special scholarship data index with data', function () {
 
 it('can create a special scholarship data', function () {
     $scholarship = Scholarship::factory()->create();
+    User::factory()->create(['npm' => '2008107010041']);
 
     $filePath = storage_path('app/tests/files/nama-mhs.xlsx');
 
@@ -78,6 +76,7 @@ it('can update a special scholarship data', function () {
         'end_scholarship' => '2025-01-01',
         'start_registration_at' => null
     ]);
+
     $response->assertRedirect('/adm/pengelolaan-khusus');
     $this->assertDatabaseHas('scholarship_data', [
         'year' => '2025',
@@ -91,11 +90,13 @@ it('can update a special scholarship data', function () {
 
 it('can delete a special scholarship data', function () {
     $this->actingAs($this->admin, 'admin');
-    $scholarshipData = ScholarshipData::factory()->create([
+    $scholarshipData = ScholarshipData::factory()->make([
         'start_scholarship' => '2024-01-01',
         'end_scholarship' => '2025-01-01',
         'start_registration_at' => null,
     ]);
+
+    $scholarshipData->save();
 
     $response = $this->delete("/adm/pengelolaan-khusus/{$scholarshipData->id}");
     $response->assertRedirect('/adm/pengelolaan-khusus');

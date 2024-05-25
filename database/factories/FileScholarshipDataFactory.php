@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\FileRequirement;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ScholarshipData;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FileScholarshipData>
@@ -17,8 +19,8 @@ class FileScholarshipDataFactory extends Factory
     public function definition(): array
     {
         return [
-            'scholarship_data_id' => 1,
-            'file_requirement_id' => 1
+            'scholarship_data_id' => ScholarshipData::factory()->create()->id,
+            'file_requirement_id' => FileRequirement::factory()->create()->id,
         ];
     }
 }
