@@ -25,7 +25,7 @@ beforeEach(function () {
     ]);
 });
 
-it('stores files and user scholarship data', function () {
+it('can apply for a scholarship', function () {
     $response = $this->actingAs($this->user)->post(route('pendaftaran.store'), [
         'scholarship_data_id' => $this->scholarship->id,
         'supervisor_approval_file' => UploadedFile::fake()->create('approval.pdf'),

@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'password' => bcrypt('password'),
             'name' => Str::limit($this->faker->name, 40),
             'major' => Str::limit($this->faker->word, 40),
-            'faculty' => Str::limit($this->faker->word, 40),
+            'faculty' => 'FMIPA',
             'gender' => $this->faker->randomElement(['Laki-Laki', 'Perempuan']),
             'ipk' => $this->faker->randomFloat(2, 3.00, 4.00),
             'total_sks' => $this->faker->numberBetween(1, 150),

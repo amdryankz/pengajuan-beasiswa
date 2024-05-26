@@ -105,7 +105,6 @@ class StudentApplicationController extends Controller
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }
 
-
     public function generatePDF(string $user_id, string $scholarship_id)
     {
         $user = User::findOrFail($user_id);

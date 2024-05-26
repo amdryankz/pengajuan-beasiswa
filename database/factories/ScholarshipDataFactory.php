@@ -28,7 +28,7 @@ class ScholarshipDataFactory extends Factory
             'start_registration_at' => $this->faker->dateTimeBetween('+1 month', '+6 months'),
             'end_registration_at' => $this->faker->dateTimeBetween('+7 months', '+1 year'),
             'min_ipk' => $this->faker->randomFloat(1, 2, 3),
-            'quota' => json_encode([$this->faker->numberBetween(1, 10), $this->faker->numberBetween(11, 20), $this->faker->numberBetween(21, 30)]),
+            'quota' => json_encode(['FMIPA' => 1]),
         ];
     }
 
