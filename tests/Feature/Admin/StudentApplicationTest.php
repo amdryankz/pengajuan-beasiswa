@@ -22,7 +22,7 @@ beforeEach(function () {
     Mail::fake();
 });
 
-it('it shows applicants based on scholarship', function () {
+it('it shows applicants for a specific scholarship', function () {
     $this->actingAs($this->admin, 'admin');
     $scholarship = ScholarshipData::factory()->hasUsers(5)->create();
 

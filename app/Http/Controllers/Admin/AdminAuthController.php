@@ -41,7 +41,6 @@ class AdminAuthController extends Controller
 
         Session::flash('status', 'failed');
         Session::flash('message', 'Invalid credentials');
-
         return redirect('/adm');
     }
 

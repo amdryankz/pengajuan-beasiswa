@@ -1,41 +1,64 @@
 <?php
 
-// use App\Models\User;
-// use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-// uses(DatabaseTransactions::class);
+uses(RefreshDatabase::class);
 
-// it('can authenticate student with valid credentials', function () {
-//     $user = User::factory()->create();
+beforeEach(function () {
+    $this->user = User::factory()->create([
+        'npm' => '12345678',
+        'password' => Hash::make('password'),
+    ]);
+});
 
-//     $response = $this->post('/login', [
-//         'npm' => $user->npm,
-//         'password' => $user->password,
-//     ]);
+it('can authenticate student with valid credentials', function () {
+    $response = $this->post('/login', [
+        'npm' => '12345678',
+        'password' => 'password',
+    ]);
 
-//     $response->assertRedirect('/mhs/beranda');
-//     $this->assertAuthenticatedAs($user, 'user');
-// });
+    $response->assertRedirect('/mhs/beranda');
+    $this->assertAuthenticatedAs($this->user);
+});
+
+it('cannot authenticate inactive student', function () {
+    $user = User::factory()->create([
+        'npm' => '12345',
+        'password' => Hash::make('password'),
+        'active_status' => 'Tidak Aktif',
+    ]);
+
+    $response = $this->post('/login', [
+        'npm' => $user->npm,
+        'password' => 'password',
+    ]);
+
+    $response->assertRedirect('/login');
+    $this->assertGuest();
+
+    $response->assertSessionHas('status', 'failed');
+    $response->assertSessionHas('message', 'Account is not active');
+});
 
 // it('cannot authenticate student with invalid credentials', function () {
-//     $user = User::factory()->create();
-
 //     $response = $this->post('/login', [
-//         'npm' => $user->npm,
-//         'password' => 'wrong_password',
+//         'npm' => '12345678',
+//         'password' => 'wrongpassword',
 //     ]);
 
 //     $response->assertRedirect('/login');
-//     $this->assertAuthenticatedAs('user');
+//     $response->assertSessionHas('status', 'failed');
+//     $response->assertSessionHas('message', 'User not found');
+//     $this->assertGuest();
 // });
 
-// it('can logout student', function () {
-//     $user = User::factory()->create();
+it('can logout student', function () {
+    $this->actingAs($this->user);
 
-//     Auth()->login($user);
+    $response = $this->get('/mhs/logout');
 
-//     $response = $this->get('/mhs/logout');
-
-//     $response->assertRedirect('/login');
-//     $this->assertGuest('user');
-// });
+    $response->assertRedirect('/login');
+    $this->assertGuest();
+});

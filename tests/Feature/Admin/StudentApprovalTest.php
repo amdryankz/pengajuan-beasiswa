@@ -22,7 +22,7 @@ beforeEach(function () {
     Mail::fake();
 });
 
-it('shows applicants who have passed the file based on the scholarship', function () {
+it('shows applicants who have passed the file for a specific scholarship', function () {
     $this->actingAs($this->admin, 'admin');
     $scholarship = ScholarshipData::factory()->create();
     $user1 = User::factory()->create();

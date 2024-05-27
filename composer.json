@@ -22,7 +22,7 @@
         "andyabih/laravel-to-uml": "^1.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
-        "mockery/mockery": "^1.4.4",
+        "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^7.0",
         "pestphp/pest": "^2.34",
         "pestphp/pest-plugin-laravel": "^2.2",

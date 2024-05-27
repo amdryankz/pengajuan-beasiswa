@@ -25,6 +25,18 @@ class UserAuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->active_status !== 'Aktif' || $user->graduate_status !== 'Belum Lulus') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                Session::flash('status', 'failed');
+                Session::flash('message', 'Account is not active');
+                return redirect('/login');
+            }
+
             $request->session()->regenerate();
             return redirect('/mhs/beranda');
         } else {
@@ -36,35 +48,48 @@ class UserAuthController extends Controller
             $xml = simplexml_load_string($body);
 
             if ($xml->npm == $credentials['npm']) {
-                $user = new User();
-                $user->npm = (string)$xml->npm;
-                $user->password = Hash::make($credentials['password']);
-                $user->name = (string)$xml->nama;
-                $user->major = (string)$xml->prodi;
-                $user->faculty = (string)$xml->fakultas;
-                $user->gender = (string)$xml->jenis_kelamin;
-                $user->ipk = (float)$xml->ipk;
-                $user->total_sks = (int)$xml->sksLulus;
-                $user->active_status = (string)$xml->status_aktif;
-                $user->graduate_status = (string)$xml->status_lulus;
-                $user->birthdate = date('Y-m-d', strtotime((string)$xml->tanggal_lahir));
-                $user->birthplace = (string)$xml->tempat_lahir;
-                $user->address = (string)$xml->alamat;
-                $user->email = (string)$xml->email;
-                $user->parent_name = (string)$xml->nama_ortu;
-                $user->phone_number = (string)$xml->no_tlp_mhs;
-                $user->save();
+                $activeStatus = (string)$xml->status_aktif;
+                $graduateStatus = (string)$xml->status_lulus;
 
-                Auth::login($user);
+                if ($activeStatus == 'Aktif' && $graduateStatus == 'Belum Lulus') {
+                    $user = new User();
+                    $user->npm = (string)$xml->npm;
+                    $user->password = Hash::make($credentials['password']);
+                    $user->name = (string)$xml->nama;
+                    $user->major = (string)$xml->prodi;
+                    $user->faculty = (string)$xml->fakultas;
+                    $user->gender = (string)$xml->jenis_kelamin;
+                    $user->ipk = (float)$xml->ipk;
+                    $user->total_sks = (int)$xml->sksLulus;
+                    $user->active_status = $activeStatus;
+                    $user->graduate_status = $graduateStatus;
+                    $user->birthdate = date('Y-m-d', strtotime((string)$xml->tanggal_lahir));
+                    $user->birthplace = (string)$xml->tempat_lahir;
+                    $user->address = (string)$xml->alamat;
+                    $user->email = (string)$xml->email;
+                    $user->parent_name = (string)$xml->nama_ortu;
+                    $user->phone_number = (string)$xml->no_tlp_mhs;
+                    $user->save();
 
-                $request->session()->regenerate();
-                return redirect('/mhs/beranda');
+                    Auth::login($user);
+
+                    $request->session()->regenerate();
+                    return redirect('/mhs/beranda');
+                } else {
+                    Session::flash('status', 'failed');
+                    Session::flash('message', 'Account is not active');
+                    return redirect('/login');
+                }
             } else {
                 Session::flash('status', 'failed');
                 Session::flash('message', 'User not found');
                 return redirect('/login');
             }
         }
+
+        Session::flash('status', 'failed');
+        Session::flash('message', 'Invalid credentials');
+        return redirect('/login');
     }
 
     public function logout(Request $request)
