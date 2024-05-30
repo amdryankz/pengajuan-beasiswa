@@ -10,15 +10,16 @@ class LandingPageController extends Controller
 {
     public function index()
     {
-        return view('main.landingpage.index');
+        $data = Announcement::all(); // Mengambil semua data berita beasiswa
+        return view('main.landingpage.index', ['data' => $data]);
     }
 
-    public function show(string $id)
+    public function show(string $slug)
     {
         try {
-            $announcement = Announcement::where('slug', $id)->firstOrFail();
+            $announcement = Announcement::where('slug', $slug)->firstOrFail();
         } catch (ModelNotFoundException $e) {
-            $announcement = Announcement::findOrFail($id);
+            $announcement = Announcement::findOrFail($slug);
         }
 
         return view('main.landingpage.show', ['pengumuman' => $announcement]);

@@ -13,7 +13,7 @@
                 <h2 class="text-center mb-4 text-xl text-blue-600 font-bold">BIODATA MAHASISWA</h2>
                 <div class="row">
                     <!-- Kolom kiri (informasi yang tidak dapat diubah) -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 sm:flex sm:flex-col">
                         <div class="card mb-4 shadow-sm rounded">
                             <div class="card-body">
                                 <h5 class="card-title text-lg font-semibold fs-5">Informasi Pribadi</h5>
@@ -96,7 +96,7 @@
                     </div>
 
                     <!-- Kolom kanan (update data) -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 sm:flex sm:flex-col">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-base fs-5">Update Informasi</h5>
@@ -106,11 +106,10 @@
                                     <div class="mb-3">
                                         <label for="phone_number" class="form-label font-semibold text-base">Nomor
                                             HP:</label>
-                                        <input type="text" name="phone_number"
+                                        <input type="text" name="phone_number" id="phone_number"
                                             class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                             value="{{ old('phone_number', $user->phone_number) }}" required>
                                     </div>
-
                                     <div class="mb-3">
                                         <label for="bank_account_number" class="form-label font-semibold text-base">Nomor
                                             Rekening:</label>
@@ -132,7 +131,7 @@
                                             class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"
                                             value="{{ old('bank_name', $user->bank_name) }}" required>
                                     </div>
-                                     {{-- <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label for="address" class="form-label font-semibold text-base">Alamat:</label>
                                         <input type="text" name="address"
                                             class="form-control border-sky-500 border-solid border-1 rounded-md p-2 text-base bg-slate-50"

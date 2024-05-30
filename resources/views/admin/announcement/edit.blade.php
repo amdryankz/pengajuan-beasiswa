@@ -81,9 +81,26 @@
     </div>
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
     <script>
         var quill = new Quill('#editor', {
-            theme: 'snow'
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{
+                        'align': []
+                    }],
+                    ['bold', 'italic', 'underline'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            }
         });
 
         // Set value of hidden input to Quill's HTML content
@@ -92,22 +109,21 @@
             var contentInput = document.querySelector('#content');
             contentInput.value = quill.root.innerHTML;
         };
-    </script>
 
-    <script>
-        function previewImage() {
-            const input = document.getElementById('image');
-            const preview = document.getElementById('preview-image');
-            const file = input.files[0];
-            const reader = new FileReader();
+        // Menangani event paste
+        document.getElementById('editor').addEventListener('paste', function(e) {
+            e.preventDefault(); // Mencegah aksi default saat paste
 
-            reader.onload = function() {
-                preview.src = reader.result;
-            };
+            // Mendapatkan teks yang dipaste
+            var text = (e.originalEvent || e).clipboardData.getData('text/plain');
 
-            if (file) {
-                reader.readAsDataURL(file);
+            // Membedakan baris-baris teks
+            var paragraphs = text.split('\n');
+
+            // Menambahkan baris-baris teks ke Quill editor
+            for (var i = 0; i < paragraphs.length; i++) {
+                quill.insertText(quill.getLength(), paragraphs[i] + '\n', Quill.sources.USER);
             }
-        }
+        });
     </script>
 @endsection
