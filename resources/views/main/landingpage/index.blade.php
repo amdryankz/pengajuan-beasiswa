@@ -78,7 +78,7 @@
     <!-- akhir Navbar -->
 
     <!-- Jumbotron -->
-    <div class="py-48 bg-cover bg-center bg-no-repeat"
+    <div class="py-36 bg-cover bg-center bg-no-repeat"
         style="background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);">
         <div class="container mx-auto px-4">
             <div class="text-center">
@@ -95,7 +95,7 @@
     <div class="container mx-auto px-4 mt-8">
 
         <!-- Judul Pengumuman dan Berita -->
-        <h2 id="berita" class="text-2xl font-bold mb-6 text-center text-gray-800">Pengumuman dan Berita Terbaru</h2>
+        <h2 id="berita" class="text-2xl font-bold mb-6 text-center text-gray-800">Pengumuman dan Berita</h2>
 
         <!-- Grid Berita -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-6">

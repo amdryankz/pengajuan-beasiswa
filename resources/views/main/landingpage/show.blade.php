@@ -62,11 +62,22 @@
         </div>
     </nav>
     <!-- akhir Navbar -->
+
     <!-- Container -->
     <div class="container mx-auto px-4 mt-8">
         <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col lg:flex-row">
             <!-- Left Column -->
             <div class="lg:w-2/3 lg:pr-6 mb-6 lg:mb-0">
+                <div class="mb-4">
+                    <a href="{{ url('/') }}"
+                        class="inline-flex items-center px-2 py-1 text-blue-600 hover:bg-blue-100 rounded-lg">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </a>
+                </div>
                 <h1 class="text-3xl font-bold mb-4">{{ $pengumuman->title }}</h1>
                 <div class="bg-gray-200 p-4 flex justify-center items-center">
                     <img src="{{ asset('storage/' . $pengumuman->image) }}" alt="{{ $pengumuman->title }}"
@@ -83,31 +94,57 @@
                             class="font-medium">{{ $pengumuman->letter_number }}</span></p>
                 </div>
                 <div class="text-gray-800 leading-relaxed">
+                    <h1 class="text-xl font-bold mb-4 text-center">{{ $pengumuman->title }}</h1>
                     {!! $pengumuman->content !!}
                 </div>
-                <a href="{{ url('/') }}" class="text-blue-500 hover:underline mt-4 block">Kembali ke Beranda</a>
+
             </div>
 
             <!-- Right Column -->
-            <div class="lg:w-1/3 bg-gray-100 rounded-lg p-6">
+            <div class="lg:w-1/3 bg-gray-100 rounded-lg p-6 mt-6 lg:mt-0 lg:sticky lg:top-8">
                 <h2 class="text-2xl font-semibold mb-4">Berita Lainnya</h2>
-                <!-- Add your additional news content here -->
-                <!-- Example: -->
                 <ul>
-                    <li class="mb-4">
-                        <a href="#" class="text-blue-500 hover:underline">Berita 1</a>
-                        <p class="text-gray-600 text-sm">Deskripsi singkat berita 1</p>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="text-blue-500 hover:underline">Berita 2</a>
-                        <p class="text-gray-600 text-sm">Deskripsi singkat berita 2</p>
-                    </li>
-                    <!-- Add more news items as needed -->
+                    @foreach ($otherNews as $news)
+                        <li
+                            class="mb-4 flex bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <img src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}"
+                                class="w-16 h-16 object-cover rounded-lg mr-4">
+                            <div>
+                                <a href="{{ url('/' . $news->slug) }}" class="text-blue-500 hover:underline">
+                                    {{ $news->title }}
+                                </a>
+                                <p class="text-gray-600 text-sm">
+                                    Tahun: {{ \Carbon\Carbon::parse($news->created_at)->format('d M Y') }}
+                                </p>
+                            </div>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
     </div>
     <!-- End Container -->
+
+    <!-- Informasi Kontak dan Footer Container -->
+    <div id="kontak" class="bg-gray-900 border rounded-lg shadow-lg mt-8">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-6 text-white text-center">Informasi Kontak</h2>
+            <div class="text-center text-white">
+                <p><span class="font-semibold"></span> Jln. Teuku Nyak Arief
+                    Darussalam, Banda Aceh, Aceh, 23111
+                    INDONESIA</p>
+                <p><span class="font-semibold">Hotline:</span> 081313223</p>
+                <p><span class="font-semibold">Email:</span> kemahasiswaan@usk.ac.id</p>
+            </div>
+        </div>
+
+        <footer class="text-white py-4">
+            <div class="container mx-auto px-4 text-center w-full">
+                <p>&copy; 2024 Beasiswa USK</p>
+                <p> BIDANG KEMAHASISWAAN DAN KEWIRAUSAHAAN</p>
+            </div>
+        </footer>
+    </div>
 
 
 

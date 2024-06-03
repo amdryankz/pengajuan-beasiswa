@@ -22,6 +22,12 @@ class LandingPageController extends Controller
             $announcement = Announcement::findOrFail($slug);
         }
 
-        return view('main.landingpage.show', ['pengumuman' => $announcement]);
+        // Get other news excluding the current one
+        $otherNews = Announcement::where('slug', '!=', $slug)->take(6)->get();
+
+        return view('main.landingpage.show', [
+            'pengumuman' => $announcement,
+            'otherNews' => $otherNews
+        ]);
     }
 }
