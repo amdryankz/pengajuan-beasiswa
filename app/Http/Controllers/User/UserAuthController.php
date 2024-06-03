@@ -40,6 +40,13 @@ class UserAuthController extends Controller
             $request->session()->regenerate();
             return redirect('/mhs/beranda');
         } else {
+            $localUser = User::where('npm', $credentials['npm'])->first();
+            if ($localUser) {
+                Session::flash('status', 'failed');
+                Session::flash('message', 'Invalid credentials');
+                return redirect('/login');
+            }
+
             $url = env('WEBSERVICE_URL');
             $key = env('WEBSERVICE_KEY');
             $client = new Client();
@@ -86,11 +93,8 @@ class UserAuthController extends Controller
                 return redirect('/login');
             }
         }
-
-        Session::flash('status', 'failed');
-        Session::flash('message', 'Invalid credentials');
-        return redirect('/login');
     }
+
 
     public function logout(Request $request)
     {
