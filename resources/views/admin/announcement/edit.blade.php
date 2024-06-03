@@ -44,6 +44,7 @@
                                 <input type="file" name="image" id="image"
                                     class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
                                     onchange="previewImage()">
+                                <div id="imagePreview" class="mt-2"></div>
                             </label>
                         </div>
                         @error('image')
@@ -125,5 +126,18 @@
                 quill.insertText(quill.getLength(), paragraphs[i] + '\n', Quill.sources.USER);
             }
         });
+
+        function previewImage() {
+            const input = document.getElementById('image');
+            const preview = document.getElementById('preview-image');
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                preview.src = reader.result;
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 @endsection

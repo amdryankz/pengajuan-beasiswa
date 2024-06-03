@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Upload Khusus')
+@section('navbar', 'Kelola Beasiswa Khusus')
 
 @section('content')
     <div class="mb-4 text-start bg-white p-4">

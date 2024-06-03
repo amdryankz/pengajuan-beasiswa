@@ -98,14 +98,14 @@
         <h2 id="berita" class="text-2xl font-bold mb-6 text-center text-gray-800">Pengumuman dan Berita Terbaru</h2>
 
         <!-- Grid Berita -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
-            @foreach ($data as $announcement)
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-6">
+            @foreach ($data as $index => $announcement)
                 <!-- Item Berita -->
                 <div
-                    class="flex flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    class="flex flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1 {{ $index >= 6 ? 'hidden' : '' }} news-item">
                     <!-- Gambar Berita -->
                     <img src="{{ asset('storage/' . $announcement->image) }}" alt="{{ $announcement->title }}"
-                        class="max-w-lg max-h-48 object-fill rounded-t-lg">
+                        class="w-full h-48 object-cover rounded-t-lg">
                     <!-- Detail Berita -->
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <!-- Judul Berita -->
@@ -114,13 +114,27 @@
                         <p class="text-sm text-gray-600 mb-4">Tanggal: {{ $announcement->created_at->format('d M Y') }}
                         </p>
                         <!-- Tombol Baca Selengkapnya -->
-                        <a href="{{ url('/' . $announcement->slug) }}" class="text-blue-500 hover:underline self-end">Baca
+                        <a href="{{ url('/' . $announcement->slug) }}"
+                            class="text-blue-500 hover:underline self-end">Baca
                             Selengkapnya</a>
                     </div>
                 </div>
             @endforeach
         </div>
         <!-- End Grid Berita -->
+
+        <!-- Buttons to Toggle News View -->
+        @if (count($data) > 6)
+            <div class="text-center mt-4">
+                <button id="showMoreButton"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300">Lihat
+                    Semua Berita</button>
+                <button id="showLessButton"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300 hidden">Lihat
+                    Sebagian Berita</button>
+            </div>
+        @endif
+
     </div>
     <!-- End Container -->
 
@@ -205,6 +219,24 @@
                 dropdownMenu.classList.toggle('hidden');
             });
         });
+
+        document.getElementById('showMoreButton').addEventListener('click', function() {
+            const hiddenItems = document.querySelectorAll('.news-item.hidden');
+            hiddenItems.forEach(item => item.classList.remove('hidden'));
+            document.getElementById('showMoreButton').classList.add('hidden');
+            document.getElementById('showLessButton').classList.remove('hidden');
+        });
+
+        document.getElementById('showLessButton').addEventListener('click', function() {
+            const newsItems = document.querySelectorAll('.news-item');
+            newsItems.forEach((item, index) => {
+                if (index >= 6) {
+                    item.classList.add('hidden');
+                }
+            });
+            document.getElementById('showMoreButton').classList.remove('hidden');
+            document.getElementById('showLessButton').classList.add('hidden');
+        }); // Button Berita Show More
     </script>
 
 </body>

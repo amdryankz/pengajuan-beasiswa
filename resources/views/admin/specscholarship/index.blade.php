@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('navbar', 'Upload Khusus')
+@section('navbar', 'Beasiswa Khusus')
 
 @section('content')
 
@@ -38,7 +38,8 @@
                             <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->name }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->year }}</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->scholarship->donor->name }}</td>
-                            <td class="px-2 py-1 text-center border-r">Rp {{ $item->amount }} / {{ $item->amount_period }}
+                            <td class="px-2 py-1 text-center border-r">Rp
+                                {{ number_format($item->amount, 0, ',', '.') }} / {{ $item->amount_period }}
                             </td>
                             <td class="text-center border-r">{{ $item->duration }} Bulan</td>
                             <td class="px-2 py-1 text-center border-r">{{ $item->start_scholarship->format('d-m-Y') }}</td>

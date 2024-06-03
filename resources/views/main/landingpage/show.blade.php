@@ -62,30 +62,54 @@
         </div>
     </nav>
     <!-- akhir Navbar -->
-
     <!-- Container -->
     <div class="container mx-auto px-4 mt-8">
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h1 class="text-3xl font-bold mb-4">{{ $pengumuman->title }}</h1>
-            <img src="{{ asset('storage/' . $pengumuman->image) }}" alt="{{ $pengumuman->title }}"
-                width="{{ $pengumuman->image_width }}" height="{{ $pengumuman->image_height }}"
-                class="mx-auto my-auto object-contain mb-4">
-            <div class="flex justify-start items-start mb-4 text-gray-600">
-                <p><i
-                        class="bi bi-calendar2-date mr-2"></i>{{ \Carbon\Carbon::parse($pengumuman->created_at)->locale('id')->isoFormat('dddd') }},
-                    <span
-                        class="font-medium">{{ \Carbon\Carbon::parse($pengumuman->created_at)->format('d M Y') }}</span>
-                </p>
-                <p class="ml-4"><i class="bi bi-card-text mr-1"></i> Nomor: <span
-                        class="font-medium">{{ $pengumuman->letter_number }}</span></p>
+        <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col lg:flex-row">
+            <!-- Left Column -->
+            <div class="lg:w-2/3 lg:pr-6 mb-6 lg:mb-0">
+                <h1 class="text-3xl font-bold mb-4">{{ $pengumuman->title }}</h1>
+                <div class="bg-gray-200 p-4 flex justify-center items-center">
+                    <img src="{{ asset('storage/' . $pengumuman->image) }}" alt="{{ $pengumuman->title }}"
+                        class="w-full lg:w-auto max-h-96 object-contain mb-4">
+                </div>
+
+                <div class="flex flex-col lg:flex-row justify-start items-start mb-4 text-gray-600">
+                    <p class="mb-2 lg:mb-0"><i
+                            class="bi bi-calendar2-date mr-2"></i>{{ \Carbon\Carbon::parse($pengumuman->created_at)->locale('id')->isoFormat('dddd') }},
+                        <span
+                            class="font-medium">{{ \Carbon\Carbon::parse($pengumuman->created_at)->format('d M Y') }}</span>
+                    </p>
+                    <p class="ml-0 lg:ml-4"><i class="bi bi-card-text mr-1"></i> Nomor: <span
+                            class="font-medium">{{ $pengumuman->letter_number }}</span></p>
+                </div>
+                <div class="text-gray-800 leading-relaxed">
+                    {!! $pengumuman->content !!}
+                </div>
+                <a href="{{ url('/') }}" class="text-blue-500 hover:underline mt-4 block">Kembali ke Beranda</a>
             </div>
-            <div class="text-gray-800 leading-relaxed">
-                {!! $pengumuman->content !!}
+
+            <!-- Right Column -->
+            <div class="lg:w-1/3 bg-gray-100 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Berita Lainnya</h2>
+                <!-- Add your additional news content here -->
+                <!-- Example: -->
+                <ul>
+                    <li class="mb-4">
+                        <a href="#" class="text-blue-500 hover:underline">Berita 1</a>
+                        <p class="text-gray-600 text-sm">Deskripsi singkat berita 1</p>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#" class="text-blue-500 hover:underline">Berita 2</a>
+                        <p class="text-gray-600 text-sm">Deskripsi singkat berita 2</p>
+                    </li>
+                    <!-- Add more news items as needed -->
+                </ul>
             </div>
-            <a href="{{ url('/') }}" class="text-blue-500 hover:underline mt-4 block">Kembali ke Beranda</a>
         </div>
     </div>
     <!-- End Container -->
+
+
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
