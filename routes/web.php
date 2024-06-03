@@ -115,11 +115,18 @@ Route::middleware('guest_user')->prefix('login')->group(function () {
 Route::middleware('auth_user')->prefix('mhs')->group(function () {
     // Daftar beasiswa
     Route::resource('pendaftaran', UserScholarshipController::class);
+
+    // Beranda
     Route::get('beranda', [UserHomepageController::class, 'index']);
+
+    // Biodata mahasiswa
     Route::get('biodata', [UserProfileController::class, 'index'])->name('biodata.index');
     Route::put('biodata/update', [UserProfileController::class, 'update'])->name('biodata.update');
+
+    // Logout mahasiswa
     Route::get('logout', [UserAuthController::class, 'logout']);
 });
 
+// Landing page
 Route::get('/', [LandingPageController::class, 'index']);
 Route::get('/{id}', [LandingPageController::class, 'show']);

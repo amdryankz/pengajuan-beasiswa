@@ -42,17 +42,17 @@ it('cannot authenticate inactive student', function () {
     $response->assertSessionHas('message', 'Account is not active');
 });
 
-// it('cannot authenticate student with invalid credentials', function () {
-//     $response = $this->post('/login', [
-//         'npm' => '12345678',
-//         'password' => 'wrongpassword',
-//     ]);
+it('cannot authenticate student with invalid credentials', function () {
+    $response = $this->post('/login', [
+        'npm' => '12345678',
+        'password' => 'wrongpassword',
+    ]);
 
-//     $response->assertRedirect('/login');
-//     $response->assertSessionHas('status', 'failed');
-//     $response->assertSessionHas('message', 'User not found');
-//     $this->assertGuest();
-// });
+    $response->assertRedirect('/login');
+    $response->assertSessionHas('status', 'failed');
+    $response->assertSessionHas('message', 'Invalid credentials');
+    $this->assertGuest();
+});
 
 it('can logout student', function () {
     $this->actingAs($this->user);
