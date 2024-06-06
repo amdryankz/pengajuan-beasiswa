@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('parent_name', 50)->nullable();
             $table->string('parent_job', 35)->nullable();
             $table->string('parent_income', 50)->nullable();
-            $table->unsignedBigInteger('phone_number')->nullable();
-            $table->unsignedBigInteger('bank_account_number')->nullable();
+            $table->string('phone_number', 20)->nullable();
+            $table->string('bank_account_number', 25)->nullable();
             $table->string('account_holder_name', 50)->nullable();
             $table->string('bank_name', 35)->nullable();
             $table->string('slug', 50)->nullable();

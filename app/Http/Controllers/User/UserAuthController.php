@@ -61,7 +61,7 @@ class UserAuthController extends Controller
                 if ($activeStatus == 'Aktif' && $graduateStatus == 'Belum Lulus') {
                     $user = new User();
                     $user->npm = (string)$xml->npm;
-                    $user->password = Hash::make($credentials['password']);
+                    $user->password = bcrypt('password');
                     $user->name = (string)$xml->nama;
                     $user->major = (string)$xml->prodi;
                     $user->faculty = (string)$xml->fakultas;
