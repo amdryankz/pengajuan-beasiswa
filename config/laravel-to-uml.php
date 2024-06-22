@@ -15,7 +15,7 @@ return [
     'channels'      => false,
     'commands'      => false,
     'components'    => false,
-    'controllers'   => true,
+    'controllers'   => false,
     'events'        => false,
     'exceptions'    => false,
     'jobs'          => false,
