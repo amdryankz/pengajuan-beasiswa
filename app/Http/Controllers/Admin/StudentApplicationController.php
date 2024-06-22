@@ -76,7 +76,12 @@ class StudentApplicationController extends Controller
 
     public function validateFile($scholarship_id, $user_id)
     {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)
+            ->where('user_id', $user_id)
+            ->get();
+
+        $user = User::findOrFail($user_id);
+        $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->file_status = true;
@@ -84,14 +89,23 @@ class StudentApplicationController extends Controller
             $userScholarship->save();
         }
 
-        Mail::to($userScholarship->user->email)->send(new FileValidated());
+        // Kirim email dengan informasi nama mahasiswa dan nama beasiswa
+        Mail::to($user->email)->send(new FileValidated(
+            $user->name,
+            $scholarship->scholarship->name
+        ));
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
     }
 
-    public function cancelValidation(Request $request, $scholarship_id, $user_id)
+   public function cancelValidation(Request $request, $scholarship_id, $user_id)
     {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
+        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)
+            ->where('user_id', $user_id)
+            ->get();
+
+        $user = User::findOrFail($user_id);
+        $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
         foreach ($userScholarships as $userScholarship) {
             $userScholarship->file_status = false;
@@ -100,7 +114,12 @@ class StudentApplicationController extends Controller
             $userScholarship->save();
         }
 
-        Mail::to($userScholarship->user->email)->send(new FileValidationCancelled($userScholarship->rejection_reason));
+        // Kirim email dengan informasi nama mahasiswa dan nama beasiswa
+        Mail::to($user->email)->send(new FileValidationCancelled(
+            $userScholarship->rejection_reason,
+            $user->name,
+            $scholarship->scholarship->name
+        ));
 
         return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
     }

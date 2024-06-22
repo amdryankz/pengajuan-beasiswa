@@ -29,7 +29,7 @@
         <h2 class="text-xl font-semibold text-slate-100">BEASISWA USK</h2>
       </div>
       <div class="bg-gradient-to-t from-blue-800 pl-2 pb-2 pr-[25%]">
-        <span class="text-md font-semibold text-slate-400"> &copy; 2023 BEASISWA USK</span>
+        <span class="text-md font-semibold text-slate-400"> &copy; 2024 BEASISWA USK</span>
       </div>
     </div>
     <div id="FormSection" class="w-1/2 flex flex-col justify-center items-center ">

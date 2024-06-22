@@ -53,29 +53,19 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="amount" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
-                    <input type="text"
-                        class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                        name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
-                </div>
 
-            </div>
-            <div class="col-span-1">
-                <div class="mb-4 flex items-start">
-                    <div class="me-4 flex-1">
-                        <label for="duration" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Durasi</label>
-                        <select
-                            class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                            name="duration" id="duration" required>
-                            <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa</option>
-                            @for ($i = 1; $i <= 48; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
+                <!-- Durasi dan Nominal -->
+                <div class="flex items-center mb-4">
+                    <!-- Nominal -->
+                    <div class="flex-1 mr-4">
+                        <label for="amount" class="mb-1 block text-sm font-medium text-gray-600">Nominal</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md focus:border-sky-500 text-sm"
+                            name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
                     </div>
+                    <!-- Per -->
                     <div class="flex-1">
-                        <label for="amount_period" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Per</label>
+                        <label for="amount_period" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Periode</label>
                         <select
                             class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
                             name="amount_period" id="amount_period" required>
@@ -85,6 +75,24 @@
                         </select>
                     </div>
                 </div>
+
+            </div>
+            <div class="col-span-1">
+                <div class="mb-4 flex items-start">
+                    <div class="flex-1">
+                        <label for="duration" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Durasi /
+                            Bulan</label>
+                        <select
+                            class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                            name="duration" id="duration" required>
+                            <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa per Bulan</option>
+                            @for ($i = 1; $i <= 48; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+
                 <div class="mb-4">
                     <label for="start_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Mulai
                         Beasiswa</label>
@@ -93,14 +101,16 @@
                         required>
                 </div>
                 <div class="mb-4">
-                    <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Akhir Beasiswa</label>
+                    <label for="end_scholarship" class="block text-sm font-medium text-gray-600 mb-1">Akhir
+                        Beasiswa</label>
                     <input type="date" id="end_scholarship" name="end_scholarship"
                         class="block w-full px-3 py-2 border-1 border-gray-300 rounded-md focus:ring-1 focus:ring-sky-500 text-sm"
                         required>
                 </div>
 
                 <div class="mb-6 relative">
-                    <label for="student_list_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload Daftar
+                    <label for="student_list_file" class="block text-sm font-medium text-gray-600 mb-1 ml-1">Upload
+                        Daftar
                         Mahasiswa</label>
                     <div class="flex items-center">
                         <input type="file" name="student_list_file" id="student_list_file" accept=".xlsx, .xls"

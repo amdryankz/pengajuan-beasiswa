@@ -7,12 +7,12 @@
 <body class="bg-gray-100 text-gray-700">
     <div class="max-w-lg mx-auto bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg mt-6">
         <div class="bg-red-500 text-white text-center py-4">
-            <h1 class="text-xl font-bold">Validasi Berkas Beasiswa Dibatalkan</h1>
+            <h1 class="text-xl font-bold">Pengumuman Seleksi Berkas - <strong>{{ $scholarshipName }}</strong></h1>
         </div>
         <div class="p-6">
-            <p>Halo,</p>
-            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan telah dibatalkan validasinya oleh admin. Alasan pembatalan adalah sebagai berikut:</p>
-            <p class="bg-gray-100 p-4 border-l-4 border-red-500 my-4">{{ $reason }}</p>
+            <p>Halo, <strong>{{ $userName }}</strong></p>
+            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan untuk beasiswa <strong>{{ $scholarshipName }}</strong> telah dibatalkan validasinya oleh admin. Alasan pembatalan adalah sebagai berikut:</p>
+            <strong class="bg-gray-100 p-4 border-l-4 border-red-500 my-4">{{ $reason }}</strong>
             <p>Silakan periksa kembali berkas Anda dan ajukan ulang jika diperlukan. Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.</p>
             <p>Terima kasih atas perhatian dan kerja samanya.</p>
             <p>Salam,<br>Bidang Kemahasiswaan Universitas Syiah Kuala</p>

@@ -46,63 +46,106 @@ class StudentApprovalController extends Controller
     }
 
     public function showDetail(string $user_id, string $scholarship_id)
-    {
-        $user = User::findOrFail($user_id);
-        $scholarship = ScholarshipData::findOrFail($scholarship_id);
+{
+    $user = User::findOrFail($user_id);
+    $scholarship = ScholarshipData::findOrFail($scholarship_id);
 
-        $files = UserScholarship::with('files')->where('user_id', $user_id)
-            ->where('scholarship_data_id', $scholarship_id)
-            ->get();
+    $files = UserScholarship::with('files')
+        ->where('user_id', $user_id)
+        ->where('scholarship_data_id', $scholarship_id)
+        ->get();
 
-        return view('admin.passfile.detail')->with('user', $user)
-            ->with('scholarship', $scholarship)
-            ->with('files', $files);
+    // Ambil kuota beasiswa untuk fakultas yang sesuai
+    $quota = json_decode($scholarship->quota, true);
+
+    // jumlah mahasiswa yang sudah divalidasi untuk fakultas
+    $validatedCount = UserScholarship::where('scholarship_data_id', $scholarship_id)
+        ->whereHas('user', function ($query) use ($user) {
+            $query->where('faculty', $user->faculty);
+        })
+        ->where('scholarship_status', true)
+        ->count();
+
+    // Cek apakah kuota untuk fakultas ini sudah terpenuhi
+    $quotaExceeded = $validatedCount >= $quota[$user->faculty];
+
+    return view('admin.passfile.detail')
+        ->with('user', $user)
+        ->with('scholarship', $scholarship)
+        ->with('files', $files)
+        ->with('quotaExceeded', $quotaExceeded); // Kirim variabel $quotaExceeded ke view
+}
+
+    
+
+   public function validateScholar($scholarship_id, $user_id)
+{
+    $scholarshipData = ScholarshipData::findOrFail($scholarship_id);
+
+    // Ambil kuota beasiswa untuk fakultas yang sesuai
+    $quota = json_decode($scholarshipData->quota, true);
+
+    $user = User::findOrFail($user_id);
+
+    $faculty = $user->faculty;
+
+    // jumlah mahasiswa yang sudah divalidasi untuk fakultas
+    $validatedCount = UserScholarship::where('scholarship_data_id', $scholarship_id)
+        ->whereHas('user', function ($query) use ($faculty) {
+            $query->where('faculty', $faculty);
+        })
+        ->where('scholarship_status', true)
+        ->count();
+
+    // Cek apakah kuota untuk fakultas ini sudah terpenuhi
+    $quotaExceeded = $validatedCount >= $quota[$faculty];
+
+    if ($quotaExceeded) {
+        return redirect()->back()->with('error', 'Kuota untuk fakultas ' . $faculty . ' sudah terpenuhi.')
+            ->with('quotaExceeded', $quotaExceeded);
     }
 
-    public function validateScholar($scholarship_id, $user_id)
-    {
-        $scholarshipData = ScholarshipData::findOrFail($scholarship_id);
-        $quota = json_decode($scholarshipData->quota, true);
+    $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)
+        ->where('user_id', $user_id)
+        ->get();
 
-        $user = User::findOrFail($user_id);
-        $faculty = $user->faculty;
-
-        $validatedCount = UserScholarship::where('scholarship_data_id', $scholarship_id)
-            ->whereHas('user', function ($query) use ($faculty) {
-                $query->where('faculty', $faculty);
-            })
-            ->where('scholarship_status', true)
-            ->count();
-
-        if ($validatedCount >= $quota[$faculty]) {
-            return redirect()->back()->with('error', 'Kuota untuk fakultas ' . $faculty . ' sudah terpenuhi.');
-        }
-
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
-
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->scholarship_status = true;
-            $userScholarship->save();
-        }
-
-        Mail::to($userScholarship->user->email)->send(new ScholarshipValidated());
-
-        return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.');
+    foreach ($userScholarships as $userScholarship) {
+        $userScholarship->scholarship_status = true;
+        $userScholarship->save();
     }
+
+    // Kirim email pemberitahuan bahwa mahasiswa dinyatakan lulus beasiswa
+    Mail::to($user->email)->send(new ScholarshipValidated($user->name, $scholarshipData->scholarship->name));
+
+    // Redirect ke halaman detail beasiswa dengan pesan sukses
+    return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa lulus beasiswa.')
+        ->with('quotaExceeded', $quotaExceeded);
+}
 
     public function cancelValidation($scholarship_id, $user_id)
-    {
-        $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)->where('user_id', $user_id)->get();
+{
+    $userScholarships = UserScholarship::where('scholarship_data_id', $scholarship_id)
+        ->where('user_id', $user_id)
+        ->get();
 
-        foreach ($userScholarships as $userScholarship) {
-            $userScholarship->scholarship_status = false;
-            $userScholarship->save();
-        }
-
-        Mail::to($userScholarship->user->email)->send(new ScholarshipValidationCancelled());
-
-        return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
+    foreach ($userScholarships as $userScholarship) {
+        $userScholarship->scholarship_status = false;
+        $userScholarship->save();
     }
+
+    $user = User::findOrFail($user_id);
+    $scholarship = ScholarshipData::findOrFail($scholarship_id);
+
+    // Send email notification
+    $mailData = new \stdClass();
+    $mailData->name = $user->name;
+    $mailData->scholarshipName = $scholarship->scholarship->name; 
+
+    Mail::to($user->email)
+        ->send(new ScholarshipValidationCancelled($mailData->name, $mailData->scholarshipName));
+
+    return redirect('/adm/kelulusan/' . $scholarship_id)->with('success', 'Mahasiswa tidak lulus beasiswa.');
+}
 
     public function export($scholarship_id)
     {

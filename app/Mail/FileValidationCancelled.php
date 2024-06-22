@@ -5,8 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class FileValidationCancelled extends Mailable
@@ -14,42 +12,31 @@ class FileValidationCancelled extends Mailable
     use Queueable, SerializesModels;
 
     public $reason;
+    public $userName; // Nama mahasiswa
+    public $scholarshipName; // Nama beasiswa
 
     /**
      * Create a new message instance.
+     *
+     * @param string $reason
+     * @param string $userName
+     * @param string $scholarshipName
      */
-    public function __construct($reason)
+    public function __construct($reason, $userName, $scholarshipName)
     {
         $this->reason = $reason;
+        $this->userName = $userName;
+        $this->scholarshipName = $scholarshipName;
     }
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'File Validation Cancelled',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.file_validation_cancelled',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
+     * Build the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return $this
      */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        return $this->subject('Pengumuman Seleksi Berkas - ' . $this->scholarshipName)
+                    ->view('emails.file_validation_cancelled');
     }
 }
