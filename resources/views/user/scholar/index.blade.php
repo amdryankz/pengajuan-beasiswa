@@ -113,7 +113,7 @@
 
                             <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->scholarship_status != true)
-                                    {{-- Tampilkan tombol hanya jika scholarship_status tidak true --}}
+                                    
                                     <form onsubmit="return confirm('Yakin mau hapus data ini?')"
                                         action="{{ route('pendaftaran.destroy', $item->id) }}" class="inline-block"
                                         method="POST">

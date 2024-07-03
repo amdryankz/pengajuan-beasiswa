@@ -18,7 +18,7 @@
         </div>
         <div class="bg-gray-100 text-gray-600 text-center py-2 border-t border-gray-300">
             <p>&copy; {{ date('Y') }} Universitas Syiah Kuala. All rights reserved.</p>
-        </div>
+            <p>Email dikirim pada {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</p>
     </div>
 </body>
 </html>
