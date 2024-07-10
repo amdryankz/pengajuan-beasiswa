@@ -5,49 +5,35 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class FileValidated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $userName; // Nama mahasiswa
+    public $scholarshipName; // Nama beasiswa
+
     /**
      * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'File Validated',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.file_validated',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @param string $userName
+     * @param string $scholarshipName
      */
-    public function attachments(): array
+    public function __construct($userName, $scholarshipName)
     {
-        return [];
+        $this->userName = $userName;
+        $this->scholarshipName = $scholarshipName;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Pengumuman Seleksi Berkas - ' . $this->scholarshipName)
+                    ->view('emails.file_validated');
     }
 }

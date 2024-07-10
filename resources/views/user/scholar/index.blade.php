@@ -40,7 +40,7 @@
                             </td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <a href="{{ route('pendaftaran.show', $item->id) }}"
-                                    class="bg-green-500 text-white px-2 py-1 rounded">Daftar</a>
+                                    class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Daftar</a>
                             </td>
                         </tr>
                     @endforeach
@@ -77,9 +77,13 @@
                                 @if ($item->file_status === null)
                                     Diproses
                                 @elseif ($item->file_status == false)
-                                    Ditolak
+                                    <span
+                                        class="px-1 py-1 rounded text-red-500 bg-red-100 font-normal whitespace-nowrap">Berkas
+                                        Ditolak</span>
                                 @elseif ($item->file_status == true)
-                                    Lulus Berkas
+                                    <span
+                                        class="px-1 py-1 rounded text-green-500 bg-green-100 font-normal whitespace-nowrap">Lulus
+                                        Berkas</span>
                                 @endif
                             </td>
 
@@ -97,22 +101,26 @@
                                 @elseif ($item->scholarship_status === null)
                                     -
                                 @elseif ($item->scholarship_status == false)
-                                    Tidak Lewat
+                                    <span
+                                        class="px-1 py-1 rounded text-red-500 bg-red-100 font-normal whitespace-nowrap">Tidak
+                                        Lulus</span>
                                 @elseif ($item->scholarship_status == true)
-                                    Lulus
+                                    <span
+                                        class="px-1 py-1 rounded text-green-500 bg-green-100 font-normal whitespace-nowrap">Lulus
+                                        Beasiswa</span>
                                 @endif
                             </td>
 
                             <td class="border-2 border-slate-200 px-4 py-2">
                                 @if ($item->scholarship_status != true)
-                                    {{-- Tampilkan tombol hanya jika scholarship_status tidak true --}}
+                                    
                                     <form onsubmit="return confirm('Yakin mau hapus data ini?')"
                                         action="{{ route('pendaftaran.destroy', $item->id) }}" class="inline-block"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded" type="submit"
-                                            name="submit">
+                                        <button class="bg-red-500 text-white hover:bg-red-600 px-2 py-1 rounded whitespace-nowrap"
+                                            type="submit" name="submit">
                                             Batal Daftar
                                         </button>
                                     </form>
@@ -120,10 +128,12 @@
                                     -
                                 @endif
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
         </div>
     </div>
 

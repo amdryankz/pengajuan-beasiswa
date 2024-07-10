@@ -6,7 +6,7 @@
 
     <div class="bg-white p-4">
         <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2">Beasiswa</h2>
+            <h2 class="text-xl font-semibold mb-2">Kelola Beasiswa</h2>
             <a href="{{ route('pengelolaan.create') }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">
                 + Tambah Beasiswa
@@ -143,7 +143,7 @@
                                                                                                 <div class="mb-3">
                                                                                                     <span
                                                                                                         class="font-bold">Nominal</span>
-                                                                                                    Rp {{ $item->amount }}
+                                                                                                    Rp {{ number_format($item->amount, 0, ',', '.') }}
                                                                                                     /
                                                                                                     {{ $item->amount_period }}
                                                                                                 </div>

@@ -29,7 +29,7 @@
                         <hr>
                         <div class="p-5 flex flex-col gap-5">
                             <div class="flex justify-center">
-                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full">
+                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full shadow-md">
                                     <div class="font-medium mx-2 sm:mx-5 my-3 flex items-center">
                                         Memilih Beasiswa
                                         <span
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full">
+                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full shadow-md">
                                     <div class="font-medium mx-2 sm:mx-5 my-3 flex items-center">
                                         Lengkapi Dokumen
                                         <span
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full">
+                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full shadow-md">
                                     <div class="font-medium mx-2 sm:mx-5 my-3 flex items-center">
                                         Melengkapi Biodata
                                         <span
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full">
+                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full shadow-md">
                                     <div class="font-medium mx-2 sm:mx-5 my-3 flex items-center">
                                         Periksa Jadwal pendaftaran beasiswa
                                         <span
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full">
+                                <div class="text-xs md:text-sm bg-[#F4F3F3] rounded-lg w-full h-full shadow-md">
                                     <div class="font-medium mx-2 sm:mx-5 my-3 flex items-center">
                                         Menunggu proses
                                         <span
