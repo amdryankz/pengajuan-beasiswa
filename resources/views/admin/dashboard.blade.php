@@ -306,12 +306,12 @@
 
             <script defer>
                 $(document).ready(function() {
-                    var table = $('#myTable').DataTable(); // Inisialisasi objek DataTable
+                    var table = $('#myTable').DataTable();
 
                     $('#facultyFilter').on('change', function() {
                         var faculty = $(this).val();
                         table.columns(3).search(faculty)
-                            .draw(); // Menggunakan variabel table untuk memanipulasi DataTable
+                            .draw();
                     });
                 });
             </script>

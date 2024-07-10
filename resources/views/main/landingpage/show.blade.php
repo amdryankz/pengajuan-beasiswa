@@ -17,8 +17,8 @@
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <nav class="bg-cover bg-center bg-no-repeat sticky top-0 z-50"
-        style="background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);">
+    <nav class="bg-cover bg-no-repeat sticky top-0 z-50"
+        style="background-image: url('https://images.unsplash.com/photo-1604856420566-576ba98b53cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
                 <a class="text-lg font-bold text-white hover:text-black" href="{{ url('/') }}">Beasiswa USK</a>
@@ -35,11 +35,11 @@
                 </div>
                 <!-- /Dropdown untuk desktop -->
                 <div class="hidden lg:flex lg:items-center lg:w-auto" id="menu sm:hidden">
-                    <a class="text-gray-100 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/') }}">Home</a>
-                    <a class="text-gray-100 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/#berita') }}">Berita</a>
-                    <a class="text-gray-100 text-sm font-semibold mx-2 lg:mx-4"
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/') }}">Home</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/#berita') }}">Berita</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
                         href="{{ url('/#panduan') }}">Panduan</a>
-                    <a class="text-gray-100 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/#kontak') }}">Kontak</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="{{ url('/#kontak') }}">Kontak</a>
                     <a class="bg-blue-100 hover:bg-blue-600 hover:text-white text-blue-700 text-sm font-semibold py-2 px-4 rounded-md mx-2 lg:mx-4"
                         href="{{ route('loginUser') }}">Login</a>
                 </div>

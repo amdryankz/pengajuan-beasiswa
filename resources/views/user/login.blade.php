@@ -10,14 +10,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body class="bg-gradient-to-r from-blue-500 to-blue-300 min-h-screen flex flex-col justify-center items-center">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
 
-        @if (session('status'))
+        @if (session('message'))
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-                {{ session('status') }}
+                {{ session('message') }}
             </div>
         @endif
 
@@ -26,7 +46,7 @@
                 alt="logo usk">
             <h1 class="text-xl font-semibold mb-6">Login Mahasiswa</h1>
         </div>
-        <form action="" method="post" class="space-y-4">
+        <form action="" method="post" class="space-y-4" onsubmit="showLoadingScreen()">
             @csrf
 
             <div>
@@ -52,8 +72,6 @@
                 </label>
             </div>
 
-
-
             <div class="flex justify-center">
                 <button type="submit"
                     class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-800">Login</button>
@@ -75,6 +93,10 @@
                 passwordInput.type = "password";
                 passwordIcon.innerText = "visibility";
             }
+        }
+
+        function showLoadingScreen() {
+            document.getElementById("loadingScreen").style.display = "flex";
         }
     </script>
 </body>

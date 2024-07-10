@@ -141,8 +141,7 @@
     <div class="pt-4">
         <p class=" font-semibold text-base px-2 py-1 {{-- border-b-2 --}}">HISTORY PENERIMAAN BEASISWA</p>
         <div class="overflow-x-auto">
-            <table class="mt-3 min-w-full bg-white border-gray-300">
-                <table class="min-w-full bg-white border border-gray-300">
+                <table class="mt-3 min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr class="bg-blue-500 text-white">
                             <th class="border border-gray-300 px-4 py-2">No</th>
