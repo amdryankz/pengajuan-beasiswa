@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        User::insert([
+        User::create([
             'npm' => '2008107010040',
             'password' => '$2y$10$M2gyFI6FxpfenuRpgv5GKeL5Xhxw15t2t8l7KDxTEfLdkFzCXfdqG',
             'name' => 'M Suhail Haritsah',
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -110,7 +110,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -141,7 +141,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -172,7 +172,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -203,7 +203,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -234,7 +234,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -265,7 +265,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -296,7 +296,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -327,7 +327,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -358,7 +358,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,
@@ -389,7 +389,7 @@ class UserSeeder extends Seeder
             $created_at = Carbon::now();
             $updated_at = Carbon::now();
 
-            User::insert([
+            User::create([
                 'npm' => $npm,
                 'password' => $password,
                 'name' => $name,

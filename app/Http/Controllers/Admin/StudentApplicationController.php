@@ -86,7 +86,7 @@ class StudentApplicationController extends Controller
 
         Mail::to($userScholarship->user->email)->send(new FileValidated());
 
-        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas telah divalidasi.');
+        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas persyaratan telah divalidasi.');
     }
 
     public function cancelValidation(Request $request, $scholarship_id, $user_id)
@@ -102,7 +102,7 @@ class StudentApplicationController extends Controller
 
         Mail::to($userScholarship->user->email)->send(new FileValidationCancelled($userScholarship->rejection_reason));
 
-        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas batal divalidasi.');
+        return redirect('/adm/pengusul/' . $scholarship_id)->with('success', 'Berkas persyaratan ditolak.');
     }
 
     public function generatePDF(string $user_id, string $scholarship_id)

@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::insert([
+        Admin::create([
             'nip' => '2008107010041',
             'name' => 'Raisul',
             'password' => '$2y$10$M2gyFI6FxpfenuRpgv5GKeL5Xhxw15t2t8l7KDxTEfLdkFzCXfdqG',
