@@ -29,11 +29,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Donatur</label>
+                    <label for="donors_id" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Nama Sumber</label>
                     <select
                         class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
                         name="donors_id" id="donors_id" disabled>
-                        <option value="" class="text-gray-600 hidden">Donatur</option>
+                        <option value="" class="text-gray-600 hidden">Sumber</option>
                     </select>
                 </div>
 
@@ -49,33 +49,39 @@
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label for="amount" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Nominal</label>
-                    <input type="text"
-                        class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md  focus:border-sky-500 text-sm"
-                        name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="amount_period" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Per</label>
-                    <select
-                        class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                        name="amount_period" id="amount_period">
-                        <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
-                        <option value="Bulan">Bulan</option>
-                        <option value="Tahun">Tahun</option>
-                    </select>
+                <!-- Durasi dan Nominal -->
+                <div class="flex items-center mb-4">
+                    <!-- Nominal -->
+                    <div class="flex-1 mr-4">
+                        <label for="amount" class="mb-1 block text-sm font-medium text-gray-600">Nominal</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 placeholder-gray-400 border-solid border-1 border-neutral-200 rounded-md focus:border-sky-500 text-sm"
+                            name="amount" id="amount" placeholder="Nominal" value="{{ old('amount') }}" required>
+                    </div>
+                    <!-- Per -->
+                    <div class="flex-1">
+                        <label for="amount_period" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Periode</label>
+                        <select
+                            class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
+                            name="amount_period" id="amount_period" required>
+                            <option value="" disabled selected class="text-gray-600 hidden">Bulan/Tahun</option>
+                            <option value="Bulan">Bulan</option>
+                            <option value="Tahun">Tahun</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             {{-- kanan --}}
             <div class="col-span-1">
                 <div class="mb-4">
-                    <label for="duration" class="mb-1  ml-1 block text-sm font-medium text-gray-600">Durasi</label>
+                    <label for="duration" class="mb-1 ml-1 block text-sm font-medium text-gray-600">Durasi /
+                        Bulan</label>
                     <select
                         class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
-                        name="duration" id="duration">
-                        <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa</option>
+                        name="duration" id="duration" required>
+                        <option value="" disabled selected class="text-gray-600 hidden">Durasi Beasiswa per Bulan
+                        </option>
                         @for ($i = 1; $i <= 48; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
@@ -132,7 +138,6 @@
                             'Kedokteran Gigi',
                             'Kelautan dan Perikanan',
                             'Ilmu Sosial dan Politik',
-                            'Pascasarjana',
                         ];
                     @endphp
                     @foreach ($facultyList as $faculty)

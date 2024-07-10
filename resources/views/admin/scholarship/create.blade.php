@@ -36,11 +36,11 @@
                     <label for="donors_id" class="block ml-1">
                         <span
                             class="block font-semibold mb-1 text-slate-700 after:content-['*'] after:text-red-600 after:ml-0.5">
-                            Pilih Donatur</span>
+                            Pilih Sumber</span>
                         <select
                             class="form-select w-full px-3 py-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500 outline-none text-sm"
                             name="donors_id" id="donors_id">
-                            <option value="" disabled selected class="text-gray-600 hidden">Nama Donatur</option>
+                            <option value="" disabled selected class="text-gray-600 hidden">Nama Sumber</option>
                             @foreach ($donor as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach

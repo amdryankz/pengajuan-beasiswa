@@ -18,7 +18,7 @@
 
 
         <div class="mx-auto max-w-4xl p-4 border shadow-sm rounded-md">
-            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa - {{ $scholarship->name }}</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa</h1>
             <div class="mb-10 max-w-xl mx-auto flex justify-between">
                 <div class="text-lg">
                     <div class="mb-3">
@@ -100,16 +100,29 @@
                 @foreach ($files as $file)
                     <li class="mb-2">
                         @if ($file->files)
-                            <label for="{{ $file->file_requirement_id }}">{{ $file->files->name }}</label><br>
+                            <span class="text-lg font-bold">{{ $file->files->name }}</span><br>
                             <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->file_path]) }}"
                                 class="text-blue-500 hover:underline text-base" target="_blank">
                                 {{ $file->file_path }}
                             </a>
                         @else
-                            <span class="text-red-500">File not available</span>
+                            <span class="text-lg text-red-500">File not available</span>
                         @endif
                     </li>
                 @endforeach
+            </ul>
+            <ul class="list-disc pl-4 mx-auto max-w-2xl">
+                <li class="mb-2">
+                    @if ($file->supervisor_approval_file)
+                        <span class="text-lg font-bold">Surat Rekomendasi Dosen Wali</span><br>
+                        <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->supervisor_approval_file]) }}"
+                            class="text-blue-500 hover:underline text-base" target="_blank">
+                            {{ $file->supervisor_approval_file }}
+                        </a>
+                    @else
+                        <span class="text-lg text-red-500">File not available</span>
+                    @endif
+                </li>
             </ul>
         </div>
     </div>

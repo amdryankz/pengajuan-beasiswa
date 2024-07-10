@@ -14,10 +14,11 @@
         </a>
 
         <div class="table-responsive">
-            <h2 class="text-lg font-semibold mb-4">List Beasiswa yang Sedang Berlangsung - {{ $scholarship->scholarship->name }}</h2>
+            <h2 class="text-lg font-semibold mb-4">List Beasiswa yang Sedang Berlangsung -
+                {{ $scholarship->scholarship->name }}</h2>
 
             <div class="mb-10">
-                <a href="{{ route('passfile.downloadExcel', ['scholarship_id' => $scholarship->id]) }}"
+                <a href="{{ route('aplicant.downloadExcel', ['scholarship_id' => $scholarship->id]) }}"
                     class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                     Export to Excel <ion-icon name="logo-buffer"></ion-icon>
                 </a>
@@ -29,16 +30,8 @@
                     <select id="facultyFilter" name="facultyFilter"
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
                         <option value="">Semua Fakultas</option>
-                        @foreach ($data as $item)
-                            @if (is_array($item['facultyList']))
-                                @foreach ($item['facultyList'] as $faculty)
-                                    <option value="{{ htmlspecialchars($faculty) }}">{{ htmlspecialchars($faculty) }}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="{{ htmlspecialchars($item['facultyList']) }}">
-                                    {{ htmlspecialchars($item['facultyList']) }}</option>
-                            @endif
+                        @foreach ($facultyList as $faculty)
+                            <option value="{{ $faculty }}">{{ $faculty }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -59,7 +52,6 @@
                         <th class="py-1 px-4 border-r">faculty</th>
                         <th class="py-1 px-4 border-r">Prodi</th>
                         <th class="py-1 px-4 border-r">Detail</th>
-                        <th class="py-1 px-4">Cetak</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,17 +67,6 @@
                                     class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">
                                     Detail</a>
                             </td>
-                            <td class="py-1 px-1 text-center">
-                                <a href="{{ route('admin.scholarship.pdf', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
-                                    target="_blank">
-                                    <span class="flex items-center justify-center">
-                                        <i class="bi bi-file-pdf-fill mr-1"></i>
-                                        <span>Cetak PDF</span>
-                                    </span>
-                                </a>
-                            </td>
-
-
                         </tr>
                     @endforeach
                 </tbody>

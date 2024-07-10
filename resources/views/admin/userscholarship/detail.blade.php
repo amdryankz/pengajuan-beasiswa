@@ -16,7 +16,7 @@
         </div>
 
         <div class="mx-auto max-w-4xl p-4 border rounded-md">
-            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pengusul Beasiswa</h1>
             <div class="mb-10 max-w-xl mx-auto flex justify-between">
                 <div class="text-lg">
                     <div class="mb-3">
@@ -106,6 +106,19 @@
                     </li>
                 @endforeach
             </ul>
+
+            <ul class="list-disc pl-4 mx-auto max-w-2xl">
+                <li class="mb-2">
+                    @if ($file->supervisor_approval_file)
+                        <span class="text-lg font-bold">Surat Rekomendasi Dosen Wali</span><br>
+                        <a href="{{ route('admin.scholarship.checkFile', ['file_path' => $file->supervisor_approval_file]) }}"
+                            class="text-blue-500 hover:underline text-base" target="_blank">
+                            {{ $file->supervisor_approval_file }}
+                        </a>
+                    @else
+                        <span class="text-lg text-red-500">File not available</span>
+                    @endif
+                </li>
             </ul>
 
             <div class="mx-auto mt-6 mb-6 p-4 flex justify-center items-center">
@@ -123,7 +136,7 @@
                                     <button type="submit"
                                         class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out">
                                         <span class="flex items-center">
-                                            <span class="mr-2">Validasi</span>
+                                            <span class="mr-2">Lulus Berkas</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="h-4 w-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -140,7 +153,7 @@
                                     <button type="submit"
                                         class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out">
                                         <span class="flex items-center">
-                                            <span class="mr-2">Tolak Validasi</span>
+                                            <span class="mr-2">Tolak Berkas</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="h-4 w-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -11,8 +11,8 @@
         </div>
         <div class="p-6">
             <p>Halo, <strong>{{ $userName }}</strong></p>
-            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan telah diperiksa oleh admin, dan anda telah dinyatakan <strong>Lulus Seleksi Berkas</strong>
-            <p>Selanjutnya, Anda dapat menunggu proses <strong>Seleksi Bakat Skolastik dan Seleksi Substansi/Wawancara.</strong> untuk informasi lebih lanjut silahkan hubungi pihak Bidang Kemahasiswaan Universitas Syiah Kuala.</p>
+            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan telah diperiksa, Anda telah dinyatakan <strong>Lulus Seleksi Berkas</strong>
+            <p>Selanjutnya, Anda dapat menunggu proses <strong>Seleksi Selanjutnya.</strong> untuk informasi lebih lanjut silahkan hubungi pihak Bidang Kemahasiswaan Universitas Syiah Kuala.</p>
             <p>Terima kasih atas perhatian dan kerja samanya.</p>
             <p>Salam,<br>Bidang Kemahasiswaan Universitas Syiah Kuala</p>
         </div>

@@ -11,9 +11,9 @@
         </div>
         <div class="p-6">
             <p>Halo, <strong>{{ $userName }}</strong></p>
-            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan untuk beasiswa <strong>{{ $scholarshipName }}</strong> telah dibatalkan validasinya oleh admin. Alasan pembatalan adalah sebagai berikut:</p>
+            <p>Kami ingin menginformasikan bahwa berkas beasiswa yang Anda ajukan untuk beasiswa <strong>{{ $scholarshipName }}</strong> telah ditolak. Alasan pembatalan adalah sebagai berikut:</p>
             <strong class="bg-gray-100 p-4 border-l-4 border-red-500 my-4">{{ $reason }}</strong>
-            <p>Silakan periksa kembali berkas Anda dan ajukan ulang jika diperlukan. Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.</p>
+            <p>Jangan Putus Asa dan Tetap Semangat!!. Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami.</p>
             <p>Terima kasih atas perhatian dan kerja samanya.</p>
             <p>Salam,<br>Bidang Kemahasiswaan Universitas Syiah Kuala</p>
         </div>

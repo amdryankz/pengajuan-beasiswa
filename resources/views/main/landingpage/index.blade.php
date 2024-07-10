@@ -37,8 +37,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="bg-cover bg-no-repeat sticky top-0 z-50"
-        style="background-image: url('https://images.unsplash.com/photo-1604856420566-576ba98b53cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <nav class="bg-cover bg-no-repeat sticky top-0 z-50 bg-gray-500">
 
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
@@ -56,11 +55,16 @@
                 </div>
                 <!-- /Dropdown untuk desktop -->
                 <div class="hidden lg:flex lg:items-center lg:w-auto" id="menu sm:hidden">
-                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="#">Home</a>
-                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="#berita">Berita</a>
-                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="#panduan">Panduan</a>
-                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="#tentang">Tentang</a>
-                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4" href="#kontak">Kontak</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
+                        href="#">Home</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
+                        href="#berita">Berita</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
+                        href="#panduan">Panduan</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
+                        href="#tentang">Tentang</a>
+                    <a class="text-gray-100 hover:text-blue-600 text-sm font-semibold mx-2 lg:mx-4"
+                        href="#kontak">Kontak</a>
                     <a class="bg-blue-100 hover:bg-blue-600 hover:text-white text-blue-700 text-sm font-semibold py-2 px-4 rounded-md mx-2 lg:mx-4"
                         href="{{ route('loginUser') }}">Login</a>
                 </div>
@@ -88,11 +92,11 @@
 
     <!-- Jumbotron -->
     <div class="py-72 parallax bg-cover bg-center bg-no-repeat"
-        style="background-image: url('https://images.unsplash.com/photo-1604856420566-576ba98b53cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+        style="background-image: url('https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="container mx-auto px-4">
             <div class="text-center">
                 <h1 class="text-4xl font-bold leading-tight text-background">Selamat Datang <span> di </span>
-                    <br>Beasiswa <span> Uneversitas </span> Syiah Kuala
+                    <br>Beasiswa <span> Universitas </span> Syiah Kuala
                 </h1>
             </div>
         </div>
@@ -102,7 +106,7 @@
 
     <!-- Container Pengumuman dan Berita -->
     <div id="berita" class="py-10 parallax bg-cover bg-center bg-no-repeat"
-        style="background-image: url('https://images.unsplash.com/photo-1604856420566-576ba98b53cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+        style="background-image: url('https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="container mx-auto px-4">
 
             <!-- Grid Berita -->
@@ -193,7 +197,7 @@
                 </div>
 
                 <div class="md:w-1/2 mb-6 md:mb-0 md:pl-6 transition-transform duration-300 transform hover:scale-105">
-                    <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Tentang Beasiswa USK" class="w-full rounded-lg">
                 </div>
             </div>
@@ -201,8 +205,7 @@
     </div>
 
     <!-- Informasi Kontak Section -->
-    <div id="kontak" class="parallax bg-cover bg-center bg-no-repeat"
-        style="background-image: url('https://images.unsplash.com/photo-1604856420566-576ba98b53cd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div id="kontak" class="parallax bg-cover bg-center bg-no-repeat bg-gray-500">
         <div class="p-6">
             <h2 class="text-2xl font-bold mb-6 text-white text-center">Informasi Kontak</h2>
             <div class="text-center text-white">

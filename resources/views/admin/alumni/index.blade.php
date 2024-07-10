@@ -28,66 +28,48 @@
                     <select id="facultyFilter" name="facultyFilter"
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
                         <option value="">Semua Fakultas</option>
-                        @foreach ($data as $item)
-                            @if (is_array($item['facultyList']))
-                                @foreach ($item['facultyList'] as $faculty)
-                                    <option value="{{ htmlspecialchars($faculty) }}">{{ htmlspecialchars($faculty) }}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="{{ htmlspecialchars($item['facultyList']) }}">
-                                    {{ htmlspecialchars($item['facultyList']) }}</option>
-                            @endif
+                        @foreach ($facultyList as $faculty)
+                            <option value="{{ $faculty }}">{{ $faculty }}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <table id="myTable" class="min-w-full bg-white border border-gray-300 text-sm">
-                <thead>
-                    <tr class="border-b-2 bg-sky-800 text-white text-sm">
-                        <th class="py-1 px-1 border-r text-center">No</th>
-                        <th class="py-1 px-4 border-r">Nama</th>
-                        <th class="py-1 px-4 border-r">NPM</th>
-                        <th class="py-1 px-4 border-r">Fakultas</th>
-                        <th class="py-1 px-4 border-r">Prodi</th>
-                        <th class="py-1 px-4 border-r">Detail</th>
-                        <th class="py-1 px-4">Cetak</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $item)
-                        <tr class="text-start">
-                            <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->name }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->npm }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->faculty }}</td>
-                            <td class="py-2 px-2 border-r">{{ $item['user']->major }}</td>
-                            <td class="py-1 px-1 border-r text-center">
-                                <a href="{{ route('alumni.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
-                                    class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">
-                                    Detail
-                                </a>
-                            </td>
-                            <td class="py-1 px-1 text-center">
-                                <a href="{{ route('admin.scholarship.pdf', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
-                                    target="_blank">
-                                    <span class="flex items-center justify-center">
-                                        <i class="bi bi-file-pdf-fill mr-1"></i>
-                                        <span>Cetak PDF</span>
-                                    </span>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <table id="myTable" class="min-w-full bg-white border border-gray-300 text-sm">
+            <thead>
+                <tr class="border-b-2 bg-sky-800 text-white text-sm">
+                    <th class="py-1 px-1 border-r text-center">No</th>
+                    <th class="py-1 px-4 border-r">Nama</th>
+                    <th class="py-1 px-4 border-r">NPM</th>
+                    <th class="py-1 px-4 border-r">Fakultas</th>
+                    <th class="py-1 px-4 border-r">Prodi</th>
+                    <th class="py-1 px-4 border-r">Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $item)
+                    <tr class="text-start">
+                        <td class="py-1 px-1 border-r text-center">{{ $loop->index + 1 }}</td>
+                        <td class="py-2 px-2 border-r">{{ $item['user']->name }}</td>
+                        <td class="py-2 px-2 border-r">{{ $item['user']->npm }}</td>
+                        <td class="py-2 px-2 border-r">{{ $item['user']->faculty }}</td>
+                        <td class="py-2 px-2 border-r">{{ $item['user']->major }}</td>
+                        <td class="py-1 px-1 border-r text-center">
+                            <a href="{{ route('alumni.detail', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
+                                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 font-normal">
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     </div>
 @endsection

@@ -44,7 +44,6 @@
                         <th class="py-1 px-4 border-r">Prodi</th>
                         <th class="py-2 px-4 border-r text-center">Detail</th>
                         <th class="py-1 px-4 border-r">Status</th>
-                        <th class="py-1 px-4">Cetak</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,16 +80,6 @@
                                 @else
                                     Tidak Mendaftar
                                 @endif
-                            </td>
-
-                            <td class="py-1 px-1 text-center">
-                                <a href="{{ route('admin.scholarship.pdf', ['user_id' => $item->id, 'scholarship_id' => $data['scholarship']->id]) }}"
-                                    target="_blank">
-                                    <span class="flex items-center justify-center">
-                                        <i class="bi bi-file-pdf-fill mr-1"></i>
-                                        <span>Cetak PDF</span>
-                                    </span>
-                                </a>
                             </td>
                         </tr>
                     @endforeach

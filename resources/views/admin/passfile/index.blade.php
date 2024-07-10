@@ -29,18 +29,9 @@
                     <select id="facultyFilter" name="facultyFilter"
                         class="block w-full p-2 border-1 border-solid border-neutral-200 rounded-md focus:border-sky-500">
                         <option value="">Semua Fakultas</option>
-                        @foreach ($data as $item)
-                            @if (is_array($item['facultyList']))
-                                @foreach ($item['facultyList'] as $faculty)
-                                    <option value="{{ htmlspecialchars($faculty) }}">{{ htmlspecialchars($faculty) }}
-                                    </option>
-                                @endforeach
-                            @else
-                                <option value="{{ htmlspecialchars($item['facultyList']) }}">
-                                    {{ htmlspecialchars($item['facultyList']) }}</option>
-                            @endif
+                        @foreach ($facultyList as $faculty)
+                            <option value="{{ $faculty }}">{{ $faculty }}</option>
                         @endforeach
-
                     </select>
                 </div>
             </div>
@@ -61,7 +52,6 @@
                         <th class="py-1 px-4 border-r">Prodi</th>
                         <th class="py-2 px-4 border-r text-center">Detail</th>
                         <th class="py-1 px-4 border-r">Status</th>
-                        <th class="py-1 px-4">Cetak</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,15 +86,6 @@
                                 @else
                                     Tidak Mendaftar
                                 @endif
-                            </td>
-                            <td class="py-1 px-1 text-center">
-                                <a href="{{ route('admin.scholarship.pdf', ['user_id' => $item['user']->id, 'scholarship_id' => $item['scholarship']->id]) }}"
-                                    target="_blank">
-                                    <span class="flex items-center justify-center">
-                                        <i class="bi bi-file-pdf-fill mr-1"></i>
-                                        <span>Cetak PDF</span>
-                                    </span>
-                                </a>
                             </td>
                         </tr>
                     @endforeach
