@@ -155,7 +155,6 @@
                             'Kedokteran Gigi',
                             'Kelautan dan Perikanan',
                             'Ilmu Sosial dan Politik',
-                            'Pascasarjana',
                         ];
                     @endphp
                     @foreach ($facultyList as $faculty)

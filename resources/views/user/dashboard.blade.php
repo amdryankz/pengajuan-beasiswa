@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('admin') }}/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="{{ asset('admin') }}/css/style.css">
     <link rel="shortcut icon" href="{{ asset('admin') }}/images/favicon.png" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 
     {{-- alpine.js --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -77,14 +79,17 @@
 <body class="bg-gray-200 flex flex-col md:flex-row min-h-screen">
 
     <!-- Sidebar -->
-    <aside x-data="{ open: false }" :class="{ 'open': open }" class="sidebar text-gray-800 shadow fixed top-0 left-0 h-full md:h-auto md:relative w-60 bg-white z-50">
-
+    <aside x-data="{ open: false }" :class="{ 'open': open }"
+        class="sidebar text-gray-800 shadow fixed top-0 left-0 h-full md:h-auto md:relative w-60 bg-white z-50">
 
         <!-- Logo -->
-        <div class="p-2 relative bg-blue-600 md:block hidden">
-            <img src="https://beasiswa.usk.ac.id/adm/public/images/logo_beasiswa_admin.png" alt="Logo"
-                class="w-48 h-auto pl-2">
+        <div class="p-2 relative bg-transparent md:block hidden shadow-md border-b-2 border-b-blue-400"
+            style="height: 56px; display: flex; align-items: center;">
+            <img src="https://upload.wikimedia.org/wikipedia/id/2/27/Unsyiah.svg" alt="Logo"
+                class="h-full pl-2 pr-2">
+            <span class="text-gray-800 font-bold text-md">BEASISWA USK</span>
         </div>
+
 
         <!-- Menu -->
         <div class="p-4">

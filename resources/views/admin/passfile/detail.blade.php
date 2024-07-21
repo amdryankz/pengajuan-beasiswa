@@ -18,7 +18,7 @@
 
 
         <div class="mx-auto max-w-4xl p-4 border shadow-sm rounded-md">
-            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pendaftar Beasiswa</h1>
+            <h1 class="text-3xl font-bold mb-8 text-center">Detail Pengusul Beasiswa</h1>
             <div class="mb-10 max-w-xl mx-auto flex justify-between">
                 <div class="text-lg">
                     <div class="mb-3">

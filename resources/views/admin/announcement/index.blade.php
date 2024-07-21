@@ -20,7 +20,7 @@
             @endif
 
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-semibold text-gray-800">Daftar Pengumuman Berita</h1>
+                <h1 class="text-2xl font-semibold text-gray-800">Daftar Pengumuman</h1>
                 <a href="{{ route('pengumuman.create') }}"
                     class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Buat
                     Pengumuman Baru</a>

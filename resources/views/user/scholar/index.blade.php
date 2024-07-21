@@ -16,29 +16,29 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <table class="mt-3 min-w-full bg-white border border-gray-300">
+            <table class="mt-3 min-w-full bg-white border-gray-300">
                 <thead>
                     <tr class="bg-blue-500 text-white">
-                        <th class="border border-gray-300 px-4 py-2">No</th>
-                        <th class="border border-gray-300 px-4 py-2">Nama Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Tahun</th>
-                        <th class="border border-gray-300 px-4 py-2">Mulai Pendaftaran Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Akhir Pendaftaran Beasiswa</th>
-                        <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">No</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">Nama Beasiswa</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">Tahun</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">Mulai Pendaftaran Beasiswa</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">Akhir Pendaftaran Beasiswa</th>
+                        <th class="border-2 border-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     @foreach ($data as $item)
                         <tr>
-                            <td class="border border-gray-300 px-4 py-2">{{ $i++ }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->year }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->start_registration_at->format('d-m-Y') }}
+                            <td class="border-2 border-gray-300 px-4 py-2">{{ $i++ }}</td>
+                            <td class="border-2 border-gray-300 px-4 py-2">{{ $item->scholarship->name }}</td>
+                            <td class="border-2 border-gray-300 px-4 py-2">{{ $item->year }}</td>
+                            <td class="border-2 border-gray-300 px-4 py-2">{{ $item->start_registration_at->format('d-m-Y') }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $item->end_registration_at->format('d-m-Y') }}
+                            <td class="border-2 border-gray-300 px-4 py-2">{{ $item->end_registration_at->format('d-m-Y') }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">
+                            <td class="border-2 border-gray-300 px-4 py-2">
                                 <a href="{{ route('pendaftaran.show', $item->id) }}"
                                     class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Daftar</a>
                             </td>
